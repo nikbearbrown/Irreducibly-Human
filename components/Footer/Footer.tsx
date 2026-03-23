@@ -74,7 +74,15 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
-          &copy; {currentYear} Scrooge &amp; Marley. All rights reserved.
+          <p>&copy; {currentYear} Scrooge &amp; Marley. All rights reserved.</p>
+          <p className="mt-2">
+            Marley is open source (MIT License) · Built by{' '}
+            <a href="https://www.bearbrown.co/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Nik Bear Brown</a>
+            {' · '}
+            <a href="https://www.bearbrown.co/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">bearbrown.co</a>
+            {' · '}
+            <a href="https://www.skepticism.ai/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">The Skepticism AI Substack</a>
+          </p>
         </div>
       </div>
     </footer>

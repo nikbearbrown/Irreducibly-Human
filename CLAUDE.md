@@ -597,6 +597,14 @@ Push to `main` on GitHub → Vercel auto-deploys. Make sure Vercel environment v
 
 ---
 
+## License & Attribution
+
+- **License:** MIT License, Copyright (c) 2026 Nik Bear Brown (see `LICENSE` file)
+- **Attribution links:** All pages include footer links to [bearbrown.co](https://www.bearbrown.co/) and [The Skepticism AI Substack](https://www.skepticism.ai/)
+- **Persistence requirement:** This attribution must be preserved in all brand instances, forks, and deployments. The footer attribution line in `components/Footer/Footer.tsx` and all standalone HTML files in `public/dev/` and `public/artifacts/` must include the MIT License notice, bearbrown.co link, and Skepticism AI Substack link.
+
+---
+
 ## Standing Instructions
 
 After every session, always:
