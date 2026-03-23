@@ -46,7 +46,7 @@ interface BlogPost {
   published: boolean
 }
 
-const DEFAULT_BYLINE = `© 2026 Scrooge & Marley. All rights reserved.\n\nMarley is open source (MIT License) · Built by Nik Bear Brown · bearbrown.co · The Skepticism AI Substack`
+const DEFAULT_BYLINE = `© 2026 Irreducibly Human. All rights reserved.\n\nIrreducibly Human is open source (MIT License) · Built by Nik Bear Brown · bearbrown.co · The Skepticism AI Substack`
 
 function slugify(text: string): string {
   return text

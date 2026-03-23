@@ -89,19 +89,19 @@ export default function TemplatePage() {
               <PrimaryButton href="https://github.com">
                 GitHub Repository
               </PrimaryButton>
-              <SecondaryButton href="mailto:correspondence@scroogeandmarley.com">
+              <SecondaryButton href="mailto:bear@bearbrown.co">
                 Send Correspondence
               </SecondaryButton>
             </div>
             
             <div className="mt-8 text-center">
-              <h3 className="text-lg font-semibold mb-2">Contact Scrooge &amp; Marley</h3>
+              <h3 className="text-lg font-semibold mb-2">Contact Irreducibly Human</h3>
               <div className="flex flex-wrap justify-center gap-4 mt-4">
                 <a
-                  href="mailto:correspondence@scroogeandmarley.com"
+                  href="mailto:bear@bearbrown.co"
                   className="text-sm text-primary hover:underline"
                 >
-                  correspondence@scroogeandmarley.com
+                  bear@bearbrown.co
                 </a>
                 <a
                   href="https://github.com"

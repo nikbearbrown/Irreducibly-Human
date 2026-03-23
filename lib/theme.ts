@@ -1,5 +1,5 @@
 export const theme = {
-  // Scrooge & Marley palette — swap these to rebrand the entire site
+  // Irreducibly Human palette — swap these to rebrand the entire site
   // All pairings meet WCAG AA contrast (4.5:1) against bb8 (parchment)
   colors: {
     bb1: '#0D0D0D',   // soot black — primary text

@@ -11,13 +11,13 @@ export default function Footer() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Company Info */}
           <div className="space-y-3">
-            <h3 className="text-sm font-semibold">Scrooge &amp; Marley</h3>
+            <h3 className="text-sm font-semibold">Irreducibly Human</h3>
             <div className="text-sm text-muted-foreground space-y-1">
               <p>1 Cornhill</p>
               <p>London EC3V 3ND</p>
               <p>
-                <a href="mailto:correspondence@scroogeandmarley.com" className="hover:text-foreground transition-colors">
-                  correspondence@scroogeandmarley.com
+                <a href="mailto:bear@bearbrown.co" className="hover:text-foreground transition-colors">
+                  bear@bearbrown.co
                 </a>
               </p>
 
@@ -106,9 +106,9 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Scrooge &amp; Marley. All rights reserved.</p>
+          <p>&copy; {currentYear} Irreducibly Human. All rights reserved.</p>
           <p className="mt-2">
-            Marley is open source (MIT License) · Built by{' '}
+            Irreducibly Human is open source (MIT License) · Built by{' '}
             <a href="https://www.bearbrown.co/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Nik Bear Brown</a>
             {' · '}
             <a href="https://www.bearbrown.co/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">bearbrown.co</a>

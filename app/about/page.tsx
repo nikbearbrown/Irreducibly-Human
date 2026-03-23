@@ -1,64 +1,74 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About - Scrooge & Marley',
-  description: 'Scrooge & Marley — Counting House & Money Lenders, Est. 1836, 1 Cornhill, London.',
+  title: 'About - Irreducibly Human',
+  description: 'Irreducibly Human — What AI Can and Can\'t Do. A 5-course graduate series at Northeastern University\'s MGEN program.',
 }
 
 export default function AboutPage() {
   return (
     <div className="container px-4 md:px-6 mx-auto py-12">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold tracking-tighter mb-8">About the Firm</h1>
+        <h1 className="text-4xl font-bold tracking-tighter mb-8">About the Series</h1>
 
         <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
           <section>
             <p>
-              Scrooge &amp; Marley is a London counting house and money lending concern,
-              established in 1836. We provide financial services to merchants, landlords,
-              and trading concerns across the City. Our reputation is built on precision,
-              discretion, and the unwavering enforcement of contractual obligations.
+              Irreducibly Human is a 5-course graduate certificate at Northeastern
+              University&apos;s MGEN program. Each course develops a specific tier of human
+              intelligence that AI cannot replicate. The series asks: what remains irreducibly
+              human in an age of increasingly capable AI?
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Founders</h2>
+            <h2 className="text-2xl font-bold mb-4">Author</h2>
             <p>
-              The firm was founded by <strong>Ebenezer Scrooge</strong> and <strong>Jacob Marley</strong>.
-              Mr Marley, though deceased these seven years, remains memorialised in the name above
-              our door. Mr Scrooge, sole surviving partner, continues to conduct all business
-              with the same exacting standards upon which the firm was built.
+              <strong>Nik Bear Brown</strong>, Northeastern University. Creator of the
+              Irreducibly Human curriculum.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Our Principles</h2>
+            <h2 className="text-2xl font-bold mb-4">The Thesis</h2>
             <p>
-              We believe that sound finance requires no ornamentation. A debt is a debt.
-              A contract is a contract. We do not speculate, we do not indulge sentiment,
-              and we do not extend terms beyond what prudence allows. These principles have
-              served our clients — and our ledgers — well.
+              AI excels at pattern matching, statistical correlation, and content generation.
+              It does not reason causally, exercise moral judgment, commit to creative
+              decisions, or teach through embodied presence. These capacities are not gaps
+              to be closed — they are the defining features of human intelligence.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Services</h2>
-            <p>
-              Scrooge &amp; Marley offers debt recovery, money lending, estate accounting,
-              and commercial bookkeeping. All engagements are governed by written agreement.
-              We maintain detailed records and provide quarterly statements to all clients
-              without exception.
-            </p>
+            <h2 className="text-2xl font-bold mb-4">The Five Courses</h2>
+            <ul>
+              <li>
+                <Link href="/courses/botspeak" className="text-primary hover:underline">BotSpeak</Link> — Tier 4: Creative Authorship
+              </li>
+              <li>
+                <Link href="/courses/causal-reasoning" className="text-primary hover:underline">Causal Reasoning</Link> — Tier 5: Causal Reasoning
+              </li>
+              <li>
+                <Link href="/courses/ethical-play" className="text-primary hover:underline">Ethical Play</Link> — Tier 3: Ethical Play
+              </li>
+              <li>
+                <Link href="/courses/aimagineering" className="text-primary hover:underline">AIMagineering</Link> — Tier 4: Creative Authorship
+              </li>
+              <li>
+                <Link href="/courses/embodied-teaching" className="text-primary hover:underline">Embodied Teaching</Link> — Tier 2: Embodied Teaching
+              </li>
+            </ul>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Correspondence</h2>
+            <h2 className="text-2xl font-bold mb-4">Contact</h2>
             <p>
               Enquiries may be directed to{' '}
-              <a href="mailto:correspondence@scroogeandmarley.com" className="text-primary hover:underline">correspondence@scroogeandmarley.com</a>.
+              <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>.
             </p>
             <p className="mt-2 text-muted-foreground">
-              1 Cornhill, London EC3V 3ND
+              Northeastern University
             </p>
           </section>
         </div>

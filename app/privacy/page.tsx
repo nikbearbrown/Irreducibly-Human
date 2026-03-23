@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - Scrooge & Marley',
-  description: 'Privacy policy for Scrooge & Marley and scroogeandmarley.com',
+  title: 'Privacy Policy - Irreducibly Human',
+  description: 'Privacy policy for Irreducibly Human and irreduciblyhuman.com',
 }
 
 export default function PrivacyPolicyPage() {
@@ -19,17 +19,16 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
             <p>
-              Welcome to <strong>scroogeandmarley.com</strong>, operated by <strong>Scrooge &amp; Marley</strong>,
-              a London counting house and money lending concern. We are committed to protecting your
+              Welcome to <strong>irreduciblyhuman.com</strong>, operated by <strong>Irreducibly Human</strong>. We are committed to protecting your
               personal information and your right to privacy. If you have any questions or concerns about this privacy
               policy or our practices with regard to your personal information, please contact us at{' '}
-              <a href="mailto:correspondence@scroogeandmarley.com" className="text-primary hover:underline">correspondence@scroogeandmarley.com</a>.
+              <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>.
             </p>
             <ul className="list-none pl-0 mt-4 space-y-1 text-base">
-              <li><strong>Company:</strong> Scrooge &amp; Marley</li>
+              <li><strong>Company:</strong> Irreducibly Human</li>
               <li><strong>Address:</strong> 1 Cornhill, London EC3V 3ND</li>
               <li><strong>Email:</strong>{' '}
-                <a href="mailto:correspondence@scroogeandmarley.com" className="text-primary hover:underline">correspondence@scroogeandmarley.com</a>
+                <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>
               </li>
             </ul>
           </section>
@@ -101,7 +100,7 @@ export default function PrivacyPolicyPage() {
               <li><strong>GitHub:</strong> Source code hosting and collaboration</li>
             </ul>
             <p className="mt-4">
-              We encourage you to review the privacy policies of these third-party services. Scrooge &amp; Marley is not
+              We encourage you to review the privacy policies of these third-party services. Irreducibly Human is not
               responsible for the privacy practices of external services.
             </p>
           </section>
@@ -194,11 +193,11 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
             <p>
-              If you have questions or comments about this privacy policy, please contact Scrooge &amp; Marley:
+              If you have questions or comments about this privacy policy, please contact Irreducibly Human:
             </p>
             <ul className="list-none pl-0 mt-4 space-y-1 text-base">
               <li><strong>Email:</strong>{' '}
-                <a href="mailto:correspondence@scroogeandmarley.com" className="text-primary hover:underline">correspondence@scroogeandmarley.com</a>
+                <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>
               </li>
               <li><strong>Address:</strong> 1 Cornhill, London EC3V 3ND</li>
             </ul>

@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Scrooge & Marley',
+  title: 'Irreducibly Human',
   description: 'Counting House & Money Lenders, Est. 1836 — 1 Cornhill, London.',
 }
 

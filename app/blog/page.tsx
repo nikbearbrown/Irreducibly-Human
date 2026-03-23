@@ -5,7 +5,7 @@ import BlogFeed from './BlogFeed'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Blog - Scrooge & Marley',
+  title: 'Blog - Irreducibly Human',
   description: 'Writing on finance, commerce, and the prudent management of capital.',
 }
 

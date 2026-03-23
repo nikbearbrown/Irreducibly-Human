@@ -19,7 +19,7 @@ export async function generateMetadata({
     if (rows.length > 0) {
       const post = rows[0]
       return {
-        title: `${post.title} - Scrooge & Marley`,
+        title: `${post.title} - Irreducibly Human`,
         description: post.excerpt || post.subtitle || post.title,
         openGraph: {
           title: post.title,
@@ -35,7 +35,7 @@ export async function generateMetadata({
       }
     }
   } catch {}
-  return { title: 'Blog - Scrooge & Marley' }
+  return { title: 'Blog - Irreducibly Human' }
 }
 
 function formatDate(dateStr: string | null): string {
