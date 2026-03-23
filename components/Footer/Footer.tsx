@@ -13,8 +13,8 @@ export default function Footer() {
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">Irreducibly Human</h3>
             <div className="text-sm text-muted-foreground space-y-1">
-              <p>1 Cornhill</p>
-              <p>London EC3V 3ND</p>
+              <p>30 N Gould St Ste N</p>
+              <p>Sheridan, WY 82801</p>
               <p>
                 <a href="mailto:bear@bearbrown.co" className="hover:text-foreground transition-colors">
                   bear@bearbrown.co

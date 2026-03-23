@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Irreducibly Human',
-  description: 'Counting House & Money Lenders, Est. 1836 — 1 Cornhill, London.',
+  description: 'What AI Can and Can\'t Do — a 5-course series from Bear Brown & Company.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

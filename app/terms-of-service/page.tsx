@@ -25,7 +25,7 @@ export default function TermsOfServicePage() {
             </p>
             <ul className="list-none pl-0 mt-4 space-y-1 text-base">
               <li><strong>Company:</strong> Irreducibly Human</li>
-              <li><strong>Address:</strong> 1 Cornhill, London EC3V 3ND</li>
+              <li><strong>Address:</strong> 30 N Gould St Ste N, Sheridan, WY 82801</li>
               <li><strong>Email:</strong>{' '}
                 <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>
               </li>
@@ -193,7 +193,7 @@ export default function TermsOfServicePage() {
               <li><strong>Email:</strong>{' '}
                 <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>
               </li>
-              <li><strong>Address:</strong> 1 Cornhill, London EC3V 3ND</li>
+              <li><strong>Address:</strong> 30 N Gould St Ste N, Sheridan, WY 82801</li>
             </ul>
           </section>
         </div>
