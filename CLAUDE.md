@@ -1,18 +1,17 @@
-# CLAUDE.md — Scrooge & Marley
+# CLAUDE.md — Irreducibly Human
 
-> **Source:** Charles Dickens, *A Christmas Carol* (1843) — public domain.
-> This is a multi-brand template demonstrating the same Next.js codebase styled for a fictional Victorian counting house.
+> **Irreducibly Human: What AI Can and Can't Do** — a 5-course graduate series in Northeastern University's MGEN program. Each course develops a specific tier of human intelligence that AI cannot replicate.
 
 ## Who this site is for
-Scrooge & Marley — Counting House & Money Lenders, Est. 1836. A London financial services firm dealing in debt recovery, money lending, estate accounting, and commercial bookkeeping.
+Irreducibly Human is the companion site for a graduate certificate program at Northeastern University. It serves as the public-facing hub for course descriptions, research blog posts, interactive tools, and developer documentation.
 
-Primary audiences (fictional):
-- Creditors seeking systematic debt recovery
-- Borrowers requiring capital advanced against collateral
-- Merchants needing commercial bookkeeping services
-- Landlords and estate holders requiring accounting
+Primary audiences:
+- Prospective and current MGEN graduate students evaluating the certificate
+- Faculty and researchers in AI, education, cognitive science, and ethics
+- Industry professionals exploring what human capabilities remain beyond AI's reach
+- General public interested in the intersection of human intelligence and artificial intelligence
 
-Brand voice: Terse, transactional, unsentimental. Every word costs something. "We deal in debts, not dreams."
+Brand voice: Academic, clear, direct. Informed by research, accessible to practitioners. No hype, no jargon for its own sake. "What AI can and can't do."
 
 ## Tech stack
 - Next.js (App Router)
@@ -26,32 +25,38 @@ Brand voice: Terse, transactional, unsentimental. Every word costs something. "W
 - D3.js (data visualizations embedded in blog posts)
 - adm-zip (server-side Substack ZIP parsing)
 
-## Founders
-The firm was founded by **Ebenezer Scrooge** and **Jacob Marley**.
+## Author
+**Nik Bear Brown**, Northeastern University. Creator of the Irreducibly Human curriculum and this platform.
 
 ## Site structure
-1. `/` — Home (firm intro + services + contact)
-2. `/tools` — Tools directory (card grid, Neon-driven)
-3. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
-4. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
-5. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
-6. `/blog` — Blog feed: published posts newest first, clean card list
-7. `/blog/[slug]` — Individual blog post with prose content
-8. `/about` — About the firm (prose format, founders info)
-9. `/privacy` — Privacy Policy for Scrooge & Marley
-10. `/privacy/cookies` — Cookie Policy for Scrooge & Marley (dedicated page)
-11. `/terms-of-service` — Terms of Service for Scrooge & Marley
-12. `/substack` — Newsletter hub: card grid of all Substack sections
-13. `/substack/[section]` — Section page: description, "Follow on Substack" CTA, chronological article list
-14. `/substack/[section]/[slug]` — Full article: attribution banner, prose content, "Subscribe on Substack" footer CTA
-15. `/admin/login` — Admin login page (password form)
-16. `/admin/dashboard` — Admin dashboard (protected via middleware + `admin_session` cookie)
-17. `/admin/dashboard/blog` — Manage blog posts (list, create, edit, delete)
-18. `/admin/dashboard/blog/new` — New post editor
-19. `/admin/dashboard/blog/[id]/edit` — Edit existing post
-20. `/admin/dashboard/blog/import` — Import posts (Substack ZIP or blog export ZIP)
-21. `/admin/dashboard/tools` — Manage tools (link and artifact types)
-22. `/admin/dashboard/substack` — Manage Substack sections & import ZIP archives
+1. `/` — Home (program intro + course overview + contact)
+2. `/courses` — Course directory (card grid of the 5-course sequence)
+3. `/courses/botspeak` — BotSpeak: Fluency in AI Communication
+4. `/courses/causal-reasoning` — Causal Reasoning and World Modeling
+5. `/courses/ethical-play` — Ethical Play and Moral Imagination
+6. `/courses/aimagineering` — AIMagineering: Creative Intelligence
+7. `/courses/embodied-teaching` — Embodied Teaching and Mentorship
+8. `/tools` — Tools directory (card grid, Neon-driven)
+9. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
+10. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
+11. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
+12. `/blog` — Blog feed: published posts newest first, clean card list
+13. `/blog/[slug]` — Individual blog post with prose content
+14. `/about` — About the program (prose format, author info, Northeastern context)
+15. `/privacy` — Privacy Policy for Irreducibly Human
+16. `/privacy/cookies` — Cookie Policy for Irreducibly Human (dedicated page)
+17. `/terms-of-service` — Terms of Service for Irreducibly Human
+18. `/substack` — Newsletter hub: card grid of all Substack sections
+19. `/substack/[section]` — Section page: description, "Follow on Substack" CTA, chronological article list
+20. `/substack/[section]/[slug]` — Full article: attribution banner, prose content, "Subscribe on Substack" footer CTA
+21. `/admin/login` — Admin login page (password form)
+22. `/admin/dashboard` — Admin dashboard (protected via middleware + `admin_session` cookie)
+23. `/admin/dashboard/blog` — Manage blog posts (list, create, edit, delete)
+24. `/admin/dashboard/blog/new` — New post editor
+25. `/admin/dashboard/blog/[id]/edit` — Edit existing post
+26. `/admin/dashboard/blog/import` — Import posts (Substack ZIP or blog export ZIP)
+27. `/admin/dashboard/tools` — Manage tools (link and artifact types)
+28. `/admin/dashboard/substack` — Manage Substack sections & import ZIP archives
 
 ### Placeholder pages (noindex, inherited from previous project)
 - `/classes` — Coming Soon placeholder
@@ -60,21 +65,38 @@ The firm was founded by **Ebenezer Scrooge** and **Jacob Marley**.
 - `/_theme-toggle-demo` — Coming Soon placeholder
 - `/template` — Page template for creating new routes (not indexed)
 
+## The Five Courses
+
+### 1. BotSpeak: Fluency in AI Communication (`/courses/botspeak`)
+How to talk to machines — and know when they're talking past you. Covers prompt engineering, model limitations, hallucination detection, and the rhetorical gap between human intent and machine output.
+
+### 2. Causal Reasoning and World Modeling (`/courses/causal-reasoning`)
+AI finds correlations. Humans build causal models. This course covers counterfactual thinking, interventionist reasoning, and the kind of "why" questions that statistical models cannot answer.
+
+### 3. Ethical Play and Moral Imagination (`/courses/ethical-play`)
+Moral reasoning under uncertainty, value pluralism, and the limits of rule-based ethics. Students develop the capacity for ethical judgment that cannot be reduced to optimization or alignment.
+
+### 4. AIMagineering: Creative Intelligence (`/courses/aimagineering`)
+Generative AI produces outputs. Humans produce meaning. This course explores creative process, aesthetic judgment, conceptual blending, and the difference between novelty and genuine originality.
+
+### 5. Embodied Teaching and Mentorship (`/courses/embodied-teaching`)
+Teaching is irreducibly human. This course covers presence, improvisation, emotional attunement, and the embodied skills that make mentorship effective — none of which transfer to a language model.
+
 ## Persistent layout (every page)
 
 ### Header (`/components/Header/Header.tsx`) — DONE
-- Logo: text-based "Scrooge & Marley" in bold tracking-tighter
-- Nav: Home (`/`) | Tools (`/tools`) | Dev (`/dev`) | About (`/about`) | Blog (`/blog`)
-- Social buttons (top right): GitHub (github.com/nikbearbrown/marley), Substack (skepticism.ai), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6) — black button style
+- Logo: text-based "Irreducibly Human" in bold tracking-tighter
+- Nav: Home (`/`) | Courses (`/courses`) | Tools (`/tools`) | Dev (`/dev`) | About (`/about`) | Blog (`/blog`)
+- Social buttons (top right): GitHub (github.com/nikbearbrown/irreducibly-human), Substack (skepticism.ai), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6) — black button style
 - Dark/light mode toggle (ThemeToggle component)
 - Mobile hamburger menu with backdrop (lg breakpoint)
 - Sticky, z-50, backdrop-blur
 
 ### Footer (`/components/Footer/Footer.tsx`) — DONE
 Four-column grid layout:
-- **Company Info:** Scrooge & Marley, 1 Cornhill, London EC3V 3ND, correspondence@scroogeandmarley.com
-- **Platform:** Links to Tools, Blog, About
-- **Connect:** GitHub (github.com/nikbearbrown/marley), Substack (skepticism.ai), Bear Brown & Co (bearbrown.co), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6)
+- **Program Info:** Irreducibly Human, Northeastern University, MGEN Program, bear@bearbrown.co
+- **Platform:** Links to Courses, Tools, Blog, About
+- **Connect:** GitHub (github.com/nikbearbrown/irreducibly-human), Substack (skepticism.ai), Bear Brown & Co (bearbrown.co), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6)
 - **Legal:** Privacy Policy, Cookie Policy, Terms of Service
 - Bottom bar: copyright
 
@@ -84,13 +106,13 @@ Four-column grid layout:
 - Header + main + Footer
 - Vercel Analytics
 
-## Home page (`/app/page.tsx`) — DONE
+## Home page (`/app/page.tsx`) — NEEDS UPDATE
 Five sections, alternating white/muted/dark backgrounds:
-1. **Hero** (two-column): Left — h1 "Scrooge & Marley", subtext "Counting House & Money Lenders, Est. 1836", firm description, "Arrange a Consultation" + "Send Correspondence" buttons (both mailto:correspondence@scroogeandmarley.com). Right — pound sign display with address.
-2. **Our Services** (2x2 card grid, muted bg): Four feature cards — Debt Recovery, Money Lending, Estate Accounting, Commercial Bookkeeping. Each with description + enquiry link.
-3. **Who We Serve** (3-column cards, dark bg): For Creditors, For Borrowers, For Merchants — each with 4 bullet points.
-4. **Settle Your Accounts** (bb-2 bg): CTA section with "ARRANGE A MEETING", "ABOUT THE FIRM" (/about), "SEND CORRESPONDENCE" buttons.
-5. **Place of Business** (dark bg): Address and contact info.
+1. **Hero** (two-column): Left — h1 "Irreducibly Human", subtext "What AI Can and Can't Do", program description, "Explore Courses" + "Contact Us" buttons. Right — introductory video embed.
+2. **The Five Courses** (2x2+1 card grid, muted bg): Five course cards — BotSpeak, Causal Reasoning, Ethical Play, AIMagineering, Embodied Teaching. Each with description + course link.
+3. **Who This Is For** (3-column cards, dark bg): For Graduate Students, For Researchers, For Professionals — each with 4 bullet points.
+4. **Get Started** (bb-2 bg): CTA section with "EXPLORE COURSES" (/courses), "ABOUT THE PROGRAM" (/about), "CONTACT US" buttons.
+5. **Northeastern University** (dark bg): Program affiliation and contact info.
 
 ## Tools system — DONE
 
@@ -238,16 +260,16 @@ Tiptap (ProseMirror-based) rich text editor, Substack-style:
 - `/blog` — Blog feed with search bar, cover image thumbnails, published posts newest first, title + subtitle + excerpt + date + "Read →"
 - `/blog/[slug]` — Full post: cover image hero, title, subtitle, date + reading time, HTML prose content (hydrated via BlogVizHydrator), byline footer, previous/next navigation, og:image + twitter:card meta tags
 
-## About page (`/app/about/page.tsx`) — DONE
+## About page (`/app/about/page.tsx`) — NEEDS UPDATE
 Prose-forward format with sections:
-- Firm introduction
-- Founders (Ebenezer Scrooge and Jacob Marley)
-- Our Principles
-- Services
-- Correspondence (email, address)
+- Program introduction (Irreducibly Human at Northeastern University)
+- Author (Nik Bear Brown, Northeastern University)
+- The Thesis (what AI can and can't do — the irreducibly human capacities)
+- The Five Courses (overview of the sequence)
+- Contact (email, Northeastern affiliation)
 
 ## Legal Pages — DONE
-All three pages use the same structural template, branded for Scrooge & Marley. Address: 1 Cornhill, London EC3V 3ND. Contact: correspondence@scroogeandmarley.com. Financial services firm.
+All three pages use the same structural template, branded for Irreducibly Human. Northeastern University, MGEN Program. Contact: bear@bearbrown.co. Educational program.
 
 ### Privacy Policy (`/app/privacy/page.tsx`)
 Sections: introduction, information we collect (contact data, inquiry content, engagement data, analytics), how we use info, sharing (consent, legitimate interests, contract, legal, vital interests), third-party services (Vercel, Neon, Substack, Anthropic, GitHub), cookies reference (links to Cookie Policy page), data security, data retention, your privacy rights, children's privacy, changes, contact. Nav: Terms of Service ← → Cookie Policy.
@@ -256,16 +278,16 @@ Sections: introduction, information we collect (contact data, inquiry content, e
 Separate dedicated page at `/privacy/cookies`. Sections: what are cookies, cookies we use (table: theme + admin_session), cookies we do NOT use (advertising, remarketing, cross-site tracking, social pixels, individual analytics), third-party cookies (Substack, Claude.site with links to their policies), how to manage cookies (browser-specific instructions), Do Not Track, changes, contact. Nav: Privacy Policy ← → Terms of Service.
 
 ### Terms of Service (`/app/terms-of-service/page.tsx`)
-15 sections: introduction, website purpose, financial services, intellectual property, use license, user conduct, newsletter content, third-party services and links, disclaimer, limitations, indemnification, revisions and errata, governing law (England and Wales), modifications, contact. Nav: Privacy Policy ← → Home.
+15 sections: introduction, website purpose, educational content, intellectual property, use license, user conduct, newsletter content, third-party services and links, disclaimer, limitations, indemnification, revisions and errata, governing law (Massachusetts, USA), modifications, contact. Nav: Privacy Policy ← → Home.
 
-## Theming (Scrooge & Marley palette)
+## Theming (Irreducibly Human palette)
 
 The color palette lives in three places that must stay in sync:
 - `lib/theme.ts` — TypeScript source of truth
 - `public/theme.json` — machine-readable for doc generators
 - `app/globals.css` — CSS variables (`--bb-1` through `--bb-8`) that drive the actual site
 
-### Scrooge & Marley palette
+### Current palette (inherited, pending rebrand)
 | Var | Hex | Role | WCAG on bb8 |
 |-----|-----|------|-------------|
 | bb1 | #0D0D0D | soot black — primary text | 16.5:1 |
@@ -287,11 +309,11 @@ The color palette lives in three places that must stay in sync:
 - Color used for accent, hierarchy, and accessibility — not decoration
 - Never use color for pure aesthetics — every color use must serve readability or navigation
 - WCAG AA contrast minimum for all text/background combinations
-- Cold, austere Victorian aesthetic — no warmth, no ornamentation
+- Clean academic aesthetic — clarity over ornamentation
 
 ## Design direction
 - Light mode default (dark mode toggle available)
-- Clean, editorial — sparse and transactional
+- Clean, editorial — scholarly and readable
 - Typography: Inter font (headings bold tracking-tighter, body clean)
 - Color: driven by the BB palette above — use `var(--color-accent)` etc.
 - Black button style: `bg-black text-white hover:bg-gray-800` (dark mode: border outline with accent hover)
@@ -360,7 +382,7 @@ Server-side parser using adm-zip. Reads `posts.csv` + HTML files from a Substack
 ```
 DATABASE_URL=                    # Neon PostgreSQL connection string (from Vercel marketplace or Neon dashboard)
 ADMIN_PASSWORD=                  # Password for /admin/login — set a strong value in production
-NEXT_PUBLIC_SITE_URL=https://scroogeandmarley.com  # Used in sitemap generation
+NEXT_PUBLIC_SITE_URL=https://irreduciblyhuman.com  # Used in sitemap generation
 BLOB_READ_WRITE_TOKEN=           # Vercel Blob token (from Vercel dashboard → Storage → Blob)
 NEXT_PUBLIC_GA_ID=               # Google Analytics measurement ID (optional, e.g. G-XXXXXXXXXX)
 NEXT_PUBLIC_ANTHROPIC_API_KEY=   # only if embedding AI assistant directly
@@ -368,27 +390,29 @@ NEXT_PUBLIC_ANTHROPIC_API_KEY=   # only if embedding AI assistant directly
 
 ## Deployment
 - Push to main → auto-deploys to Vercel
-- Domain: scroogeandmarley.com
+- Domain: irreduciblyhuman.com
 
 ## What NOT to do
 - Do not use localStorage — use React state or sessionStorage
 - Do not add analytics or tracking beyond what's already present
-- Keep public nav to five items: Home, Tools, Dev, About, Blog
+- Keep public nav to six items: Home, Courses, Tools, Dev, About, Blog
 - Do not commit .env.local or credentials to git
 
 ## User Guide
 
 ### Overview
 
-scroogeandmarley.com is a multi-brand template site demonstrating a Next.js codebase styled as a Victorian counting house (from Dickens' *A Christmas Carol*, 1843, public domain). It runs on Next.js with Vercel auto-deploy. The public site has no login; the admin dashboard is cookie-protected.
+irreduciblyhuman.com is the companion site for "Irreducibly Human: What AI Can and Can't Do," a 5-course graduate certificate in Northeastern University's MGEN program. It runs on Next.js with Vercel auto-deploy. The public site has no login; the admin dashboard is cookie-protected.
 
 ---
 
 ### For visitors
 
-**Home page** (`/`) — Landing page with firm intro, services cards, client benefits, CTA, and contact info.
+**Home page** (`/`) — Landing page with program introduction, course overview cards, audience benefits, CTA, and contact info.
 
-**About** (`/about`) — Prose-format page covering the firm's history, founders, principles, services, and contact details.
+**Courses** (`/courses`) — Card grid of the five courses in the Irreducibly Human sequence. Click a course to read its full description.
+
+**About** (`/about`) — Prose-format page covering the program's thesis, author, course sequence, and contact details.
 
 **Tools** (`/tools`) — Tools directory page. Contains interactive tool cards when populated.
 
@@ -453,10 +477,10 @@ ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS cover_image TEXT;
 
 ```
 DATABASE_URL=postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/neondb?sslmode=require
-NEXT_PUBLIC_SITE_URL=https://scroogeandmarley.com
+NEXT_PUBLIC_SITE_URL=https://irreduciblyhuman.com
 ```
 
-3. **Admin access** — Navigate to `/admin` (redirects to `/admin/login`). Enter the password set in `ADMIN_PASSWORD` env var. On success, an `admin_session` cookie is set (httpOnly, 7-day expiry) and you're redirected to the dashboard.
+4. **Admin access** — Navigate to `/admin` (redirects to `/admin/login`). Enter the password set in `ADMIN_PASSWORD` env var. On success, an `admin_session` cookie is set (httpOnly, 7-day expiry) and you're redirected to the dashboard.
 
 #### Managing Substack sections
 
@@ -514,7 +538,13 @@ npm run dev        # starts at http://localhost:3000
 ```
 app/
   page.tsx                          # Home
-  about/page.tsx                    # About the firm
+  about/page.tsx                    # About the program
+  courses/page.tsx                  # Course directory (card grid)
+  courses/botspeak/page.tsx         # BotSpeak course page
+  courses/causal-reasoning/page.tsx # Causal Reasoning course page
+  courses/ethical-play/page.tsx     # Ethical Play course page
+  courses/aimagineering/page.tsx    # AIMagineering course page
+  courses/embodied-teaching/page.tsx # Embodied Teaching course page
   blog/page.tsx                     # Blog feed (server component, fetches posts)
   blog/BlogFeed.tsx                 # Client component: search + post cards with cover images
   blog/[slug]/page.tsx              # Individual blog post
@@ -568,7 +598,7 @@ app/
 middleware.ts                         # Auth middleware (protects /admin/dashboard)
 components/
   Header/Header.tsx                 # Sticky header with nav + social + theme toggle
-  Footer/Footer.tsx                 # 4-column footer (company, platform, social, legal)
+  Footer/Footer.tsx                 # 4-column footer (program, platform, social, legal)
   BlogEditor/BlogEditor.tsx         # Tiptap rich text editor (WYSIWYG, embeds, viz)
   BlogVizHydrator/BlogVizHydrator.tsx # Client component: hydrates data-viz elements with D3 charts
   ThemeToggle.tsx                   # Dark/light mode toggle
@@ -612,5 +642,9 @@ After every session, always:
 2. Commit and push all changes to main with a descriptive commit message.
 
 ## Remaining work (in priority order)
-1. Add tools via admin dashboard
-2. Consider contact form widget (currently all CTAs route to mailto)
+1. Rebrand Header, Footer, Home page, and About page to Irreducibly Human
+2. Build `/courses` directory page and five individual course pages
+3. Update legal pages (Privacy, Cookies, Terms) for Irreducibly Human branding
+4. Update color palette for academic/Northeastern branding
+5. Add tools via admin dashboard
+6. Consider contact form widget (currently all CTAs route to mailto)

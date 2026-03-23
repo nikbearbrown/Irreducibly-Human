@@ -4,59 +4,70 @@ const buttonStyles =
 const buttonOutline =
   'inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'
 
-const FEATURES = [
+const COURSES = [
   {
-    title: 'DEBT RECOVERY',
+    title: 'BOTSPEAK',
     description:
-      'We pursue outstanding balances with methodical rigour. Every shilling owed is a shilling that shall be collected. Our ledgers do not forget, and neither do we.',
-    link: 'Review collection terms',
+      'Fluency in AI communication. How to talk to machines — and know when they\'re talking past you. Prompt engineering, model limitations, hallucination detection, and the rhetorical gap between human intent and machine output.',
+    link: 'Explore BotSpeak',
+    href: '/courses/botspeak',
   },
   {
-    title: 'MONEY LENDING',
+    title: 'CAUSAL REASONING',
     description:
-      'Capital advanced at competitive rates, secured against suitable collateral. Terms are precise, interest is punctual, and repayment is non-negotiable. We lend to those who can repay.',
-    link: 'Enquire about lending rates',
+      'AI finds correlations. Humans build causal models. Counterfactual thinking, interventionist reasoning, and the kind of "why" questions that statistical models cannot answer.',
+    link: 'Explore Causal Reasoning',
+    href: '/courses/causal-reasoning',
   },
   {
-    title: 'ESTATE ACCOUNTING',
+    title: 'ETHICAL PLAY',
     description:
-      'Complete stewardship of financial estates, from property rents to inheritance settlements. Every transaction recorded in duplicate, every farthing accounted for.',
-    link: 'Learn about estate services',
+      'Moral reasoning under uncertainty, value pluralism, and the limits of rule-based ethics. Developing the capacity for ethical judgment that cannot be reduced to optimization or alignment.',
+    link: 'Explore Ethical Play',
+    href: '/courses/ethical-play',
   },
   {
-    title: 'COMMERCIAL BOOKKEEPING',
+    title: 'AIMAGINEERING',
     description:
-      'Double-entry bookkeeping for merchants, warehouses, and trading concerns. We bring order to commerce and ensure your accounts withstand the scrutiny of any auditor.',
-    link: 'See bookkeeping services',
+      'Generative AI produces outputs. Humans produce meaning. Creative process, aesthetic judgment, conceptual blending, and the difference between novelty and genuine originality.',
+    link: 'Explore AIMagineering',
+    href: '/courses/aimagineering',
+  },
+  {
+    title: 'EMBODIED TEACHING',
+    description:
+      'Teaching is irreducibly human. Presence, improvisation, emotional attunement, and the embodied skills that make mentorship effective — none of which transfer to a language model.',
+    link: 'Explore Embodied Teaching',
+    href: '/courses/embodied-teaching',
   },
 ]
 
-const BENEFITS = [
+const AUDIENCES = [
   {
-    heading: 'FOR CREDITORS',
+    heading: 'FOR ENGINEERS',
     items: [
-      'Systematic recovery of outstanding debts',
-      'Detailed accounting of every payment received',
-      'Legal proceedings initiated where necessary',
-      'Quarterly statements delivered without fail',
+      'AI-tool-capable but no framework for evaluating outputs',
+      'Need to distinguish correlation from causation in model behavior',
+      'Building systems that require human judgment at the boundary',
+      'Want to understand what their tools actually can\'t do',
     ],
   },
   {
-    heading: 'FOR BORROWERS',
+    heading: 'FOR EDUCATORS',
     items: [
-      'Clear terms set forth before any sum changes hands',
-      'Repayment schedules calculated to the penny',
-      'No hidden charges — our rates are stated plainly',
-      'Prompt acknowledgement of all payments rendered',
+      'Deploying AI in embodied, relational domains',
+      'Need to preserve what makes teaching human',
+      'Designing curricula that develop irreducibly human skills',
+      'Preparing students for a world shaped by AI',
     ],
   },
   {
-    heading: 'FOR MERCHANTS',
+    heading: 'FOR DESIGNERS',
     items: [
-      'Ledgers maintained with absolute precision',
-      'Monthly reconciliation of all trade accounts',
-      'Tax obligations calculated and documented',
-      'Confidential handling of all financial matters',
+      'Need judgment before and after the tool runs',
+      'Distinguishing generative novelty from genuine originality',
+      'Building creative processes that use AI without depending on it',
+      'Developing aesthetic criteria that machines cannot replicate',
     ],
   },
 ]
@@ -70,29 +81,29 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="flex flex-col justify-center space-y-6">
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Scrooge &amp; Marley
+                Irreducibly Human
               </h1>
               <p className="text-lg text-muted-foreground">
-                Counting House &amp; Money Lenders, Est. 1836
+                What AI Can and Can&apos;t Do
               </p>
               <p className="max-w-[540px] text-lg leading-relaxed">
-                We deal in debts, not dreams. For nearly a decade, our firm has provided
-                sound financial services to the merchants, landlords, and trading concerns
-                of London. Every transaction recorded. Every obligation enforced.
+                A 5-course graduate series at Northeastern University&apos;s MGEN program.
+                Each course develops a specific tier of human intelligence that AI
+                cannot replicate. Designed and taught by Nik Bear Brown.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
-                <a href="mailto:correspondence@scroogeandmarley.com" className={buttonStyles}>
-                  Arrange a Consultation
+                <a href="/courses" className={buttonStyles}>
+                  Explore the Courses
                 </a>
-                <a href="mailto:correspondence@scroogeandmarley.com" className={buttonOutline}>
-                  Send Correspondence
+                <a href="/about" className={buttonOutline}>
+                  About the Series
                 </a>
               </div>
             </div>
             <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
               <iframe
                 src="https://www.youtube.com/embed/HJJQoIUElvo?si=xfCpIQTbBqTj38pP"
-                title="Scrooge & Marley"
+                title="Irreducibly Human"
                 width="100%"
                 height="100%"
                 frameBorder="0"
@@ -105,35 +116,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* The Series Section */}
       <section className="w-full py-16 md:py-24 bg-muted/40">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="text-center mb-12 max-w-3xl mx-auto">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-3">
-              Our Services
+              The Series
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Scrooge &amp; Marley offers a complete range of financial services
-              for the prudent man of business. Precision in all matters. Sentiment in none.
+              Five courses, each targeting a distinct human capacity that remains
+              beyond the reach of current AI. Taken together, they form a map of
+              what makes human intelligence irreducible.
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-2">
-            {FEATURES.map((feature) => (
+            {COURSES.map((course) => (
               <div
-                key={feature.title}
+                key={course.title}
                 className="rounded-lg border bg-card p-8 shadow-sm flex flex-col"
               >
                 <h3 className="text-lg font-bold tracking-wide mb-3">
-                  {feature.title}
+                  {course.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed flex-1">
-                  {feature.description}
+                  {course.description}
                 </p>
                 <a
-                  href="#"
+                  href={course.href}
                   className="mt-6 text-sm font-medium text-foreground hover:underline"
                 >
-                  {feature.link} →
+                  {course.link} →
                 </a>
               </div>
             ))}
@@ -141,29 +153,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Who Benefits Section */}
+      {/* Who This Is For Section */}
       <section className="w-full py-16 md:py-24 bg-foreground text-background">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-sm font-semibold tracking-widest uppercase text-background/60 mb-3">
-              Who We Serve
+              Who This Is For
             </h2>
             <p className="text-lg text-background/70 max-w-2xl mx-auto">
-              Our clients value discretion, accuracy, and the certainty that their
-              financial affairs are managed by men who understand the weight of a pound.
+              This series is for practitioners who already use AI and need a
+              framework for understanding where it stops and human judgment begins.
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-3">
-            {BENEFITS.map((benefit) => (
+            {AUDIENCES.map((audience) => (
               <div
-                key={benefit.heading}
+                key={audience.heading}
                 className="rounded-lg border border-background/10 bg-background/5 p-8"
               >
                 <h3 className="text-lg font-bold tracking-wide mb-4">
-                  {benefit.heading}
+                  {audience.heading}
                 </h3>
                 <ul className="space-y-3">
-                  {benefit.items.map((item) => (
+                  {audience.items.map((item) => (
                     <li
                       key={item}
                       className="text-background/80 text-sm leading-relaxed flex gap-2"
@@ -178,62 +190,52 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* CTA Section */}
       <section className="w-full py-16 md:py-24 bg-[var(--bb-2)] text-white">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <h2 className="text-sm font-semibold tracking-widest uppercase text-white/60 mb-3">
-            Settle Your Accounts
+            Begin the Sequence
           </h2>
           <p className="text-lg text-white/80 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Whether you require capital advanced, debts collected, or ledgers put in order,
-            Scrooge &amp; Marley stands ready. We do not waste your time, and we expect
-            the same courtesy. State your business plainly.
+            The series starts with BotSpeak — learning to communicate with AI systems
+            clearly, critically, and without illusion. Each subsequent course builds on
+            the last, developing the human capacities that no model can replicate.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="mailto:correspondence@scroogeandmarley.com"
+              href="/courses/botspeak"
               className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold tracking-wide transition-colors bg-white text-[var(--bb-2)] shadow hover:bg-white/90"
             >
-              ARRANGE A MEETING
+              START WITH BOTSPEAK
             </a>
             <a
               href="/about"
               className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold tracking-wide transition-colors border border-white/30 text-white hover:bg-white/10"
             >
-              ABOUT THE FIRM
-            </a>
-            <a
-              href="mailto:correspondence@scroogeandmarley.com"
-              className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold tracking-wide transition-colors border border-white/30 text-white hover:bg-white/10"
-            >
-              SEND CORRESPONDENCE
+              ABOUT THE SERIES
             </a>
           </div>
         </div>
       </section>
 
-      {/* Connect Section */}
+      {/* Contact Section */}
       <section className="w-full py-16 md:py-24 bg-foreground text-background">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
-            Place of Business
+            Northeastern University
           </h2>
           <p className="max-w-[600px] mx-auto text-background/70 text-lg mb-8">
-            Scrooge &amp; Marley receive callers by appointment at our counting house.
-            Correspondence may be directed to the address below. We do not keep idle hours.
+            Irreducibly Human is part of Northeastern&apos;s MGEN graduate program.
+            For questions about the series, reach out directly.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            {[
-              { name: '1 Cornhill, London', href: '#' },
-              { name: 'correspondence@scroogeandmarley.com', href: 'mailto:correspondence@scroogeandmarley.com' },
-            ].map((link) => (
-              <span
-                key={link.name}
-                className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors border border-background/30 text-background"
-              >
-                {link.name}
-              </span>
-            ))}
+            <a
+              href="mailto:bear@bearbrown.co"
+              className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors border border-background/30 text-background hover:bg-background/10"
+            >
+              bear@bearbrown.co
+            </a>
           </div>
         </div>
       </section>
