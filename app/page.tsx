@@ -1,36 +1,64 @@
-import { Brain, Rocket, Users } from 'lucide-react'
-
 const buttonStyles =
   'inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-black text-white shadow hover:bg-gray-800 dark:border dark:border-input dark:bg-background dark:text-foreground dark:shadow-sm dark:hover:bg-accent dark:hover:text-accent-foreground'
 
-const SERVICES = [
+const buttonOutline =
+  'inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'
+
+const FEATURES = [
   {
-    icon: Brain,
-    title: 'AI Consulting',
+    title: 'CONVERSATIONAL TEXTBOOKS',
     description:
-      'Direct AI consulting for startups and enterprises. Strategy, implementation, and hands-on build support.',
-    link: { label: 'Get in touch →', href: 'mailto:medhavy@humanitarians.ai' },
+      'Medhavy transforms static PDFs into interactive conversations. Students can ask questions in natural language and receive answers grounded in course-specific content, not generic internet responses.',
+    link: 'Learn more about conversational features',
   },
   {
-    icon: Rocket,
-    title: 'Angel Advising',
+    title: 'AI AS CO-INSTRUCTOR',
     description:
-      'I advise early-stage startups in exchange for equity. Deep AI expertise, network access, and long-term skin in the game.',
-    link: { label: 'Learn more →', href: 'mailto:medhavy@humanitarians.ai' },
+      'Medhavy automatically creates summaries, quizzes, exams, and lecture notes while keeping instructors in control. AI proposes, instructors dispose—preserving pedagogical expertise and teaching philosophy.',
+    link: 'Explore AI co-instruction capabilities',
   },
   {
-    icon: Users,
-    title: 'Talent Connector',
+    title: 'EFFORTLESS COURSE CREATION',
     description:
-      'I connect startups with exceptional recent engineering grads — top-tier talent at entry-level prices.',
-    link: { label: 'Find talent →', href: 'mailto:medhavy@humanitarians.ai' },
+      'Import an OpenStax book or GitHub markdown repository and Medhavy builds Canvas modules, generates assessments, and creates lecture materials. What used to take weeks becomes an afternoon of review.',
+    link: 'See how Medhavy saves time',
+  },
+  {
+    title: 'UNIFIED LEARNING PLATFORM',
+    description:
+      'Medhavy unifies OpenStax textbooks, GitHub repositories, and existing Canvas content into a single, structured course experience—eliminating frustrating platform jumping for both students and instructors.',
+    link: 'Discover platform integration',
   },
 ]
 
-const CONNECT_LINKS = [
-  { name: 'YouTube', href: 'https://www.youtube.com/@NikBearBrown' },
-  { name: 'GitHub', href: 'https://github.com/nikbearbrown' },
-  { name: 'Humanitarians AI', href: 'https://humanitarians.ai' },
+const BENEFITS = [
+  {
+    heading: 'FOR INSTRUCTORS',
+    items: [
+      'Cut course build time from weeks to hours',
+      'Keep full editorial control over content',
+      'Align AI-generated content with your teaching style',
+      'Gain a "co-instructor" that knows your course',
+    ],
+  },
+  {
+    heading: 'FOR STUDENTS',
+    items: [
+      'Access a cohesive course where textbooks answer questions',
+      'Receive personalized explanations aligned with learning style',
+      'Spend less time hunting for materials',
+      'Focus more time on understanding concepts',
+    ],
+  },
+  {
+    heading: 'FOR ADMINISTRATORS',
+    items: [
+      'Rapidly deploy consistent, high-quality courses',
+      'Maintain FERPA-compliant architecture',
+      'Track version history with unpublished-by-default workflow',
+      'Implement best-practice AI principles',
+    ],
+  },
 ]
 
 export default function Home() {
@@ -44,17 +72,22 @@ export default function Home() {
               <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                 Medhavy
               </h1>
-              <p className="text-xl font-medium text-foreground/80">
-                Adaptive Learning Platform
+              <p className="text-lg text-muted-foreground">
+                Often spelled Medhavy
               </p>
-              <p className="max-w-[540px] text-lg text-muted-foreground leading-relaxed">
-                White-label, institution-deployable AI education infrastructure.
-                Medhavy helps organizations build and deliver adaptive learning
-                experiences powered by AI.
+              <p className="max-w-[540px] text-lg leading-relaxed">
+                <strong className="font-bold">
+                  मेधावी (Medhavy): From Sanskrit, meaning &ldquo;intelligent&rdquo; or
+                  &ldquo;intellectually brilliant&rdquo;
+                </strong>
+                {' — the perfect name for our AI-powered intelligent textbook system.'}
               </p>
-              <div className="flex flex-col gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 pt-2">
                 <a href="mailto:medhavy@humanitarians.ai" className={buttonStyles}>
-                  Work With Us
+                  Request Demo
+                </a>
+                <a href="mailto:medhavy@humanitarians.ai" className={buttonOutline}>
+                  Contact Us
                 </a>
               </div>
             </div>
@@ -74,30 +107,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What I Do Section */}
+      {/* Features Section */}
       <section className="w-full py-16 md:py-24 bg-muted/40">
         <div className="container px-4 md:px-6 mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-              What We Do
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-3">
+              Transform Your Textbooks
             </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Medhavy turns static textbooks into a living, AI-curated course inside
+              Canvas—combining automation with instructor control to deliver effortless,
+              personalized, and emotionally intelligent learning at scale.
+            </p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {SERVICES.map((service) => (
+          <div className="grid gap-8 md:grid-cols-2">
+            {FEATURES.map((feature) => (
               <div
-                key={service.title}
+                key={feature.title}
                 className="rounded-lg border bg-card p-8 shadow-sm flex flex-col"
               >
-                <service.icon className="h-10 w-10 mb-4 text-foreground" strokeWidth={1.5} />
-                <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
+                <h3 className="text-lg font-bold tracking-wide mb-3">
+                  {feature.title}
+                </h3>
                 <p className="text-muted-foreground leading-relaxed flex-1">
-                  {service.description}
+                  {feature.description}
                 </p>
                 <a
-                  href={service.link.href}
+                  href="#"
                   className="mt-6 text-sm font-medium text-foreground hover:underline"
                 >
-                  {service.link.label}
+                  {feature.link} →
                 </a>
               </div>
             ))}
@@ -105,27 +144,38 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Connect Section */}
+      {/* Who Benefits Section */}
       <section className="w-full py-16 md:py-24 bg-foreground text-background">
-        <div className="container px-4 md:px-6 mx-auto text-center">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
-            Let&apos;s Collaborate
-          </h2>
-          <p className="max-w-[600px] mx-auto text-background/70 text-lg mb-8">
-            Whether you need AI strategy, a technical advisor on your cap table,
-            or your next great hire — let&apos;s talk.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {CONNECT_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors border border-background/30 text-background hover:bg-background/10"
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-sm font-semibold tracking-widest uppercase text-background/60 mb-3">
+              Who Benefits from Medhavy?
+            </h2>
+            <p className="text-lg text-background/70 max-w-2xl mx-auto">
+              Medhavy creates value for everyone involved in the educational ecosystem.
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {BENEFITS.map((benefit) => (
+              <div
+                key={benefit.heading}
+                className="rounded-lg border border-background/10 bg-background/5 p-8"
               >
-                {link.name}
-              </a>
+                <h3 className="text-lg font-bold tracking-wide mb-4">
+                  {benefit.heading}
+                </h3>
+                <ul className="space-y-3">
+                  {benefit.items.map((item) => (
+                    <li
+                      key={item}
+                      className="text-background/80 text-sm leading-relaxed flex gap-2"
+                    >
+                      <span className="text-background/40 shrink-0">—</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
         </div>

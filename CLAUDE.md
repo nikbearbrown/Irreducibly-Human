@@ -68,13 +68,13 @@ Four-column grid layout:
 - Inter font
 - Header + main + Footer
 - Vercel Analytics
-- Muzak component removed from layout
+- Music components removed from site
 
 ## Home page (`/app/page.tsx`) — DONE
-Four sections, alternating white/muted/dark backgrounds:
-1. **Hero** (two-column): Left — name (h1 "Medhavy"), subtitle "Adaptive Learning Platform", body text, "Work With Us" (mailto) button. Right — YouTube embed (GN7yQntWJHU).
-2. **What We Do** (3-column cards, muted bg): AI Consulting (Brain icon), Angel Advising (Rocket icon), Talent Connector (Users icon). Each with description + mailto link.
-3. **Connect** (centered, dark bg foreground/background inverted): "Let's Collaborate" heading, subtext, buttons for YouTube, GitHub, Humanitarians AI.
+Three sections, alternating white/muted/dark backgrounds:
+1. **Hero** (two-column): Left — h1 "Medhavy", subtext "Often spelled Medhavy", Sanskrit definition (मेधावी bold), "Request Demo" + "Contact Us" buttons (both mailto:medhavy@humanitarians.ai). Right — YouTube embed (GN7yQntWJHU).
+2. **Transform Your Textbooks** (2×2 card grid, muted bg): Four feature cards — Conversational Textbooks, AI as Co-Instructor, Effortless Course Creation, Unified Learning Platform. Each with description + "Learn more" link (placeholder anchors).
+3. **Who Benefits from Medhavy?** (3-column cards, dark bg): For Instructors, For Students, For Administrators — each with 4 bullet points.
 
 ## Tools system — DONE
 
