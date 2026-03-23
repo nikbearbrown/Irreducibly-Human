@@ -1,10 +1,10 @@
 
 # Irreducibly Human — What AI Can and Can't Do
 
-A 5-course graduate series at Northeastern University's MGEN program. Each course
+A 5-course graduate series at Bear Brown & Company. Each course
 develops a specific tier of human intelligence that AI cannot replicate.
 
-**Live site:** https://irreduciblyhuman.com
+**Live site:** https://irreduciblyhuman.xyz
 **GitHub:** https://github.com/nikbearbrown/Irreducibly-Human
 
 ## Stack
@@ -58,7 +58,7 @@ Open http://localhost:3000
 DATABASE_URL=              # Neon PostgreSQL connection string
 ADMIN_PASSWORD=            # Password for /admin/login
 BLOB_READ_WRITE_TOKEN=     # Vercel Blob token
-NEXT_PUBLIC_SITE_URL=      # https://irreduciblyhuman.com
+NEXT_PUBLIC_SITE_URL=      # https://irreduciblyhuman.xyz
 ```
 
 ## Database Setup
@@ -85,7 +85,7 @@ and Substack sections from the dashboard.
 
 ## About
 
-Created by Nik Bear Brown, Northeastern University.
+Created by Nik Bear Brown, Bear Brown & Company.
 
 Irreducibly Human is open source (MIT License). See `LICENSE` for details.
 

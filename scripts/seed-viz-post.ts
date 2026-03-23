@@ -22,7 +22,7 @@ const sql = neon(process.env.DATABASE_URL!)
 const title = 'AI Adoption Across Industries — What the Data Shows'
 const subtitle = 'A look at where AI is gaining real traction'
 const slug = 'ai-adoption-across-industries'
-const byline = `Irreducibly Human — What AI Can and Can't Do. A 5-course graduate series at Northeastern University's MGEN program.
+const byline = `Irreducibly Human — What AI Can and Can't Do. A 5-course series from Bear Brown & Company.
 Contact: bear@bearbrown.co`
 
 const content = `<p>Artificial intelligence is no longer a uniform phenomenon. Adoption rates vary dramatically by sector, shaped by regulatory environment, data availability, and organizational appetite for change.</p>

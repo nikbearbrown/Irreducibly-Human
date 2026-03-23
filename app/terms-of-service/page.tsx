@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Terms of Service - Irreducibly Human',
-  description: 'Terms of Service for Irreducibly Human and irreduciblyhuman.com',
+  description: 'Terms of Service for Irreducibly Human and irreduciblyhuman.xyz',
 }
 
 export default function TermsOfServicePage() {
@@ -19,7 +19,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
             <p>
-              Welcome to <strong>irreduciblyhuman.com</strong>. By accessing or using this website, you agree to be bound by
+              Welcome to <strong>irreduciblyhuman.xyz</strong>. By accessing or using this website, you agree to be bound by
               these Terms of Service (&ldquo;Terms&rdquo;). If you do not agree to these Terms, please do not use
               our website.
             </p>
@@ -35,7 +35,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">2. Website Purpose</h2>
             <p>
-              Irreducibly Human provides educational content and course materials. The irreduciblyhuman.com website serves as an informational resource, tool directory,
+              Irreducibly Human provides educational content and course materials. The irreduciblyhuman.xyz website serves as an informational resource, tool directory,
               and professional contact point. Content on this website is intended to provide general information about our
               services and activities, and does not constitute professional advice.
             </p>

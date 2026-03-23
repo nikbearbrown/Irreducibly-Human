@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Cookie Policy - Irreducibly Human',
-  description: 'Cookie policy for Irreducibly Human and irreduciblyhuman.com',
+  description: 'Cookie policy for Irreducibly Human and irreduciblyhuman.xyz',
 }
 
 export default function CookiePolicyPage() {
@@ -22,7 +22,7 @@ export default function CookiePolicyPage() {
               Cookies are small text files that are placed on your computer or mobile device when you visit a website.
               They are widely used to make websites work more efficiently and to provide information to website owners.
               This Cookie Policy explains how <strong>Irreducibly Human</strong> uses cookies and similar technologies on{' '}
-              <strong>irreduciblyhuman.com</strong>.
+              <strong>irreduciblyhuman.xyz</strong>.
             </p>
             <ul className="list-none pl-0 mt-4 space-y-1 text-base">
               <li><strong>Company:</strong> Irreducibly Human</li>

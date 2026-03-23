@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Irreducibly Human',
-  description: 'Privacy policy for Irreducibly Human and irreduciblyhuman.com',
+  description: 'Privacy policy for Irreducibly Human and irreduciblyhuman.xyz',
 }
 
 export default function PrivacyPolicyPage() {
@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
             <p>
-              Welcome to <strong>irreduciblyhuman.com</strong>, operated by <strong>Irreducibly Human</strong>. We are committed to protecting your
+              Welcome to <strong>irreduciblyhuman.xyz</strong>, operated by <strong>Irreducibly Human</strong>. We are committed to protecting your
               personal information and your right to privacy. If you have any questions or concerns about this privacy
               policy or our practices with regard to your personal information, please contact us at{' '}
               <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>.

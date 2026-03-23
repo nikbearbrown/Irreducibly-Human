@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About - Irreducibly Human',
-  description: 'Irreducibly Human — What AI Can and Can\'t Do. A 5-course graduate series at Northeastern University\'s MGEN program.',
+  description: 'Irreducibly Human — What AI Can and Can\'t Do. A 5-course series from Bear Brown & Company.',
 }
 
 export default function AboutPage() {
@@ -15,8 +15,8 @@ export default function AboutPage() {
         <div className="prose prose-lg dark:prose-invert max-w-none space-y-8">
           <section>
             <p>
-              Irreducibly Human is a 5-course graduate certificate at Northeastern
-              University&apos;s MGEN program. Each course develops a specific tier of human
+              Irreducibly Human is a 5-course series from Bear Brown &amp; Company.
+              Each course develops a specific tier of human
               intelligence that AI cannot replicate. The series asks: what remains irreducibly
               human in an age of increasingly capable AI?
             </p>
@@ -25,7 +25,7 @@ export default function AboutPage() {
           <section>
             <h2 className="text-2xl font-bold mb-4">Author</h2>
             <p>
-              <strong>Nik Bear Brown</strong>, Northeastern University. Creator of the
+              <strong>Nik Bear Brown</strong>, Bear Brown &amp; Company. Creator of the
               Irreducibly Human curriculum.
             </p>
           </section>
@@ -68,7 +68,7 @@ export default function AboutPage() {
               <a href="mailto:bear@bearbrown.co" className="text-primary hover:underline">bear@bearbrown.co</a>.
             </p>
             <p className="mt-2 text-muted-foreground">
-              Northeastern University
+              Bear Brown &amp; Company
             </p>
           </section>
         </div>

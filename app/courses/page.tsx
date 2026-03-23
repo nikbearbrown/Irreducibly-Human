@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Courses - Irreducibly Human",
-  description: "The five-course Irreducibly Human sequence at Northeastern University's MGEN program. Each course develops a specific tier of human intelligence that AI cannot replicate.",
+  description: "The five-course Irreducibly Human sequence from Bear Brown & Company. Each course develops a specific tier of human intelligence that AI cannot replicate.",
 };
 
 const COURSES = [

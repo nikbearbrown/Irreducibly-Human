@@ -87,9 +87,9 @@ export default function Home() {
                 What AI Can and Can&apos;t Do
               </p>
               <p className="max-w-[540px] text-lg leading-relaxed">
-                A 5-course graduate series at Northeastern University&apos;s MGEN program.
-                Each course develops a specific tier of human intelligence that AI
-                cannot replicate. Designed and taught by Nik Bear Brown.
+                A 5-course series from Bear Brown &amp; Company. Each course develops
+                a specific tier of human intelligence that AI cannot replicate.
+                Designed and taught by Nik Bear Brown.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
                 <a href="/courses" className={buttonStyles}>
@@ -223,10 +223,10 @@ export default function Home() {
       <section className="w-full py-16 md:py-24 bg-foreground text-background">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
-            Northeastern University
+            Bear Brown &amp; Company
           </h2>
           <p className="max-w-[600px] mx-auto text-background/70 text-lg mb-8">
-            Irreducibly Human is part of Northeastern&apos;s MGEN graduate program.
+            Irreducibly Human is a production of Bear Brown &amp; Company.
             For questions about the series, reach out directly.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
