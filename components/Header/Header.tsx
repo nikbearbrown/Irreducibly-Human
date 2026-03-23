@@ -18,6 +18,8 @@ const NAV_ITEMS = [
 const SOCIAL_LINKS = [
   { name: 'GitHub', href: 'https://github.com/nikbearbrown/marley' },
   { name: 'Substack', href: 'https://www.skepticism.ai/' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@Musinique' },
+  { name: 'Spotify', href: 'https://open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6?si=9Fx2UusBQHi3tTyVEAoCDQ' },
 ]
 
 const buttonStyles =

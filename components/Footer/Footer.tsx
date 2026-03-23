@@ -68,6 +68,22 @@ export default function Footer() {
               >
                 Bear Brown &amp; Co
               </a>
+              <a
+                href="https://www.youtube.com/@Musinique"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                YouTube
+              </a>
+              <a
+                href="https://open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6?si=9Fx2UusBQHi3tTyVEAoCDQ"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Spotify
+              </a>
             </div>
           </div>
 

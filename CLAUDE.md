@@ -65,7 +65,7 @@ The firm was founded by **Ebenezer Scrooge** and **Jacob Marley**.
 ### Header (`/components/Header/Header.tsx`) — DONE
 - Logo: text-based "Scrooge & Marley" in bold tracking-tighter
 - Nav: Home (`/`) | Tools (`/tools`) | Dev (`/dev`) | About (`/about`) | Blog (`/blog`)
-- Social buttons (top right): GitHub (github.com/nikbearbrown/marley), Substack (skepticism.ai) — black button style
+- Social buttons (top right): GitHub (github.com/nikbearbrown/marley), Substack (skepticism.ai), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6) — black button style
 - Dark/light mode toggle (ThemeToggle component)
 - Mobile hamburger menu with backdrop (lg breakpoint)
 - Sticky, z-50, backdrop-blur
@@ -74,7 +74,7 @@ The firm was founded by **Ebenezer Scrooge** and **Jacob Marley**.
 Four-column grid layout:
 - **Company Info:** Scrooge & Marley, 1 Cornhill, London EC3V 3ND, correspondence@scroogeandmarley.com
 - **Platform:** Links to Tools, Blog, About
-- **Connect:** GitHub (github.com/nikbearbrown/marley), Substack (skepticism.ai), Bear Brown & Co (bearbrown.co)
+- **Connect:** GitHub (github.com/nikbearbrown/marley), Substack (skepticism.ai), Bear Brown & Co (bearbrown.co), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6)
 - **Legal:** Privacy Policy, Cookie Policy, Terms of Service
 - Bottom bar: copyright
 
