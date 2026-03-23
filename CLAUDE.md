@@ -21,6 +21,9 @@ Primary audiences:
 - D3.js (data visualizations embedded in blog posts)
 - adm-zip (server-side Substack ZIP parsing)
 
+## Founders
+Medhavy LLC was founded by **Nik Bear Brown** and **Srinivas Sridhar**.
+
 ## Site structure
 1. `/` — Home (platform intro + services + connect)
 2. `/tools` — Tools directory (card grid, Neon-driven)
@@ -28,22 +31,29 @@ Primary audiences:
 4. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
 5. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
 6. `/blog` — Blog feed: published posts newest first, clean card list
-5. `/blog/[slug]` — Individual blog post with prose content
-6. `/about` — CV / bio page (prose format)
-7. `/privacy` — Privacy Policy for Medhavy LLC
-8. `/privacy/cookies` — Cookie Policy for Medhavy LLC (dedicated page)
-9. `/terms-of-service` — Terms of Service for Medhavy LLC
-10. `/substack` — Newsletter hub: card grid of all Substack sections
-11. `/substack/[section]` — Section page: description, "Follow on Substack" CTA, chronological article list
-12. `/substack/[section]/[slug]` — Full article: attribution banner, prose content, "Subscribe on Substack" footer CTA
-13. `/admin/login` — Admin login page (password form)
-14. `/admin/dashboard` — Admin dashboard (protected via middleware + `admin_session` cookie)
-15. `/admin/dashboard/blog` — Manage blog posts (list, create, edit, delete)
-16. `/admin/dashboard/blog/new` — New post editor
-17. `/admin/dashboard/blog/[id]/edit` — Edit existing post
-18. `/admin/dashboard/blog/import` — Import posts (Substack ZIP or blog export ZIP)
-19. `/admin/dashboard/tools` — Manage tools (link and artifact types)
-20. `/admin/dashboard/substack` — Manage Substack sections & import ZIP archives
+7. `/blog/[slug]` — Individual blog post with prose content
+8. `/about` — CV / bio page (prose format, founders info)
+9. `/privacy` — Privacy Policy for Medhavy LLC
+10. `/privacy/cookies` — Cookie Policy for Medhavy LLC (dedicated page)
+11. `/terms-of-service` — Terms of Service for Medhavy LLC
+12. `/substack` — Newsletter hub: card grid of all Substack sections
+13. `/substack/[section]` — Section page: description, "Follow on Substack" CTA, chronological article list
+14. `/substack/[section]/[slug]` — Full article: attribution banner, prose content, "Subscribe on Substack" footer CTA
+15. `/admin/login` — Admin login page (password form)
+16. `/admin/dashboard` — Admin dashboard (protected via middleware + `admin_session` cookie)
+17. `/admin/dashboard/blog` — Manage blog posts (list, create, edit, delete)
+18. `/admin/dashboard/blog/new` — New post editor
+19. `/admin/dashboard/blog/[id]/edit` — Edit existing post
+20. `/admin/dashboard/blog/import` — Import posts (Substack ZIP or blog export ZIP)
+21. `/admin/dashboard/tools` — Manage tools (link and artifact types)
+22. `/admin/dashboard/substack` — Manage Substack sections & import ZIP archives
+
+### Placeholder pages (noindex, inherited from previous project)
+- `/classes` — Coming Soon placeholder
+- `/contact` — Coming Soon placeholder
+- `/projects` — Coming Soon placeholder
+- `/_theme-toggle-demo` — Coming Soon placeholder
+- `/template` — Page template for creating new routes (not indexed)
 
 ## Persistent layout (every page)
 
@@ -58,7 +68,7 @@ Primary audiences:
 ### Footer (`/components/Footer/Footer.tsx`) — DONE
 Four-column grid layout:
 - **Company Info:** Medhavy LLC, 30 N Gould St Ste N, Sheridan WY 82801, medhavy@humanitarians.ai- **Platform:** Links to Tools, Blog, About
-- **Connect:** GitHub, YouTube, Spotify, Substack (text links)
+- **Connect:** GitHub, YouTube, Substack (text links)
 - **Legal:** Privacy Policy, Cookie Policy, Terms of Service
 - Bottom bar: copyright
 
@@ -204,7 +214,7 @@ Tiptap (ProseMirror-based) rich text editor, Substack-style:
 - Tiptap WYSIWYG editor with toolbar:
   - Text: Bold, Italic, Underline, Strikethrough, Inline Code, Code Block
   - Structure: H2, H3, Bullet List, Ordered List, Blockquote, Horizontal Rule
-  - Embeds: Link, Image (upload to Vercel Blob via drag/drop/paste/button), YouTube (via @tiptap/extension-youtube), Spotify (URL → iframe), D3 Viz (inserts `data-viz` placeholder)
+  - Embeds: Link, Image (upload to Vercel Blob via drag/drop/paste/button), YouTube (via @tiptap/extension-youtube), D3 Viz (inserts `data-viz` placeholder)
 - Preview toggle renders HTML via BlogVizHydrator (D3 vizzes work in preview)
 - Output is clean HTML via `editor.getHTML()`, stored in `content` column
 - Actions: "Save Draft", "Publish" (sets published=true + published_at), "Unpublish" (for published posts)
@@ -228,24 +238,24 @@ Tiptap (ProseMirror-based) rich text editor, Substack-style:
 - `/blog/[slug]` — Full post: cover image hero, title, subtitle, date + reading time, HTML prose content (hydrated via BlogVizHydrator), byline footer, previous/next navigation, og:image + twitter:card meta tags
 
 ## About page (`/app/about/page.tsx`) — DONE
-Prose-forward CV format with sections:
-- Bio intro (professor at NEU, AI/ML/prompt engineering)
-- Academic Role
-- Writing & Speaking (EdSurge, ISTE+ASCD)
+Prose-forward format with sections:
+- Platform intro
+- Founders (Nik Bear Brown and Srinivas Sridhar)
+- Mission
+- What We Build
 - Humanitarians AI (501c3, Fellows Program)
-- Music & Art (Spotify link)
-- Connect (email, GitHub/YouTube/Spotify buttons)
+- Connect (email, GitHub/YouTube buttons)
 
-Content describes Medhavy platform mission, what we build, Humanitarians AI connection, and contact info.
+Content describes founders, Medhavy platform mission, what we build, Humanitarians AI connection, and contact info.
 
 ## Legal Pages — DONE
-All three pages follow the Humanitarians AI structural template, rewritten for Medhavy LLC. Each references: Medhavy LLC (Nik Brown, Sole Member), 30 N Gould St Ste N, Sheridan WY 82801, medhavy@humanitarians.ai, AI consulting services.
+All three pages follow the Humanitarians AI structural template, rewritten for Medhavy LLC. Founded by Nik Bear Brown and Srinivas Sridhar. Each references: Medhavy LLC, 30 N Gould St Ste N, Sheridan WY 82801, medhavy@humanitarians.ai, AI consulting services.
 
 ### Privacy Policy (`/app/privacy/page.tsx`)
-Sections: introduction, information we collect (contact data, inquiry content, consulting engagement data, analytics), how we use info, sharing (consent, legitimate interests, contract, legal, vital interests), third-party services (Vercel, Neon, Spotify, Substack, Anthropic, GitHub, YouTube), cookies reference (links to Cookie Policy page), data security, data retention, your privacy rights, children's privacy, changes, contact. Nav: Terms of Service ← → Cookie Policy.
+Sections: introduction, information we collect (contact data, inquiry content, consulting engagement data, analytics), how we use info, sharing (consent, legitimate interests, contract, legal, vital interests), third-party services (Vercel, Neon, Substack, Anthropic, GitHub, YouTube), cookies reference (links to Cookie Policy page), data security, data retention, your privacy rights, children's privacy, changes, contact. Nav: Terms of Service ← → Cookie Policy.
 
 ### Cookie Policy (`/app/privacy/cookies/page.tsx`)
-Separate dedicated page at `/privacy/cookies`. Sections: what are cookies, cookies we use (table: theme + admin_session), cookies we do NOT use (advertising, remarketing, cross-site tracking, social pixels, individual analytics), third-party cookies (Spotify, Substack, Claude.site with links to their policies), how to manage cookies (browser-specific instructions), Do Not Track, changes, contact. Nav: Privacy Policy ← → Terms of Service.
+Separate dedicated page at `/privacy/cookies`. Sections: what are cookies, cookies we use (table: theme + admin_session), cookies we do NOT use (advertising, remarketing, cross-site tracking, social pixels, individual analytics), third-party cookies (Substack, Claude.site with links to their policies), how to manage cookies (browser-specific instructions), Do Not Track, changes, contact. Nav: Privacy Policy ← → Terms of Service.
 
 ### Terms of Service (`/app/terms-of-service/page.tsx`)
 15 sections: introduction, website purpose, AI consulting services, intellectual property, use license, user conduct, newsletter content (lists all 5 Substack publications), third-party services and links, disclaimer, limitations, indemnification, revisions and errata, governing law (Wyoming), modifications, contact. Nav: Privacy Policy ← → Home.
@@ -382,7 +392,7 @@ medhavy.com is the Medhavy adaptive learning platform site — part product intr
 
 ### For visitors
 
-**Home page** (`/`) — Landing page with a brief intro, "About Me" and "Contact" buttons, and an embedded Spotify player that randomly showcases one of 13 artist profiles. Click "Another artist" to shuffle.
+**Home page** (`/`) — Landing page with platform intro, feature cards, benefits section, CTA, and collaboration links.
 
 **About** (`/about`) — Prose-format CV covering academic work at Northeastern, writing and speaking credits, Humanitarians AI, music projects, and contact info.
 

@@ -89,13 +89,6 @@ export default function CookiePolicyPage() {
             </p>
             <ul className="list-disc pl-6 mt-4 space-y-2">
               <li>
-                <strong>Spotify embeds</strong> — The embedded Spotify player may set cookies related to playback
-                and Spotify account features. See{' '}
-                <a href="https://www.spotify.com/legal/cookies-policy/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                  Spotify&apos;s Cookie Policy
-                </a>.
-              </li>
-              <li>
                 <strong>Substack embeds</strong> — Newsletter content imported from Substack may include references
                 to Substack services. See{' '}
                 <a href="https://substack.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
@@ -128,7 +121,7 @@ export default function CookiePolicyPage() {
             </p>
             <ul className="list-disc pl-6 mt-4 space-y-2">
               <li>Your dark/light mode theme preference will not persist between visits</li>
-              <li>Third-party embeds (Spotify player, tools) may not function correctly</li>
+              <li>Third-party embeds (tools) may not function correctly</li>
               <li>The core website content will remain fully accessible</li>
             </ul>
           </section>

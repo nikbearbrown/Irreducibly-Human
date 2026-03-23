@@ -21,6 +21,15 @@ export default function AboutPage() {
           </section>
 
           <section>
+            <h2 className="text-2xl font-bold mb-4">Founders</h2>
+            <p>
+              Medhavy was founded by <strong>Nik Bear Brown</strong> and <strong>Srinivas Sridhar</strong>.
+              Together they bring decades of experience in AI, education technology, and academic research
+              to the mission of making adaptive learning infrastructure accessible to every institution.
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-2xl font-bold mb-4">Mission</h2>
             <p>
               Our mission is to make high-quality, adaptive education accessible to every institution —

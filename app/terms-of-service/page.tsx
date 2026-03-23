@@ -115,7 +115,7 @@ export default function TermsOfServicePage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold mb-4">8. Third-Party Services and Links</h2>
             <p>
-              This website integrates with and contains links to third-party services including Spotify, Substack,
+              This website integrates with and contains links to third-party services including Substack,
               GitHub, YouTube, Vercel, Neon, and Anthropic. Medhavy LLC does not guarantee the accuracy,
               relevance, timeliness, or completeness of any information on these external services. Please note that
               Medhavy LLC is not responsible for the content, privacy practices, or availability of these external

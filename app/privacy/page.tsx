@@ -97,7 +97,6 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-6 mt-4 space-y-2">
               <li><strong>Vercel:</strong> Website hosting and privacy-focused analytics</li>
               <li><strong>Neon:</strong> PostgreSQL database infrastructure</li>
-              <li><strong>Spotify:</strong> Embedded music player for artist profiles</li>
               <li><strong>Substack:</strong> Newsletter publishing and distribution platform</li>
               <li><strong>Anthropic:</strong> AI-powered contact assistant</li>
               <li><strong>GitHub:</strong> Source code hosting and collaboration</li>

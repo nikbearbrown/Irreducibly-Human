@@ -28,7 +28,6 @@ import {
   Minus,
   ImageIcon,
   Youtube as YoutubeIcon,
-  Music,
   BarChart,
   Braces,
   Upload,
@@ -64,12 +63,6 @@ function extractExcerpt(html: string): string {
   const text = stripHtml(html)
   if (text.length <= 200) return text
   return text.slice(0, 200).replace(/\s\S*$/, '') + '…'
-}
-
-function parseSpotifyUrl(url: string): { type: string; id: string } | null {
-  const match = url.match(/open\.spotify\.com\/(track|album|playlist|episode|show)\/([a-zA-Z0-9]+)/)
-  if (match) return { type: match[1], id: match[2] }
-  return null
 }
 
 async function uploadFile(file: File): Promise<string> {
@@ -266,18 +259,6 @@ export default function BlogEditor({ post }: { post?: BlogPost }) {
     } finally {
       setSaving(false)
     }
-  }
-
-  function insertSpotify() {
-    const url = window.prompt('Spotify URL (track, album, playlist, episode):')
-    if (!url) return
-    const parsed = parseSpotifyUrl(url)
-    if (!parsed) {
-      window.alert('Could not parse Spotify URL. Use a link like https://open.spotify.com/track/...')
-      return
-    }
-    const iframe = `<iframe src="https://open.spotify.com/embed/${parsed.type}/${parsed.id}" width="100%" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" style="border-radius:12px"></iframe>`
-    editor?.chain().focus().insertContent(iframe).run()
   }
 
   function insertYoutube() {
@@ -478,9 +459,6 @@ export default function BlogEditor({ post }: { post?: BlogPost }) {
         </ToolbarButton>
         <ToolbarButton onClick={insertYoutube} title="YouTube embed">
           <YoutubeIcon className="h-4 w-4" />
-        </ToolbarButton>
-        <ToolbarButton onClick={insertSpotify} title="Spotify embed">
-          <Music className="h-4 w-4" />
         </ToolbarButton>
         <ToolbarButton onClick={insertViz} title="D3 viz embed">
           <BarChart className="h-4 w-4" />
