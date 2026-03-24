@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AImagineering: full table of contents and chapter specifications</title>
+  <meta name="description" content="Complete chapter specifications for Irreducibly Human: AImagineering — the graduate engineering course textbook covering the full AI-augmented design pipeline. Covers learner profile, three-act learning arc, chapter-by-chapter learning outcomes, worked examples, assessable exercises, and the Human Half Declaration throughline.">
+  <meta name="keywords" content="AImagineering, table of contents, chapter specifications, design pipeline, Irreducibly Human, graduate engineering, Nik Bear Brown, Dreamer Realist Critic, Commit document, empathy investigation, grain documentation, human judgment, AI-augmented design">
+
+  <style>
+    :root {
+      --bb-1: #1a0a00;
+      --bb-2: #8B3A0F;
+      --bb-3: #C0392B;
+      --bb-4: #E8A020;
+      --bb-5: #D4500A;
+      --bb-6: #B8860B;
+      --bb-7: #C8A96E;
+      --bb-8: #F0E6D0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background-color: var(--bb-8);
+      color: var(--bb-1);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .page-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 32px 64px;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      border-bottom: 3px solid var(--bb-2);
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+    }
+
+    .cover-series {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 8px;
+    }
+
+    .cover h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--bb-2);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .cover h2 {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--bb-5);
+      margin-bottom: 18px;
+    }
+
+    .cover-meta {
+      font-size: 13px;
+      color: var(--bb-6);
+    }
+
+    .version-meta {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--bb-6);
+      border: 1px solid var(--bb-7);
+      border-radius: 3px;
+      padding: 4px 10px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: white;
+      border-left: 4px solid var(--bb-2);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .toc h3 {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 14px;
+    }
+
+    .toc ol { padding-left: 20px; }
+    .toc li { margin-bottom: 4px; font-size: 14px; }
+    .toc a { color: var(--bb-2); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 56px; }
+
+    .section-number {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 4px;
+    }
+
+    h2.section-title {
+      font-size: 22px;
+      color: var(--bb-2);
+      border-bottom: 1px solid var(--bb-7);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+
+    h3 {
+      font-size: 16px;
+      color: var(--bb-5);
+      margin: 28px 0 10px;
+    }
+
+    h4 {
+      font-size: 14px;
+      color: var(--bb-2);
+      font-style: italic;
+      font-weight: 600;
+      margin: 18px 0 8px;
+    }
+
+    p { margin-bottom: 14px; }
+
+    ul { padding-left: 20px; margin-bottom: 14px; }
+    ul li { margin-bottom: 6px; font-size: 15px; }
+
+    a { color: var(--bb-5); }
+    strong { color: var(--bb-1); }
+
+    /* ── TABLES ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0 24px;
+    }
+
+    th {
+      background: var(--bb-2);
+      color: var(--bb-8);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--bb-7);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(200, 169, 110, 0.12);
+    }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 4px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .callout-warn {
+      background: rgba(192, 57, 43, 0.08);
+      border-left: 4px solid var(--bb-3);
+    }
+
+    .callout-note {
+      background: rgba(232, 160, 32, 0.10);
+      border-left: 4px solid var(--bb-4);
+    }
+
+    .callout-info {
+      background: white;
+      border-left: 4px solid var(--bb-7);
+    }
+
+    .callout strong { color: var(--bb-2); }
+
+    /* ── THESIS BLOCK ── */
+    .thesis-block {
+      background: var(--bb-1);
+      color: var(--bb-8);
+      padding: 28px 32px;
+      border-radius: 4px;
+      margin-bottom: 28px;
+    }
+
+    .thesis-block .thesis-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-7);
+      margin-bottom: 10px;
+    }
+
+    .thesis-block .thesis-sentence {
+      font-size: 18px;
+      color: var(--bb-4);
+      font-style: italic;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .thesis-block p {
+      font-size: 14px;
+      color: var(--bb-7);
+      margin-bottom: 10px;
+    }
+
+    .thesis-block .success-condition {
+      font-size: 14px;
+      color: var(--bb-8);
+      border-top: 1px solid rgba(200,169,110,0.3);
+      padding-top: 14px;
+      margin-top: 14px;
+      font-style: italic;
+    }
+
+    /* ── ACT HEADERS ── */
+    .act-header {
+      background: var(--bb-2);
+      color: var(--bb-8);
+      padding: 18px 22px;
+      border-radius: 4px 4px 0 0;
+      margin-top: 32px;
+    }
+
+    .act-header .act-label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-7);
+      margin-bottom: 4px;
+    }
+
+    .act-header h3 {
+      font-size: 17px;
+      color: var(--bb-8);
+      margin: 0 0 4px;
+    }
+
+    .act-header p {
+      font-size: 13px;
+      color: rgba(240,230,208,0.75);
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* ── CHAPTER BLOCKS ── */
+    .chapter-block {
+      border: 1px solid var(--bb-7);
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      margin-bottom: 36px;
+      overflow: hidden;
+    }
+
+    .chapter-header {
+      background: rgba(139, 58, 15, 0.08);
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--bb-7);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chapter-header .ch-num {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+    }
+
+    .chapter-header .ch-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--bb-2);
+    }
+
+    .chapter-header .ch-sub {
+      font-size: 13px;
+      color: var(--bb-5);
+      font-style: italic;
+      width: 100%;
+    }
+
+    .chapter-body { padding: 20px 22px; }
+
+    .do-statement {
+      font-size: 14px;
+      background: white;
+      border-left: 3px solid var(--bb-4);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-style: italic;
+      color: var(--bb-1);
+    }
+
+    .do-statement strong {
+      font-style: normal;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .chapter-sub-section {
+      margin-bottom: 18px;
+    }
+
+    .chapter-sub-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      font-weight: 700;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--bb-7);
+      padding-bottom: 4px;
+    }
+
+    .content-blocks-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: block-counter;
+    }
+
+    .content-blocks-list li {
+      padding: 8px 12px 8px 32px;
+      border-bottom: 1px solid rgba(200,169,110,0.4);
+      font-size: 14px;
+      position: relative;
+      counter-increment: block-counter;
+    }
+
+    .content-blocks-list li::before {
+      content: counter(block-counter);
+      position: absolute;
+      left: 8px;
+      top: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bb-6);
+    }
+
+    .exercises-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: ex-counter;
+    }
+
+    .exercises-list li {
+      padding: 10px 12px 10px 36px;
+      border-bottom: 1px solid rgba(200,169,110,0.4);
+      font-size: 14px;
+      position: relative;
+      counter-increment: ex-counter;
+    }
+
+    .exercises-list li::before {
+      content: counter(ex-counter);
+      position: absolute;
+      left: 10px;
+      top: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bb-4);
+      background: var(--bb-2);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bloom-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      background: rgba(184,134,11,0.12);
+      border: 1px solid var(--bb-7);
+      border-radius: 2px;
+      padding: 1px 5px;
+      margin-left: 6px;
+      font-style: normal;
+    }
+
+    .worked-example {
+      background: rgba(200,169,110,0.15);
+      border: 1px solid var(--bb-7);
+      border-radius: 3px;
+      padding: 14px 16px;
+      font-size: 13px;
+    }
+
+    .worked-example .we-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bb-5);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .bridge-block {
+      background: var(--bb-1);
+      color: var(--bb-7);
+      padding: 12px 16px;
+      border-radius: 3px;
+      font-size: 13px;
+      font-style: italic;
+      margin-top: 16px;
+    }
+
+    .bridge-block strong {
+      color: var(--bb-4);
+      font-style: normal;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .hhd-flag {
+      display: inline-block;
+      background: var(--bb-3);
+      color: white;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 2px;
+      margin-left: 6px;
+    }
+
+    /* ── OUTCOMES LIST ── */
+    ol.outcomes-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: outcome-counter;
+    }
+
+    .outcomes-list li {
+      padding: 12px 14px 12px 36px;
+      border-bottom: 1px solid var(--bb-7);
+      font-size: 14px;
+      position: relative;
+      counter-increment: outcome-counter;
+    }
+
+    .outcomes-list li::before {
+      content: counter(outcome-counter);
+      position: absolute;
+      left: 12px;
+      top: 13px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bb-4);
+      background: var(--bb-2);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── TRANSITION CONDITIONS ── */
+    .transition-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .transition-card {
+      background: white;
+      border: 1px solid var(--bb-7);
+      border-top: 3px solid var(--bb-5);
+      border-radius: 0 0 4px 4px;
+      padding: 14px;
+    }
+
+    .transition-card .tc-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 6px;
+    }
+
+    .transition-card p {
+      font-size: 13px;
+      margin: 0;
+    }
+
+    /* ── COMMIT STRUCTURE ── */
+    .commit-element {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--bb-7);
+    }
+
+    .commit-element:last-child { border-bottom: none; }
+
+    .commit-el-name {
+      min-width: 180px;
+      padding: 10px 14px;
+      background: rgba(139,58,15,0.06);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--bb-2);
+      border-right: 1px solid var(--bb-7);
+    }
+
+    .commit-el-desc {
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+
+    .commit-table {
+      border: 1px solid var(--bb-7);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    /* ── MISCONCEPTIONS ── */
+    .misconception-row {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--bb-7);
+    }
+
+    .misconception-row:last-child { border-bottom: none; }
+
+    .mc-wrong {
+      min-width: 50%;
+      padding: 10px 14px;
+      font-size: 13px;
+      border-right: 1px solid var(--bb-7);
+      background: rgba(192,57,43,0.05);
+      font-style: italic;
+    }
+
+    .mc-right {
+      padding: 10px 14px;
+      font-size: 13px;
+      background: rgba(139,58,15,0.04);
+    }
+
+    .mc-table {
+      border: 1px solid var(--bb-7);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    @media (max-width: 600px) {
+      .page-wrapper { padding: 24px 16px 48px; }
+      .chapter-header { flex-direction: column; }
+      .transition-grid { grid-template-columns: 1fr; }
+      .commit-el-name { min-width: 120px; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      color: #999;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 40px;
+    }
+
+    footer a { color: #999; }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-series">Irreducibly Human Series · TIC TOC · Course Architecture Document</div>
+    <h1>AImagineering: full table of contents and chapter specifications</h1>
+    <h2>What AI can't do — the graduate engineering design pipeline</h2>
+    <div class="cover-meta">
+      Bear Brown &amp; Company / Kindle Direct Publishing, 2026
+    </div>
+    <div class="version-meta">Version 0.2 &nbsp;·&nbsp; March 2026 &nbsp;·&nbsp; Reviewed by Dev the Dev</div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#concept">Book Concept and Thesis</a></li>
+      <li><a href="#learner">Learner Profile</a></li>
+      <li><a href="#arc">Three-Act Learning Arc</a></li>
+      <li><a href="#mapping">Course-to-Chapter Mapping</a></li>
+      <li><a href="#outcomes">Learning Outcomes</a></li>
+      <li><a href="#chapters">Chapter-by-Chapter Specifications</a></li>
+      <li><a href="#assessment">Assessment Architecture</a></li>
+    </ol>
+  </div>
+
+
+  <!-- 1. CONCEPT -->
+  <div class="section" id="concept">
+    <div class="section-number">Section 1</div>
+    <h2 class="section-title">Book Concept and Thesis</h2>
+
+    <div class="thesis-block">
+      <div class="thesis-label">One-sentence version</div>
+      <div class="thesis-sentence">This book teaches graduate engineers to do the parts of design that AI cannot — from reframing the brief before generating, to committing their name to a solution worth deploying.</div>
+      <p><strong style="color:var(--bb-4);">Thesis:</strong> Ideation is now a tool operation, not a cognitive achievement — which means everything that happens before and after ideation is now the work of design.</p>
+      <div class="success-condition">The book succeeds if: a reader who completes it can stand in front of a design problem, resist the pull to generate immediately, ask the right human questions first, direct AI tools with authority rather than dependency, and ultimately commit to a course of action they can defend on its merits — not just its polish.</div>
+    </div>
+  </div>
+
+
+  <!-- 2. LEARNER PROFILE -->
+  <div class="section" id="learner">
+    <div class="section-number">Section 2</div>
+    <h2 class="section-title">Learner Profile</h2>
+
+    <h3>Primary reader</h3>
+    <p>A graduate engineering student who prompts fluently, accepts the brief as given, generates prolifically, struggles to choose among outputs, has never been asked to reframe a problem rather than solve it, and has never been required to commit to a decision in a way that makes them personally accountable for its consequences. They mistake fluent generation for good judgment.</p>
+
+    <h3>Prior knowledge map</h3>
+    <table>
+      <tr><th>Prerequisite</th><th>Safe to assume?</th></tr>
+      <tr><td>AI tool operation at Course 1 level</td><td>Safe</td></tr>
+      <tr><td>Basic design thinking vocabulary</td><td>Probably safe</td></tr>
+      <tr><td>Engineering domain expertise (at least one field)</td><td>Safe</td></tr>
+      <tr><td>Neri Oxman's Krebs Cycle of Creativity</td><td><strong>NOT SAFE — introduced Ch. 2</strong></td></tr>
+    </table>
+
+    <h3>Prior misconceptions the course must address</h3>
+    <div class="mc-table">
+      <div class="misconception-row">
+        <div class="mc-wrong">Misconception</div>
+        <div class="mc-right" style="font-weight:600; color:var(--bb-2);">What the course argues instead</div>
+      </div>
+      <div class="misconception-row">
+        <div class="mc-wrong">"More ideas = better design process"</div>
+        <div class="mc-right">The course inverts this</div>
+      </div>
+      <div class="misconception-row">
+        <div class="mc-wrong">"AI ideation is the hard part"</div>
+        <div class="mc-right">The course argues it is now the easy part</div>
+      </div>
+      <div class="misconception-row">
+        <div class="mc-wrong">"Design Thinking ends at prototype"</div>
+        <div class="mc-right">The course adds Commit as the missing stage</div>
+      </div>
+      <div class="misconception-row">
+        <div class="mc-wrong">"Commitment means certainty"</div>
+        <div class="mc-right">Commitment requires accepting uncertainty, not eliminating it</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 3. ARC -->
+  <div class="section" id="arc">
+    <div class="section-number">Section 3</div>
+    <h2 class="section-title">Three-Act Learning Arc</h2>
+
+    <div class="callout callout-info">
+      <strong>Arc statement:</strong> This book takes the reader from fluent generator to accountable designer by first revealing what AI cannot see in the brief, then developing the human capacities that produce what AI cannot generate, then demanding the commitment that AI can never make.
+    </div>
+
+    <table>
+      <tr><th>Act</th><th>Weeks</th><th>Chapters</th><th>What the student gains</th></tr>
+      <tr>
+        <td><strong>Act One — The Material and the Human</strong></td>
+        <td>1–7</td>
+        <td>Ch. 1–4</td>
+        <td>Knows exactly what their tools do and don't do; has one finding about their user that no simulation would have surfaced; can reframe a brief on explicit criteria</td>
+      </tr>
+      <tr>
+        <td><strong>Act Two — The Human Capacities</strong></td>
+        <td>8–13</td>
+        <td>Ch. 5–7</td>
+        <td>Can build something real, evaluate whether it works, and articulate what the data shows and what it cannot show</td>
+      </tr>
+      <tr>
+        <td><strong>Act Three — The Commit</strong></td>
+        <td>14–15</td>
+        <td>Ch. 8–10</td>
+        <td>Can commit to a specific course of action with their name on it, explain the metacognitive switch that made the commit possible, and demonstrate the full pipeline on a new brief</td>
+      </tr>
+    </table>
+
+    <h3>Transition conditions</h3>
+    <div class="transition-grid">
+      <div class="transition-card">
+        <div class="tc-label">Act One → Act Two</div>
+        <p>Student has documented the grain of their primary tool AND conducted one genuine empathy investigation</p>
+      </div>
+      <div class="transition-card">
+        <div class="tc-label">Act Two → Act Three</div>
+        <p>Student has a defended problem reframe, an ideation curation, a prototype, and test results with interpretive judgment</p>
+      </div>
+      <div class="transition-card">
+        <div class="tc-label">Act Three → Completion</div>
+        <p>Student has produced a Commit document that survives peer critique, and can narrate every human judgment call in their process</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 4. MAPPING -->
+  <div class="section" id="mapping">
+    <div class="section-number">Section 4</div>
+    <h2 class="section-title">Course-to-Chapter Mapping</h2>
+
+    <table>
+      <tr><th>Stage</th><th>Weeks</th><th>Chapter</th><th>Core claim</th><th>Key deliverable</th></tr>
+      <tr><td>Orientation</td><td>1</td><td>Ch. 1 — The Thirty-Minute Designer</td><td>You already know how to generate. That is not the same as knowing how to design.</td><td>30-min experiment audit</td></tr>
+      <tr><td>The Material</td><td>2–3</td><td>Ch. 2 — Finding the Grain</td><td>Every tool has a grain. Working with it is craft. Ignoring it is waste.</td><td>Grain documentation</td></tr>
+      <tr><td>Empathize</td><td>4–5</td><td>Ch. 3 — What Simulation Cannot Feel</td><td>AI simulates users. It cannot meet them.</td><td>Empathy investigation</td></tr>
+      <tr><td>Define</td><td>6–7</td><td>Ch. 4 — The Brief Is a Hypothesis</td><td>The brief you were handed is a hypothesis. Reframe it before you generate.</td><td>Three reframes + defense</td></tr>
+      <tr><td>Ideate</td><td>8</td><td>Ch. 5 — One Week for the Dreamer</td><td>AI is the best Dreamer tool ever built. Curation is still yours.</td><td>30+ concepts + curation defense</td></tr>
+      <tr><td>Prototype</td><td>9–11</td><td>Ch. 6 — The Realist Builds</td><td>AI accelerates the build. The human decides what to build.</td><td>Prototype + specification doc</td></tr>
+      <tr><td>Test</td><td>12–13</td><td>Ch. 7 — The Critic Tests</td><td>The data tells you if it works. You decide if it should.</td><td>Interpretive judgment document</td></tr>
+      <tr><td>Commit</td><td>14–15</td><td>Ch. 8 — The Commit</td><td>Design Thinking ends at Test. This is the stage it omits.</td><td>Commit document (draft → critique → final)</td></tr>
+      <tr><td>Synthesis</td><td>15</td><td>Ch. 9 — The Metacognitive Switch</td><td>The capacity that directs the others. No AI equivalent.</td><td>Process reflection</td></tr>
+      <tr><td>Capstone</td><td>TBD</td><td>Ch. 10 — The Full Pipeline</td><td>Can you do it without the scaffolding?</td><td>Full pipeline presentation</td></tr>
+    </table>
+  </div>
+
+
+  <!-- 5. OUTCOMES -->
+  <div class="section" id="outcomes">
+    <div class="section-number">Section 5</div>
+    <h2 class="section-title">Learning Outcomes</h2>
+
+    <p>By the end of this course, students will be able to:</p>
+
+    <ol class="outcomes-list">
+      <li><strong>Identify</strong> the grain of at least three AI tools — what each does naturally, what it resists, and where the human must supply what the tool cannot <span class="bloom-tag">Apply · Tier 4</span></li>
+      <li><strong>Conduct</strong> an empathy investigation that produces findings an AI simulation of the user could not have generated <span class="bloom-tag">Apply · Tier 3</span></li>
+      <li><strong>Reframe</strong> a given design brief into at least two alternative problem definitions, selecting and defending one on explicit criteria <span class="bloom-tag">Analyze · Tier 4</span></li>
+      <li><strong>Direct</strong> an AI ideation session producing a defined quantity of concepts, then apply human curatorial judgment to select and develop the most promising <span class="bloom-tag">Apply + Evaluate · Tiers 1 + 4</span></li>
+      <li><strong>Construct</strong> a prototype using AI acceleration while documenting the identification decisions that the AI could not supply <span class="bloom-tag">Apply · Tiers 4 + 5</span></li>
+      <li><strong>Evaluate</strong> prototype test results using the three legitimacy types — pragmatic, moral, and cognitive — identifying where human interpretive judgment is required beyond what the data shows <span class="bloom-tag">Evaluate · Tier 4</span></li>
+      <li><strong>Commit</strong> to a design direction by staking their name on a specific course of action, documenting accountability and unresolved uncertainty <span class="bloom-tag">Create · Tier 7</span></li>
+      <li><strong>Demonstrate</strong> through every deliverable that they can name one judgment call that required their values, domain knowledge, or accountability that an AI could not have made on their behalf <span class="bloom-tag">Metacognitive · all levels</span></li>
+    </ol>
+
+    <h3>Outcome-to-chapter map</h3>
+    <table>
+      <tr><th>Chapter</th><th>Bloom's level</th><th>Assessable?</th><th>Maps to course need?</th></tr>
+      <tr><td>Ch. 1</td><td>Analyze</td><td>Yes — 500-word audit</td><td>Yes — establishes the inversion</td></tr>
+      <tr><td>Ch. 2</td><td>Apply</td><td>Yes — grain documentation</td><td>Yes — tool authority</td></tr>
+      <tr><td>Ch. 3</td><td>Apply</td><td>Yes — empathy investigation</td><td>Yes — irreducible human contact</td></tr>
+      <tr><td>Ch. 4</td><td>Analyze</td><td>Yes — reframe defense</td><td>Yes — problem formulation</td></tr>
+      <tr><td>Ch. 5</td><td>Evaluate</td><td>Yes — curation defense</td><td>Yes — judgment over generation</td></tr>
+      <tr><td>Ch. 6</td><td>Apply</td><td>Yes — specification doc</td><td>Yes — identification decisions</td></tr>
+      <tr><td>Ch. 7</td><td>Evaluate</td><td>Yes — interpretive judgment doc</td><td>Yes — legitimacy types</td></tr>
+      <tr><td>Ch. 8</td><td>Create</td><td>Yes — Commit document</td><td>Yes — the course's core claim</td></tr>
+      <tr><td>Ch. 9</td><td>Metacognitive</td><td>Yes — process reflection</td><td>Yes — directs the others</td></tr>
+      <tr><td>Ch. 10</td><td>Create</td><td>Yes — pipeline presentation</td><td>Yes — transfer demonstration</td></tr>
+    </table>
+  </div>
+
+
+  <!-- 6. CHAPTERS -->
+  <div class="section" id="chapters">
+    <div class="section-number">Section 6</div>
+    <h2 class="section-title">Chapter-by-Chapter Specifications</h2>
+
+    <!-- ACT ONE -->
+    <div class="act-header">
+      <div class="act-label">Act One · Weeks 1–7 · Chapters 1–4</div>
+      <h3>The Material and the Human</h3>
+      <p>The tools, the user, and the brief — before a single concept is generated</p>
+    </div>
+
+    <!-- CH 1 -->
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 1</span>
+        <span class="ch-title">The Thirty-Minute Designer</span>
+        <span class="ch-sub">What you learned to do and why it is now the easy part</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Distinguish between the fluency of generation and the judgment of design — specifically, identify what questions were not asked in a fully AI-assisted 30-minute design session.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Distinguish generation fluency from design judgment <span class="bloom-tag">Analyze</span></li>
+            <li>Identify at least five categories of human judgment skipped in a standard AI-assisted design session <span class="bloom-tag">Apply</span></li>
+            <li>Articulate the course argument in one sentence in their own words <span class="bloom-tag">Understand</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>In medias res. No theory. Students open a brief, open their AI suite, and have 30 minutes. The output arrives. The chapter begins: "The output is good. That is not the point."</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The thirty-minute experiment — what was produced and what was assumed</li>
+            <li>The questions that weren't asked — a taxonomy of the human judgment the session skipped</li>
+            <li>The Tier 1 map — what AI does at superhuman level; what this means for the engineer</li>
+            <li>The cognitive forklift reframed for design — applied to the design studio</li>
+            <li>The course argument stated directly — this course teaches the five things the forklift cannot do</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            Brief: "Design an onboarding experience for a new employee." AI produces a complete, polished 5-step onboarding flow in under 30 minutes. The analysis reveals: no questions were asked about which type of new employee, what organization culture actually is vs. what HR says it is, what previous onboarding experiences felt like, or what "success" means to someone 90 days in. The output is generically correct and specifically wrong.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Run the thirty-minute experiment with your own brief. Write a 500-word audit of what the session assumed that it never asked. <span class="bloom-tag">Apply</span> <span class="hhd-flag">HHD required</span></li>
+            <li>Compare your AI-generated output to one you would produce after two weeks of user research. What is different? What is missing? <span class="bloom-tag">Analyze</span></li>
+            <li>In one sentence, state the course argument in your own words. Not the textbook's words. <span class="bloom-tag">Understand</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 2</strong>
+          "The output assumes a user. You haven't met them yet. Before you do — you need to know what your tools actually do."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 2 -->
+    <div class="act-header" style="margin-top:0; border-radius:4px 4px 0 0;">
+      <div class="act-label">&nbsp;</div>
+      <h3 style="color:var(--bb-8); font-size:14px; opacity:0.7;">Act One continued</h3>
+      <p></p>
+    </div>
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 2</span>
+        <span class="ch-title">Finding the Grain</span>
+        <span class="ch-sub">What your tools do naturally, what they resist, and why it matters before you touch a brief</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Identify the grain of at least two AI tools — the natural affordances and resistances — and document what this means for when to use them and when to work against them.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Map the grain of at least two AI tools against a specific design brief <span class="bloom-tag">Apply</span></li>
+            <li>Identify at least one design decision that changes because of grain awareness <span class="bloom-tag">Analyze</span></li>
+            <li>Place AI tools within the Krebs Cycle of Creativity and explain where each is strongest and weakest <span class="bloom-tag">Understand</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>The carpenter and the wood grain. Crawford's <em>Shop Class as Soulcraft.</em> The tool that has a grain is not the enemy of craft — ignoring the grain is.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The grain metaphor applied to AI tools — what each does easily, what it fights</li>
+            <li>The Krebs Cycle of Creativity (Oxman) — Science → Engineering → Design → Art. AI is strong at Engineering. Weakest at Art — converting behavior into new perceptions. <em>Prerequisite note: Krebs Cycle introduced here — not assumed.</em></li>
+            <li>Mapping the grain of three tools: a language model, an image generator, a code assistant</li>
+            <li>The grain as a design resource — working with affordances rather than against them</li>
+            <li>Platform awareness as a design competency — choosing tools based on what the brief needs, not habit</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            A student designing a community health intervention. The language model's grain: produces coherent, complete, Western-normative health communication. Its resistance: cannot produce communication that feels like it came from within the community rather than addressed to it. Working with the grain means using it for structural scaffolding. Working against it means expecting cultural authenticity it cannot supply.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Document the grain of your primary AI tool for your capstone domain — what it does naturally, what it resists, and one specific design decision that changes because of this knowledge. <span class="bloom-tag">Apply</span></li>
+            <li>Place your primary tool on the Krebs Cycle. Where is it strongest? Where does human judgment have to compensate? <span class="bloom-tag">Analyze</span></li>
+            <li>Given your capstone brief, which tool is best suited for which stage of the design process? Defend the assignment. <span class="bloom-tag">Evaluate</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 3</strong>
+          "You know your tools. You still don't know your user."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 3 -->
+    <div class="chapter-block" style="border-top:1px solid var(--bb-7);">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 3</span>
+        <span class="ch-title">What Simulation Cannot Feel</span>
+        <span class="ch-sub">The empathy investigation and the gap between user modeling and user contact</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Conduct an empathy investigation that produces at least one finding that an AI simulation of the user could not have generated.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Conduct an empathy investigation (minimum 2 human contacts) using observation, interview, and artifact analysis <span class="bloom-tag">Apply</span></li>
+            <li>Document at least one finding that would not appear in any AI-generated persona for the user group <span class="bloom-tag">Apply</span></li>
+            <li>Explain why plausible user simulations are insufficient for design that serves specific people in specific contexts <span class="bloom-tag">Analyze</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>An AI-generated user persona next to a field note from an actual conversation. They are not the same document.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The difference between user simulation and user contact — what each produces</li>
+            <li>Why AI personas are plausible and wrong — the training data problem for edge cases</li>
+            <li>The empathy investigation protocol — observation, interview, artifact analysis</li>
+            <li>What to look for that simulation misses — the unexpected, the contradictory, the embodied</li>
+            <li>Tier 3 named directly — AI simulates interpersonal intelligence; humans live it</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            Students designing for elderly users in low-income housing. The AI persona produces a coherent, internally consistent elderly user with predictable needs. The field investigation finds: the user has a specific relationship with a particular window in her apartment that organizes her entire daily routine in ways no needs assessment would surface. That finding changes the design.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Conduct one genuine empathy investigation (minimum 2 human contacts). Document one finding that would not appear in any AI-generated persona for your user group. <span class="bloom-tag">Apply</span></li>
+            <li>Compare your AI-generated persona to your field findings. Where does the persona succeed? Where does it fail? What type of failure is it? <span class="bloom-tag">Analyze</span></li>
+            <li>What is the design consequence of relying on the AI persona alone? Name a specific decision that would have been wrong. <span class="bloom-tag">Evaluate</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 4</strong>
+          "You know your tools. You know something real about your user. Now you have to decide what problem is worth solving."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 4 -->
+    <div class="chapter-block" style="border-top:1px solid var(--bb-7);">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 4</span>
+        <span class="ch-title">The Brief Is a Hypothesis</span>
+        <span class="ch-sub">Problem formulation and the art of reframing before generating</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Reframe a given design brief into at least two alternative problem definitions, selecting and defending one on explicit criteria.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Generate at least three alternative problem definitions from a single brief <span class="bloom-tag">Apply</span></li>
+            <li>Evaluate each reframe against explicit criteria — user impact, feasibility, alignment with empathy findings <span class="bloom-tag">Evaluate</span></li>
+            <li>Select and defend a reframe in a 3-minute presentation, fielding peer objections <span class="bloom-tag">Create</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>The classic brief: "Design a faster horse." The reframe: "Help people move between places efficiently." The AI response to each brief is radically different. The choice of brief is a human judgment.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The rationalist vs. co-evolutionary models of design — solving the given problem vs. reframing it</li>
+            <li>Primary generators — the conceptual anchors that shape problem formulation</li>
+            <li>The reframe protocol — five questions that produce alternative problem definitions</li>
+            <li>Criteria for choosing among reframes — who decides, on what basis</li>
+            <li>AI as a reframe stress-tester — using AI to find the failure modes of each reframe before committing</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            Brief: "Reduce food waste in university dining halls." Three reframes with different solution spaces and different values implications. The choice is not a design decision — it is a values decision. The student must defend it.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Produce three reframes of your capstone brief using the reframe protocol. <span class="bloom-tag">Apply</span></li>
+            <li>Evaluate each reframe against explicit criteria. Which survives the stress-test? <span class="bloom-tag">Evaluate</span></li>
+            <li>Select and defend your reframe in a 3-minute presentation to peers. Field two objections. Revise or hold your position with stated reasons. <span class="bloom-tag">Create</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 5</strong>
+          "You have a problem worth solving. Now the Dreamer gets one week."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ACT TWO -->
+    <div class="act-header">
+      <div class="act-label">Act Two · Weeks 8–13 · Chapters 5–7</div>
+      <h3>The Human Capacities</h3>
+      <p>One pipeline stage per chapter. Where the judgment builds.</p>
+    </div>
+
+    <!-- CH 5 -->
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 5</span>
+        <span class="ch-title">One Week for the Dreamer</span>
+        <span class="ch-sub">AI-assisted ideation, human curation, and the judgment that separates 50 ideas from 3</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Direct an AI ideation session that produces a defined quantity of concepts, then apply human curatorial judgment to select and develop the most promising three.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Direct an AI ideation session that produces minimum 30 genuine concepts (not variations on one concept) <span class="bloom-tag">Apply</span></li>
+            <li>Conduct a documented curation session reducing 30+ concepts to 3 with explicit criteria <span class="bloom-tag">Evaluate</span></li>
+            <li>Write a defense of each selected concept that explains what made it worth developing over the alternatives <span class="bloom-tag">Create</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>The Dreamer/Realist/Critic framework (Disney Imagineering). This is the Dreamer's week. The Dreamer's job is not to evaluate — it is to generate without premature constraint. AI is the best Dreamer tool ever built. This week is about learning to use it without becoming dependent on it.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The Dreamer/Realist/Critic framework — what each mode does and when each is needed</li>
+            <li>AI as Dreamer — why this is the right role and the only week it owns</li>
+            <li>The ideation session protocol — directing AI generation toward genuine divergence, not repetition</li>
+            <li>The curation problem — why choosing among 50 plausible options is harder than generating them</li>
+            <li>Curatorial criteria — what makes a concept worth developing beyond its plausibility</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            50 concepts generated in one afternoon for the food waste reframe. Curation reveals: 40 are variations on the same social comparison mechanic; 8 are interesting but infeasible in a semester; 2 are genuinely surprising. Those two get developed. The analysis of why the surprising ones survived is the lesson.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Run an AI ideation session producing minimum 30 concepts for your capstone brief. <span class="bloom-tag">Apply</span></li>
+            <li>Conduct a documented curation session. Select 3 concepts. Write a 300-word defense of each selection. <span class="bloom-tag">Evaluate</span></li>
+            <li>Name one judgment call in the curation process that required your values, your domain knowledge, or your accountability — that an AI tool could not have made on your behalf. <span class="bloom-tag">Create</span> <span class="hhd-flag">HHD required</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 6</strong>
+          "You have three concepts worth building. The Realist takes over."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 6 -->
+    <div class="chapter-block" style="border-top:1px solid var(--bb-7);">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 6</span>
+        <span class="ch-title">The Realist Builds</span>
+        <span class="ch-sub">AI-accelerated prototyping and the identification decisions that only humans make</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Construct a prototype using AI acceleration while documenting the identification decisions — what to build and why — that the AI could not supply.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Produce a low-fidelity prototype of a primary concept using AI acceleration <span class="bloom-tag">Apply</span></li>
+            <li>Document minimum 5 identification decisions — choices the AI could not make without human input <span class="bloom-tag">Analyze</span></li>
+            <li>Articulate the relationship between prototype fidelity and the specific question it is designed to answer <span class="bloom-tag">Evaluate</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>The Realist's job is to take the Dreamer's concepts and make them real. AI accelerates the build. The human decides what to build and what to test.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The Realist's cognitive job — translate concept into testable artifact</li>
+            <li>AI as build accelerator — code, design, content, structure</li>
+            <li>The identification decisions — every prototype encodes assumptions about what matters; AI cannot supply these</li>
+            <li>The specification document — translating human judgment into a build brief for AI tools</li>
+            <li>Knowing when to stop building — the prototype answers a specific question; it is not finished product</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            The dining hall receipt system. The AI builds the interface in an afternoon. The identification decisions the human must supply: which waste metric is most motivating, where to surface it in the dining hall journey, individual vs. aggregated data, what happens when a student sees demoralizing data. None of these are in the AI's build brief until the human puts them there.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Build a low-fidelity prototype of your primary concept using AI acceleration. <span class="bloom-tag">Apply</span></li>
+            <li>Submit a specification document identifying every decision the AI could not make — minimum 5 explicit identification decisions. <span class="bloom-tag">Analyze</span></li>
+            <li>What specific question does this prototype answer? What question does it deliberately not answer yet? <span class="bloom-tag">Evaluate</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 7</strong>
+          "You have something real. Now the Critic asks whether it actually works."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 7 -->
+    <div class="chapter-block" style="border-top:1px solid var(--bb-7);">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 7</span>
+        <span class="ch-title">The Critic Tests</span>
+        <span class="ch-sub">Interpretive judgment, the three legitimacy types, and what the data cannot tell you</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Evaluate prototype test results using the three legitimacy types — pragmatic, moral, and cognitive — identifying where human interpretive judgment is required beyond what the data shows.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Conduct prototype testing with minimum 5 users and document results <span class="bloom-tag">Apply</span></li>
+            <li>Evaluate results against all three legitimacy types — not just pragmatic <span class="bloom-tag">Evaluate</span></li>
+            <li>Identify at least one finding the data cannot resolve and specify what additional judgment or evidence would be required <span class="bloom-tag">Analyze</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>The test results are in. They show the prototype works. The question the data cannot answer: should it?</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The three legitimacy types — pragmatic (does it work), moral (should it exist), cognitive (can it be trusted)</li>
+            <li>Why AI achieves pragmatic legitimacy and struggles with the others</li>
+            <li>The interpretive leap — what the data shows and what it implies are different things</li>
+            <li>Reading test results as a designer — what counts as evidence, what counts as noise</li>
+            <li>The failure modes of interpretation — over-trusting data, under-trusting human judgment, confusing metric with meaning</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example</div>
+            The dining hall receipt prototype tests at 73% motivating. The interpretive judgment required: which 27% found it demotivating and why; whether short-term motivation translates to behavior change; whether the intervention is equitable across income levels; unintended consequences. None of these are in the 73% figure.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Conduct prototype testing with minimum 5 users. Document results. <span class="bloom-tag">Apply</span></li>
+            <li>Submit an interpretive judgment document that addresses all three legitimacy types. <span class="bloom-tag">Evaluate</span></li>
+            <li>Name one finding the data cannot resolve. What would you need — in the way of evidence, expertise, or judgment — to address it? <span class="bloom-tag">Analyze</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 8</strong>
+          "You know what the data shows and what it doesn't. Now you have to decide."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ACT THREE -->
+    <div class="act-header">
+      <div class="act-label">Act Three · Weeks 14–15 · Chapters 8–10</div>
+      <h3>The Commit</h3>
+      <p>The stage Design Thinking omits</p>
+    </div>
+
+    <!-- CH 8 -->
+    <div class="chapter-block">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 8 — strengthened spec v0.2</span>
+        <span class="ch-title">The Commit</span>
+        <span class="ch-sub">Staking your name, acknowledging uncertainty, and the judgment that AI can never make</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Commit to a design direction by staking their name on a specific course of action — through a draft, peer critique, and revised final — documenting what they are accountable for and what uncertainty remains.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Produce a draft Commit document that specifies a course of action, its evidential basis, acknowledged uncertainty, and stated accountability <span class="bloom-tag">Create</span></li>
+            <li>Critique a peer's Commit document using the four structural criteria, identifying where specificity, accountability, or honesty about uncertainty is missing <span class="bloom-tag">Evaluate</span></li>
+            <li>Revise and finalize a Commit document that survives peer scrutiny <span class="bloom-tag">Create</span></li>
+            <li>Articulate the difference between commitment under uncertainty and certainty, and explain why AI cannot make the Commit on the designer's behalf <span class="bloom-tag">Analyze</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>Design Thinking ends at Test. This chapter is the stage it omits. AI iterates forever. Humans commit. The Commit is not certainty — it is the decision to act despite uncertainty, with your name attached to the consequences.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li><strong>Why Design Thinking omits Commit</strong> — it was designed as an ideation methodology, not a deployment methodology. The omission was invisible when prototyping was hard. AI has made it catastrophic.</li>
+            <li><strong>What Commit actually requires</strong> — a specific course of action (not "explore further"); evidence from the test phase; acknowledged uncertainty; stated accountability for what happens if it fails.</li>
+            <li><strong>The bad Commit — before peer critique</strong> — the food waste worked example shown first as a vague, over-qualified, accountability-free draft. This is the model for what peer critique is designed to find and fix.</li>
+            <li><strong>The peer critique protocol</strong> — four diagnostic questions: Specificity, Evidential basis, Honesty about uncertainty, Accountability.</li>
+            <li><strong>The good Commit — after peer critique</strong> — the same food waste example revised: specific, evidentially grounded, honest about uncertainty, with a named accountable designer.</li>
+            <li><strong>Phronesis as the meta-capacity</strong> — the peer critique round is not just a quality gate. Students who watch their Commit fail under peer scrutiny before it fails in the real world are developing phronesis. Students who only write the document once are practicing confidence, not judgment.</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">The Commit document — required five-element structure</div>
+          <div class="commit-table">
+            <div class="commit-element">
+              <div class="commit-el-name">The decision</div>
+              <div class="commit-el-desc">A specific course of action — not a direction, a recommendation, or an option</div>
+            </div>
+            <div class="commit-element">
+              <div class="commit-el-name">The evidence</div>
+              <div class="commit-el-desc">Direct citations from the test phase — what the data showed</div>
+            </div>
+            <div class="commit-element">
+              <div class="commit-el-name">The uncertainty</div>
+              <div class="commit-el-desc">What the designer does not know and cannot know before deployment</div>
+            </div>
+            <div class="commit-element">
+              <div class="commit-el-name">The accountability</div>
+              <div class="commit-el-desc">What the designer is responsible for if it fails — stated specifically, bounded explicitly</div>
+            </div>
+            <div class="commit-element">
+              <div class="commit-el-name">The revision condition</div>
+              <div class="commit-el-desc">What new information would change this decision</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">The peer critique protocol — four diagnostic questions</div>
+          <ul>
+            <li><strong>Specificity:</strong> Could someone act on this recommendation without a follow-up conversation?</li>
+            <li><strong>Evidential basis:</strong> Is every claim traceable to the test phase, or is some of it confidence dressed as evidence?</li>
+            <li><strong>Honesty about uncertainty:</strong> Does this document say what the designer doesn't know, or only what they know?</li>
+            <li><strong>Accountability:</strong> Is there a name attached to specific consequences — or is the document engineered to distribute blame?</li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Bad draft — before peer critique</div>
+            <p style="font-style:italic; color:var(--bb-6); margin-bottom:8px;">"Based on our testing, we recommend exploring the dining hall receipt concept further, with additional user research to refine the messaging and address equity concerns. The concept showed promising results and has potential for positive behavior change."</p>
+            <p style="font-size:12px; color:var(--bb-5);"><strong>What peer critique finds:</strong> No specific action. No bounded accountability. Uncertainty acknowledged but used to defer rather than to scope. "Exploring further" is a Commit document's equivalent of iterating forever.</p>
+          </div>
+          <div class="worked-example" style="margin-top:12px;">
+            <div class="we-label">Revised Commit — after peer critique</div>
+            <p style="font-style:italic; color:var(--bb-6); margin-bottom:8px;">"I am recommending the dining hall receipt system with dollar-value framing, integrated with the existing POS infrastructure, piloted in one dining hall for one semester. I am accountable for: accurate waste calculation, clear user communication, and equitable experience across income levels. I am not accountable for behavior change beyond the pilot semester, or outcomes in dining halls with different demographics. This recommendation should be revisited if the pilot shows differential impact by income level exceeding 15 percentage points."</p>
+            <p style="font-size:12px; color:var(--bb-5);"><strong>What the revision demonstrates:</strong> Specificity that enables action. Accountability that is bounded and honest. Uncertainty scopes rather than protects. A revision condition concrete enough to trigger.</p>
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Produce a draft Commit document for your capstone design using the required five-element structure. <span class="bloom-tag">Create</span></li>
+            <li>Apply the four peer critique diagnostic questions to a partner's Commit document. Deliver written feedback naming every place where specificity, evidential basis, honesty about uncertainty, or accountability is missing. <span class="bloom-tag">Evaluate</span></li>
+            <li>Revise and finalize your Commit document. Name one judgment call in the Commit that required your values, your domain knowledge, or your accountability — that an AI tool could not have made on your behalf. <span class="bloom-tag">Create</span> <span class="hhd-flag">HHD required</span></li>
+          </ol>
+        </div>
+
+        <div class="callout callout-warn">
+          <strong>Weighting flag (OQ-006):</strong> The Commit document is weighted at 10% in the current assessment distribution. Consider whether this reflects the chapter's importance as the course's most original contribution. A 10% weighting may signal to students that the Commit is not the course's center of gravity.
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 9</strong>
+          "You made a commitment. What made that possible? The answer is not confidence, expertise, or data. It is the capacity to know which mode the moment required — and to switch to it."
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 9 -->
+    <div class="chapter-block" style="border-top:1px solid var(--bb-7);">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 9</span>
+        <span class="ch-title">The Metacognitive Switch</span>
+        <span class="ch-sub">Knowing which mode the room needs, and the intelligence that directs the others</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Identify which of the three modes (Dreamer/Realist/Critic) a design situation requires and articulate the metacognitive switch — the judgment that directs the process rather than executes it.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Identify at least two moments in their capstone process where a mode switch was required and describe what triggered the recognition <span class="bloom-tag">Analyze</span></li>
+            <li>Explain why the metacognitive switch has no AI equivalent <span class="bloom-tag">Analyze</span></li>
+            <li>Articulate what each mode costs when it runs too long — and what the switch produced in their specific case <span class="bloom-tag">Evaluate</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>The most dangerous moment in any design process is when the Dreamer won't stop dreaming, or the Critic won't let the Dreamer start. The capacity to recognize which mode is needed — and to switch — is what the conductor does that no instrument can do for itself.</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li>The metacognitive switch defined — knowing which mode the moment requires, not just executing a mode well</li>
+            <li>Signs that each mode has gone on too long — the Dreamer who can't curate, the Realist who won't stop building, the Critic who prevents the Commit</li>
+            <li>AI as a mode amplifier — it will Dream forever, Realize indefinitely, Critique without resolution. The human is the circuit breaker.</li>
+            <li>The human as director of the process — the role that has no AI equivalent, and why Tier 4 is the directing intelligence, not just a capacity among others</li>
+            <li>Developing the switch — retrospective analysis as the primary development mechanism; the switch cannot be taught prospectively, only recognized retrospectively and then anticipated</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example — placeholder (OQ-002)</div>
+            To be drawn from student capstone process reflection. Placeholder: a design process where the Dreamer phase extended two weeks past the intended endpoint because the AI kept producing compelling variations — and the cost was a compressed Realist phase that produced a weaker prototype.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Write a 500-word process reflection documenting at least two moments when you had to switch modes — what triggered the recognition, what the switch cost, and what it produced. <span class="bloom-tag">Analyze</span></li>
+            <li>Name one moment when you failed to switch and describe the consequence. <span class="bloom-tag">Analyze</span></li>
+            <li>What is the mode you default to? What does that default cost you in a design process? <span class="bloom-tag">Evaluate</span></li>
+          </ol>
+        </div>
+
+        <div class="bridge-block">
+          <strong>Bridge to Ch. 10</strong>
+          "You can name the switch. Now: can you run the whole pipeline without the scaffolding?"
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CH 10 -->
+    <div class="chapter-block" style="border-top:1px solid var(--bb-7);">
+      <div class="chapter-header">
+        <span class="ch-num">Chapter 10 — completed spec v0.2</span>
+        <span class="ch-title">The Full Pipeline</span>
+        <span class="ch-sub">Transfer, demonstration, and the argument the series is making</span>
+      </div>
+      <div class="chapter-body">
+        <div class="do-statement">
+          <strong>What the student learns to do</strong>
+          Apply the full AImagineering pipeline to a new brief in condensed form — demonstrating that the capacities developed across the course are internalized as judgment rather than executed as procedure.
+        </div>
+
+        <div class="callout callout-note">
+          <strong>The transfer test — why this chapter exists:</strong> A student who can run the pipeline with the book open has learned a procedure. A student who can run it on a new brief, in compressed time, without step-by-step scaffolding, has internalized the judgment. If the capacities are not present in Chapter 10 performance, they were never present — they were compliance.
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Learning outcomes</div>
+          <ul>
+            <li>Apply the full pipeline to a new brief in condensed form (one week), with each stage explicitly narrated <span class="bloom-tag">Create</span></li>
+            <li>Identify, unprompted, where in the condensed process the human judgment layers were required and what they produced <span class="bloom-tag">Analyze</span></li>
+            <li>Articulate the series argument — what is irreducibly human in AI-augmented design, and why — in their own terms, not the book's <span class="bloom-tag">Evaluate</span></li>
+            <li>Produce a pipeline narrative that could be delivered to a client, employer, or review committee <span class="bloom-tag">Create</span></li>
+          </ul>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Chapter opening</div>
+          <p>This chapter does not summarize the book. It tests it. A new brief. No chapter numbers to consult. No worked example to follow. The question is not "did you learn the pipeline?" It is "can you use it?"</p>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Core content blocks</div>
+          <ol class="content-blocks-list">
+            <li><strong>The pipeline as a single argument</strong> — not a sequence of methods but one integrated claim: the human judgment layers are not supplements to AI-assisted design; they are the design.</li>
+            <li><strong>The condensed pipeline brief</strong> — a new design problem introduced in class, deliberately chosen to prevent direct transfer of the capstone worked examples. Domain unfamiliar enough that domain expertise cannot substitute for process. Complex enough to require genuine reframing. Consequential enough to require a real Commit.</li>
+            <li><strong>What has changed for this student — specifically</strong> — a structured reflection protocol that requires concrete behavioral change, not generic growth statements. "I now ask three reframe questions before touching a tool" is evidence. "I have a deeper appreciation for human judgment" is not.</li>
+            <li><strong>The professional application</strong> — students name the specific role they are moving into and describe one decision in that role where the pipeline applies directly.</li>
+            <li><strong>The series argument and what comes next</strong> — where this course sits in the Irreducibly Human series; what the next course takes on; why the Commit in this course becomes a moral architecture in the next.</li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="worked-example">
+            <div class="we-label">Worked example — placeholder (OQ-002)</div>
+            To be drawn from student capstone presentations. Placeholder structure: one pipeline narrative showing the full sequence of human judgment calls — from grain identification through the Commit — presented as the model of what the Chapter 10 assessment requires.
+          </div>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Assessable exercises</div>
+          <ol class="exercises-list">
+            <li>Apply the full pipeline to the condensed brief introduced in class. Produce a pipeline narrative document that covers every stage and names every human judgment call. <span class="bloom-tag">Create</span></li>
+            <li>In your pipeline narrative, identify the three moments where you were most tempted to let the AI decide. What did you do instead? What did it produce? <span class="bloom-tag">Analyze</span></li>
+            <li>Name one judgment call anywhere in your full course capstone that required your values, your domain knowledge, or your accountability — that an AI could not have made on your behalf. This is your graduation statement from AImagineering. <span class="bloom-tag">Create</span> <span class="hhd-flag">HHD — final</span></li>
+            <li>Describe the role you are moving into. Name one decision in that role where this pipeline applies directly. What does the pipeline require you to do that you would not have done before this course? <span class="bloom-tag">Evaluate — Professional Application</span></li>
+          </ol>
+        </div>
+
+        <div class="chapter-sub-section">
+          <div class="chapter-sub-label">Final presentation criteria</div>
+          <p>Students present their capstone process as a pipeline narrative — not the output, but every human judgment call, every metacognitive switch, and the Commit document they stand behind. Assessment criteria: specificity of judgment call narration, evidence of metacognitive switching, quality of Commit document, credibility of the Human Half Declaration.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /chapters -->
+
+
+  <!-- 7. ASSESSMENT -->
+  <div class="section" id="assessment">
+    <div class="section-number">Section 7</div>
+    <h2 class="section-title">Assessment Architecture</h2>
+
+    <div class="callout callout-info">
+      <strong>The Human Half Declaration</strong> appears in every major deliverable. Not optional. A submission that cannot fill it has not done the human half of AImagineering.
+    </div>
+
+    <table>
+      <tr><th>Deliverable</th><th>Chapter</th><th>Weight</th><th>Bloom's level</th></tr>
+      <tr><td>30-min experiment audit</td><td>Ch. 1</td><td>5%</td><td>Analyze</td></tr>
+      <tr><td>Grain documentation</td><td>Ch. 2</td><td>10%</td><td>Apply</td></tr>
+      <tr><td>Empathy investigation</td><td>Ch. 3</td><td>15%</td><td>Apply</td></tr>
+      <tr><td>Reframe defense</td><td>Ch. 4</td><td>15%</td><td>Evaluate / Create</td></tr>
+      <tr><td>Ideation curation + defense</td><td>Ch. 5</td><td>10%</td><td>Evaluate</td></tr>
+      <tr><td>Prototype + specification doc</td><td>Ch. 6</td><td>15%</td><td>Apply / Analyze</td></tr>
+      <tr><td>Interpretive judgment document</td><td>Ch. 7</td><td>10%</td><td>Evaluate</td></tr>
+      <tr><td>Commit document (draft → critique → final)</td><td>Ch. 8</td><td>10%</td><td>Create</td></tr>
+      <tr><td>Process reflection</td><td>Ch. 9</td><td>5%</td><td>Analyze</td></tr>
+      <tr><td>Full pipeline presentation</td><td>Ch. 10</td><td>5%</td><td>Create</td></tr>
+    </table>
+
+    <div class="callout callout-warn">
+      <strong>Weighting note (OQ-006):</strong> Weights sum to 100%. The Commit document is currently weighted at 10% — the same as grain documentation and ideation curation. Given that the Commit is the course's most original contribution and its stated center of gravity, consider whether 10% accurately signals its importance to students. A rebalancing toward the back half of the course may be warranted in v0.3.
+    </div>
+  </div>
+
+
+  <div style="font-size:13px; color:var(--bb-6); border-top:1px solid var(--bb-7); padding-top:20px; margin-top:40px;">
+    <em>Irreducibly Human: AImagineering — TIC TOC v0.2 · March 2026</em><br>
+    Chapter specs complete. Worked examples for Ch. 9–10 pending capstone material (OQ-002). Resolve OQ-001 (co-instructor) and OQ-002 (capstone domain) before content production begins.
+  </div>
+
+</div><!-- /page-wrapper -->
+
+<footer>
+  Built with <a href="https://www.bearbrown.co" target="_blank" rel="noopener">bearbrown.co</a> ·
+  AI tools for educators, creators &amp; founders
+</footer>
+
+</body>
+</html>

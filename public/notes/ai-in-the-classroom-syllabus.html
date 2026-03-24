@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI in the classroom: a practical workshop series for business school faculty</title>
+  <meta name="description" content="Four-session faculty development workshop. Builds the supervisory AI framework business school faculty need to evaluate outputs, redesign assessments, and draft defensible syllabus policy — applied directly to courses they are currently teaching.">
+  <meta name="keywords" content="AI in the classroom, faculty workshop, business school, AI policy, assessment redesign, prompt specification, AI reliability, Irreducibly Human, AI fluency, higher education">
+
+  <style>
+    :root {
+      --bb-1: #1a0a00;
+      --bb-2: #8B3A0F;
+      --bb-3: #C0392B;
+      --bb-4: #E8A020;
+      --bb-5: #D4500A;
+      --bb-6: #B8860B;
+      --bb-7: #C8A96E;
+      --bb-8: #F0E6D0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background-color: var(--bb-8);
+      color: var(--bb-1);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    .page-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 32px 64px;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      border-bottom: 3px solid var(--bb-2);
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+    }
+
+    .cover-series {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 8px;
+    }
+
+    .cover h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--bb-2);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .cover h2 {
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--bb-5);
+      margin-bottom: 18px;
+    }
+
+    .cover-meta {
+      font-size: 13px;
+      color: var(--bb-6);
+    }
+
+    .version-meta {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--bb-6);
+      border: 1px solid var(--bb-7);
+      border-radius: 3px;
+      padding: 4px 10px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: white;
+      border-left: 4px solid var(--bb-2);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .toc h3 {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 14px;
+    }
+
+    .toc ol { padding-left: 20px; }
+
+    .toc li {
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .toc a {
+      color: var(--bb-2);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 56px; }
+
+    .section-number {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 4px;
+    }
+
+    h2.section-title {
+      font-size: 22px;
+      color: var(--bb-2);
+      border-bottom: 1px solid var(--bb-7);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+
+    h3 {
+      font-size: 16px;
+      color: var(--bb-5);
+      margin: 28px 0 10px;
+    }
+
+    h4 {
+      font-size: 14px;
+      color: var(--bb-2);
+      font-style: italic;
+      font-weight: 600;
+      margin: 20px 0 8px;
+    }
+
+    p { margin-bottom: 14px; }
+
+    ul {
+      padding-left: 20px;
+      margin-bottom: 14px;
+    }
+
+    ul li {
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    a { color: var(--bb-5); }
+    strong { color: var(--bb-1); }
+
+    /* ── WELCOME ── */
+    .welcome-letter {
+      background: white;
+      border-left: 4px solid var(--bb-4);
+      padding: 28px 32px;
+      border-radius: 0 4px 4px 0;
+      font-style: italic;
+    }
+
+    .welcome-letter em {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--bb-2);
+    }
+
+    .welcome-letter .signature {
+      font-style: normal;
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--bb-6);
+    }
+
+    /* ── TABLES ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0 24px;
+    }
+
+    th {
+      background: var(--bb-2);
+      color: var(--bb-8);
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--bb-7);
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(200, 169, 110, 0.12);
+    }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      padding: 16px 20px;
+      border-radius: 4px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .callout-warn {
+      background: rgba(192, 57, 43, 0.08);
+      border-left: 4px solid var(--bb-3);
+    }
+
+    .callout-note {
+      background: rgba(232, 160, 32, 0.10);
+      border-left: 4px solid var(--bb-4);
+    }
+
+    .callout-info {
+      background: white;
+      border-left: 4px solid var(--bb-7);
+    }
+
+    .callout strong { color: var(--bb-2); }
+
+    /* ── LEARNING OUTCOMES ── */
+    ol.outcomes-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: outcome-counter;
+    }
+
+    .outcomes-list li {
+      padding: 12px 14px 12px 36px;
+      border-bottom: 1px solid var(--bb-7);
+      font-size: 14px;
+      position: relative;
+      counter-increment: outcome-counter;
+    }
+
+    .outcomes-list li::before {
+      content: counter(outcome-counter);
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--bb-4);
+      background: var(--bb-2);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── SESSION BLOCKS ── */
+    .session-block {
+      border: 1px solid var(--bb-7);
+      border-radius: 4px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+
+    .session-header {
+      background: var(--bb-2);
+      color: var(--bb-8);
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .session-header .s-label {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    .session-header .s-title {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .session-header .s-date {
+      font-size: 12px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+
+    .session-body { padding: 20px 22px; }
+
+    .session-question {
+      font-size: 15px;
+      font-style: italic;
+      color: var(--bb-5);
+      border-left: 3px solid var(--bb-4);
+      padding-left: 14px;
+      margin-bottom: 20px;
+    }
+
+    .phase-block {
+      margin-bottom: 18px;
+    }
+
+    .phase-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .phase-label span {
+      color: var(--bb-1);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .artifact-block {
+      background: rgba(139, 58, 15, 0.06);
+      border: 1px solid var(--bb-7);
+      border-radius: 3px;
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+
+    .artifact-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bb-5);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    /* ── SESSION STRUCTURE BLOCK ── */
+    .structure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .structure-card {
+      background: white;
+      border: 1px solid var(--bb-7);
+      border-top: 3px solid var(--bb-2);
+      border-radius: 0 0 4px 4px;
+      padding: 16px;
+    }
+
+    .structure-card .sc-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bb-6);
+      margin-bottom: 4px;
+    }
+
+    .structure-card .sc-time {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--bb-2);
+      margin-bottom: 8px;
+    }
+
+    .structure-card p {
+      font-size: 13px;
+      margin: 0;
+      color: var(--bb-1);
+    }
+
+    /* ── PORTFOLIO TABLE ── */
+    .portfolio-table td:first-child {
+      font-weight: 700;
+      color: var(--bb-2);
+      white-space: nowrap;
+      width: 60px;
+    }
+
+    .portfolio-table td:nth-child(2) {
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .page-wrapper { padding: 24px 16px 48px; }
+      .session-header { flex-direction: column; }
+      .structure-grid { grid-template-columns: 1fr; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      color: #999;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 40px;
+    }
+
+    footer a { color: #999; }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-series">Irreducibly Human Series</div>
+    <h1>AI in the classroom: a practical workshop series for business school faculty</h1>
+    <h2>What AI can and can't do — and what that means for how you teach</h2>
+    <div class="cover-meta">
+      4 Sessions · Once Weekly · 90–120 minutes per session · April 2026 · In-person<br>
+      Executive Education
+    </div>
+    <div class="version-meta">Version 1.0 &nbsp;·&nbsp; [Distribution Date] &nbsp;·&nbsp; Reviewed by Dev the Dev</div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol>
+      <li><a href="#welcome">Welcome</a></li>
+      <li><a href="#series">The Irreducibly Human Series</a></li>
+      <li><a href="#info">Workshop Information</a></li>
+      <li><a href="#outcomes">Learning Outcomes</a></li>
+      <li><a href="#materials">Required Materials</a></li>
+      <li><a href="#schedule">Workshop Structure and Session Schedule</a></li>
+    </ol>
+  </div>
+
+
+  <!-- 1. WELCOME -->
+  <div class="section" id="welcome">
+    <div class="section-number">Section 1</div>
+    <h2 class="section-title">Welcome</h2>
+
+    <div class="welcome-letter">
+      <p>I've spent years watching capable professionals use AI tools confidently and badly — not because they weren't intelligent, but because no one had given them a framework for understanding what they were actually working with. They could generate outputs. They couldn't evaluate them. They could prompt. They couldn't specify. They could iterate. They couldn't tell when they had stopped thinking and started deferring.</p>
+
+      <p>That gap is what this workshop series closes.</p>
+
+      <p>AI fluency is not knowing which tools to use. It is understanding the cognitive nature of the entity you are collaborating with — what it does at superhuman level, what it cannot do at all, and what remains irreducibly yours. The faculty member who uses AI to generate a syllabus policy without understanding why AI outputs fail is not using AI well. They are using it optimistically. Those are different practices with very different outcomes.</p>
+
+      <p>This series is built around one organizing principle: <em>you are not the user of this tool — you are the supervisor of it.</em> Every session builds one layer of that supervisory capacity, applied immediately to real work in your own courses.</p>
+
+      <p>The series is demanding in a specific way. It will not ask you to learn a new platform or memorize prompt templates. It will ask you to make judgment calls about AI outputs, apply those judgments to your own teaching, and leave each session with a working document you can use next week. That is more durable than a demonstration. It is also harder.</p>
+
+      <p>What you will leave with: four working artifacts built from real courses you are teaching, and the framework for continuing to develop your practice after the series ends.</p>
+
+      <p>Here is what to do before Session 1: bring a laptop and a course you are currently teaching. Nothing else is required.</p>
+
+      <div class="signature">
+        — [Lead Instructor] | [email]<br>
+        — [DMSB Co-Instructor, TBD] | [email]
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 2. SERIES -->
+  <div class="section" id="series">
+    <div class="section-number">Section 2</div>
+    <h2 class="section-title">The Irreducibly Human Series</h2>
+
+    <p>We are in the early years of the most powerful cognitive tools ever built. AI systems are superhuman at pattern recognition, fact retrieval, arithmetic, and syntactic correctness. They are genuinely poor at formulating the right question, auditing their own outputs for plausibility, and knowing when not to proceed.</p>
+
+    <p>The Irreducibly Human series develops exactly those capacities — the forms of reasoning that AI tools require humans to supply.</p>
+
+    <p>This workshop — <strong>AI in the Classroom</strong> — is the series entry point for faculty practitioners. It builds the foundational framework for AI collaboration across four sessions, develops the supervisory practices that make AI a professional strength rather than a professional liability, and applies that framework directly to teaching, assessment design, and classroom policy.</p>
+
+    <p>Aligned with the Schofield &amp; Zhou AI Literacy Framework, the series moves participants from foundational understanding to applied classroom practice. Faculty will not study AI — they will practice it.</p>
+  </div>
+
+
+  <!-- 3. WORKSHOP INFO -->
+  <div class="section" id="info">
+    <div class="section-number">Section 3</div>
+    <h2 class="section-title">Workshop Information</h2>
+
+    <h3>Workshop Identifiers</h3>
+    <table>
+      <tr><th>Field</th><th>Value</th></tr>
+      <tr><td>Workshop Title</td><td>AI in the Classroom: A Practical Workshop Series for Business School Faculty</td></tr>
+      <tr><td>Sessions</td><td>4</td></tr>
+      <tr><td>Format</td><td>Once weekly, April 2026</td></tr>
+      <tr><td>Duration per session</td><td>90–120 minutes</td></tr>
+      <tr><td>Mode of Delivery</td><td>In-person</td></tr>
+      <tr><td>Department</td><td>Executive Education</td></tr>
+    </table>
+
+    <h3>Meeting Information</h3>
+    <p>Day and time: [TBD] &nbsp;·&nbsp; Location: [Building, Room]</p>
+
+    <div class="callout callout-warn">
+      Each session has two components: a facilitated concept segment and a hands-on workshop segment. <strong>The workshop segment is where learning consolidates.</strong> A session attended only for the first half is a session where no artifact gets built.
+    </div>
+
+    <h3>Instructor Information</h3>
+    <table>
+      <tr><th>Role</th><th>Name</th><th>Email</th><th>Response time</th></tr>
+      <tr><td>Lead Instructor</td><td>[TBD]</td><td>[TBD]</td><td>Within 48 hours on weekdays</td></tr>
+      <tr><td>DMSB Co-Instructor</td><td>[TBD]</td><td>[TBD]</td><td>Within 48 hours on weekdays</td></tr>
+    </table>
+    <p>Preferred contact: email for logistics. Office hours for anything that takes more than two sentences to answer well.</p>
+
+    <h3>Session Materials</h3>
+    <p>All session materials, artifact templates, and reference documents will be distributed via [platform TBD] before each session. Sessions will be recorded for participants who wish to review material covered. Recordings are available to enrolled participants only.</p>
+
+    <h3>Prerequisites</h3>
+
+    <div class="callout callout-info">
+      <strong>What this workshop assumes:</strong> At least one prior use of an AI tool (ChatGPT, Claude, Microsoft Copilot, or equivalent). A laptop with browser access. One course currently being taught or in development.
+    </div>
+
+    <p><strong>What this workshop does not assume:</strong> Prior coursework in AI, machine learning, or data science. Technical background of any kind. Prior prompting experience or tool fluency.</p>
+  </div>
+
+
+  <!-- 4. OUTCOMES -->
+  <div class="section" id="outcomes">
+    <div class="section-number">Section 4</div>
+    <h2 class="section-title">Learning Outcomes</h2>
+
+    <p>By the end of this workshop series, participants will be able to:</p>
+
+    <ol class="outcomes-list">
+      <li>Explain how AI systems generate outputs through pattern completion rather than knowledge retrieval, and predict the most likely failure type before it occurs</li>
+      <li>Apply a reliability framework to AI outputs, distinguishing tasks that are safe to use as-is, tasks that require verification, and tasks that should not be delegated</li>
+      <li>Write a complete, testable instruction for an AI tool — specifying task, audience, inclusions, exclusions, and success standard — and predict its failure mode before running it</li>
+      <li>Apply a four-layer verification protocol to an AI output, identifying the layer most likely to fail in their specific discipline</li>
+      <li>Redesign one existing assessment to remain meaningful in an AI environment, shifting from product to process and requiring the judgment AI cannot supply</li>
+      <li>Draft a syllabus AI policy statement that specifies permitted and prohibited uses — not a prohibition, and not open permission</li>
+      <li>Articulate, in writing, at least one judgment call in their teaching practice that requires their values, domain knowledge, or accountability — and that an AI cannot make on their behalf</li>
+    </ol>
+  </div>
+
+
+  <!-- 5. MATERIALS -->
+  <div class="section" id="materials">
+    <div class="section-number">Section 5</div>
+    <h2 class="section-title">Required Materials</h2>
+
+    <div class="callout callout-note">
+      <strong>No textbook. No advance reading. No specialized software. No installation required.</strong>
+    </div>
+
+    <h3>AI tools (all free — no purchase required)</h3>
+    <table>
+      <tr><th>Tool</th><th>URL</th></tr>
+      <tr><td>Claude</td><td><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a></td></tr>
+      <tr><td>ChatGPT</td><td><a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a></td></tr>
+      <tr><td>Microsoft Copilot</td><td><a href="https://copilot.microsoft.com" target="_blank" rel="noopener">copilot.microsoft.com</a></td></tr>
+    </table>
+    <p>Participants may use any combination. No single tool is required.</p>
+
+    <h3>Documentation tools (free, browser-based)</h3>
+    <p>Google Docs or equivalent — for artifact production during workshop segments.</p>
+
+    <h3>Bring to every session</h3>
+    <ul>
+      <li>Laptop with browser access</li>
+      <li>Free account with at least one AI tool listed above</li>
+      <li>One real course currently being taught or in development</li>
+    </ul>
+  </div>
+
+
+  <!-- 6. SCHEDULE -->
+  <div class="section" id="schedule">
+    <div class="section-number">Section 6</div>
+    <h2 class="section-title">Workshop Structure and Session Schedule</h2>
+
+    <h3>Session structure</h3>
+    <p>Every session follows the same three-part structure:</p>
+
+    <div class="structure-grid">
+      <div class="structure-card">
+        <div class="sc-label">Open</div>
+        <div class="sc-time">20 min</div>
+        <p>A real failure case. Not a definition. A specific situation where a faculty member or professional used AI and something went wrong — or nearly wrong. Participants encounter the problem before they encounter the framework.</p>
+      </div>
+      <div class="structure-card">
+        <div class="sc-label">Build</div>
+        <div class="sc-time">40–50 min</div>
+        <p>The concept that explains the failure, demonstrated live using tools participants already have. Hands-on in the room.</p>
+      </div>
+      <div class="structure-card">
+        <div class="sc-label">Make</div>
+        <div class="sc-time">30–40 min</div>
+        <p>Participants apply the concept to their own real course and leave with a completed artifact. No hypotheticals. No homework. Built in the room.</p>
+      </div>
+    </div>
+
+
+    <!-- SESSION 1 -->
+    <div class="session-block">
+      <div class="session-header">
+        <span class="s-label">Session 1</span>
+        <span class="s-title">What you're actually working with</span>
+        <span class="s-date">Week 1 · April 2026 · 90–120 min</span>
+      </div>
+      <div class="session-body">
+        <div class="session-question">Why does AI give me wrong answers so confidently — and what do I do about that?</div>
+
+        <div class="phase-block">
+          <div class="phase-label">Open <span>20 min</span></div>
+          <p>A faculty member submits a course proposal with three AI-generated citations. Two of the studies do not exist. The journals are real. The authors are real. The papers are not. She had no framework for why it happened and no way to have caught it. This case is not unusual. It is the default failure mode of a confident tool used without a mental model.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Build <span>40 min</span></div>
+          <p>How AI systems generate output: pattern completion, not knowledge retrieval. The distinction matters because it predicts the failure type before it occurs. AI does not know things — it completes patterns based on training data. The more plausible something sounds, the more confidently it will say it, whether or not it is true. This is not a bug being fixed. It is the architecture.</p>
+          <p>Why confident expression is structurally uncorrelated with accuracy. The reliability question: which tasks are safe to delegate, which require verification, which should never leave your hands.</p>
+          <p><em>Live demonstration:</em> the same question asked three ways, showing how framing changes output — and a live hallucination in a business domain participants recognize.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Make <span>30–40 min</span></div>
+          <p>Participants map three tasks from their own teaching onto a simple framework: <strong>Use as-is / Verify before using / Never delegate.</strong> Pairs compare and discuss. Full group debrief on what surprised them.</p>
+        </div>
+
+        <div class="artifact-block">
+          <div class="artifact-label">Session 1 Artifact — Personal AI Reliability Map</div>
+          A one-page document showing which tasks in their specific teaching and research workflow they will trust AI to handle, which they will verify before using, and which they will not hand off. Built in the session. Specific to their discipline and their courses.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SESSION 2 -->
+    <div class="session-block">
+      <div class="session-header">
+        <span class="s-label">Session 2</span>
+        <span class="s-title">How to direct it well</span>
+        <span class="s-date">Week 2 · April 2026 · 90–120 min</span>
+      </div>
+      <div class="session-body">
+        <div class="session-question">Why do I keep getting mediocre output even when I try — and how do I fix that?</div>
+
+        <div class="phase-block">
+          <div class="phase-label">Open <span>20 min</span></div>
+          <p>A Strategy faculty member asks AI to generate a case discussion for her MBA class. The output is smooth, generic, uses no real companies, and could apply to any industry in any decade. She concludes AI isn't useful for her teaching. The problem wasn't the tool. It was the instruction. The tool did exactly what it was asked to do — which was not what she needed.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Build <span>40 min</span></div>
+          <p>The five components of an instruction that produces usable output:</p>
+          <ul>
+            <li><strong>The task</strong> — what you want</li>
+            <li><strong>The audience</strong> — who it's for, their level, their prior knowledge</li>
+            <li><strong>Inclusions</strong> — what it must contain</li>
+            <li><strong>Exclusions</strong> — what it must not contain</li>
+            <li><strong>Success standard</strong> — what "good" looks like for this specific use</li>
+          </ul>
+          <p><em>Live demonstration:</em> one weak prompt rebuilt through all five components. Output comparison shown live. Business school applications demonstrated: case discussion questions for a specific company and concept, assignment rubrics for specific learning outcomes, exam questions at calibrated difficulty levels, research summaries for course prep.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Make <span>30–40 min</span></div>
+          <p>Each participant writes a complete instruction for one real task they currently do manually. Partner reviews against the five components and identifies what is missing. Participant revises. Both run their prompts live and evaluate the output.</p>
+        </div>
+
+        <div class="artifact-block">
+          <div class="artifact-label">Session 2 Artifact — Working Prompt Specification</div>
+          A tested, working instruction set for one real task in their course — written, run, revised, and producing output they evaluated in the room. Not a template. An actual prompt that works for their actual course.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SESSION 3 -->
+    <div class="session-block">
+      <div class="session-header">
+        <span class="s-label">Session 3</span>
+        <span class="s-title">How to evaluate what it gives you</span>
+        <span class="s-date">Week 3 · April 2026 · 90–120 min</span>
+      </div>
+      <div class="session-body">
+        <div class="session-question">How do I know when to trust AI output — and how do I push back on it when I shouldn't?</div>
+
+        <div class="phase-block">
+          <div class="phase-label">Open <span>20 min</span></div>
+          <p>An Organizational Behavior faculty member uses AI to summarize current research on psychological safety for a lecture update. The summary is well-organized, smooth, and cites three papers that have been substantially challenged since publication. She uses it without checking. A student who has read the field more recently raises it in class. The faculty member had no verification practice. She had no framework for knowing which layer of the output to check.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Build <span>40 min</span></div>
+          <p>Four layers every AI output contains — and which layer is most likely to fail in which disciplines:</p>
+          <ul>
+            <li><strong>Facts</strong> — Are the specific claims accurate?</li>
+            <li><strong>Reasoning</strong> — Does the logic hold?</li>
+            <li><strong>Framing</strong> — Is a partial picture being presented as complete?</li>
+            <li><strong>Omissions</strong> — What important thing is not here?</li>
+          </ul>
+          <p>Calibrating verification depth: how much checking does this output actually need? The three variables — stakes, reversibility, and domain reliability — applied to real business school use cases.</p>
+          <p>Using AI to interrogate AI: the adversarial prompt. How to ask the tool to find the weaknesses in what it just told you.</p>
+          <p><em>Live demonstration:</em> a piece of AI-generated course content run through all four layers. The adversarial prompt applied. What it found that ordinary review missed.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Make <span>30–40 min</span></div>
+          <p>Participants bring or generate one piece of AI output from their own domain. Apply the four-layer check. Identify which layer is highest-risk in their specific discipline and why.</p>
+        </div>
+
+        <div class="artifact-block">
+          <div class="artifact-label">Session 3 Artifact — Discipline-Specific Verification Checklist</div>
+          A one-page verification protocol for AI outputs in their field — what to check, how to check it, and what "good enough to use" looks like for their specific teaching context. Built from their own hands-on work in the session.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SESSION 4 -->
+    <div class="session-block">
+      <div class="session-header">
+        <span class="s-label">Session 4</span>
+        <span class="s-title">AI in your classroom: assessment and policy</span>
+        <span class="s-date">Week 4 · April 2026 · 90–120 min</span>
+      </div>
+      <div class="session-body">
+        <div class="session-question">What do I actually say to my students about AI, and how do I redesign my assessments so they hold up?</div>
+
+        <div class="phase-block">
+          <div class="phase-label">Open <span>20 min</span></div>
+          <p>A Finance faculty member bans AI in her course. Her students use it anyway, undisclosed. Her assessments are unchanged. She is grading AI-generated work without knowing it, and her students are not developing the skills she believes she is developing. The policy failed not because students are dishonest — but because it was designed for a world that no longer exists. A prohibition without redesign is not a policy. It is a wish.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Build <span>40 min</span></div>
+          <p>There is no AI-proof assessment. There is only AI-aware assessment design. The right question is not "did they use AI?" It is "what did they have to do that AI cannot do for them?"</p>
+          <p>What AI cannot do for your students:</p>
+          <ul>
+            <li>Apply your disciplinary judgment to their specific situation</li>
+            <li>Defend a position under live questioning</li>
+            <li>Connect a concept to their own professional experience</li>
+            <li>Make an accountable professional judgment with their name on it</li>
+          </ul>
+          <p>Assessment redesign principles for a business school context: shift from product to process — require the thinking, not just the answer. Add a defense or reflection component. Require domain specificity AI cannot fake — their company, their data, their decision. Make AI use explicit, disclosed, and part of the assessment.</p>
+          <p>Syllabus policy language that works: not prohibition, not open permission, but specification. What AI may be used for, what it may not be used for, and what the student must supply regardless of tool use.</p>
+          <p><em>Live demonstration:</em> one existing assignment from a volunteer participant redesigned in the room. Before and after shown.</p>
+        </div>
+
+        <div class="phase-block">
+          <div class="phase-label">Make <span>30–40 min</span></div>
+          <p>Each participant identifies their highest-risk assessment — the one most vulnerable to AI substitution. Redesign one component using the session principles. Draft one paragraph of AI policy language for their syllabus.</p>
+        </div>
+
+        <div class="artifact-block">
+          <div class="artifact-label">Session 4 Artifact — Redesigned Assessment + AI Policy Statement</div>
+          A revised version of one real assessment from their course, plus a draft AI policy statement ready to drop into their syllabus. Specific to their course. Defensible to their students.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CUMULATIVE DELIVERABLE -->
+    <h3>Cumulative deliverable — AI Teaching Portfolio</h3>
+    <p>Participants complete the series with four working documents:</p>
+
+    <table class="portfolio-table">
+      <tr><th>Session</th><th>Artifact</th><th>What it is</th></tr>
+      <tr><td>1</td><td>Personal AI Reliability Map</td><td>Which tasks to delegate, verify, or retain — specific to their discipline</td></tr>
+      <tr><td>2</td><td>Working Prompt Specification</td><td>A tested prompt for one real course task, ready to use</td></tr>
+      <tr><td>3</td><td>Verification Checklist</td><td>A discipline-specific protocol for evaluating AI output</td></tr>
+      <tr><td>4</td><td>Redesigned Assessment + AI Policy Statement</td><td>A revised assignment and syllabus policy statement</td></tr>
+    </table>
+
+    <div class="callout callout-note">
+      These are not templates. They are working documents built from real courses in the room.
+    </div>
+
+
+    <!-- SCHEDULE AT A GLANCE -->
+    <h3>Schedule at a glance</h3>
+    <table>
+      <tr><th>Session</th><th>Topic</th><th>Artifact</th></tr>
+      <tr><td>1</td><td>What you're actually working with</td><td>Personal AI Reliability Map</td></tr>
+      <tr><td>2</td><td>How to direct it well</td><td>Working Prompt Specification</td></tr>
+      <tr><td>3</td><td>How to evaluate what it gives you</td><td>Verification Checklist</td></tr>
+      <tr><td>4</td><td>AI in your classroom: assessment and policy</td><td>Redesigned Assessment + AI Policy Statement</td></tr>
+    </table>
+  </div>
+
+
+
+
+</div><!-- /page-wrapper -->
+
+<footer>
+  Built with <a href="https://www.bearbrown.co" target="_blank" rel="noopener">bearbrown.co</a> ·
+  AI tools for educators, creators &amp; founders
+</footer>
+
+</body>
+</html>
