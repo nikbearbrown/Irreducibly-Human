@@ -95,7 +95,7 @@ export default function Home() {
                 <a href="/courses" className={buttonStyles}>
                   Explore the Courses
                 </a>
-                <a href="/about" className={buttonOutline}>
+                <a href="/notes/irreducibly-human-project-doc" className={buttonOutline}>
                   About the Series
                 </a>
               </div>
