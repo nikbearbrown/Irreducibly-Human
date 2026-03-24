@@ -106,7 +106,7 @@ export default function Home() {
             </div>
             <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src="https://www.youtube.com/embed/HJJQoIUElvo?si=xfCpIQTbBqTj38pP"
+                src="https://www.youtube.com/embed/R2X2-_USSVY?si=mIyL7XqejJGbtizL"
                 title="Irreducibly Human"
                 width="100%"
                 height="100%"
