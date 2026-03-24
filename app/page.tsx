@@ -10,35 +10,49 @@ const COURSES = [
     description:
       'Fluency in AI communication. How to talk to machines — and know when they\'re talking past you. Prompt engineering, model limitations, hallucination detection, and the rhetorical gap between human intent and machine output.',
     link: 'Explore BotSpeak',
-    href: '/courses/botspeak',
+    href: '/notes/NEU_botspeak-syllabus',
   },
   {
     title: 'CAUSAL REASONING',
     description:
       'AI finds correlations. Humans build causal models. Counterfactual thinking, interventionist reasoning, and the kind of "why" questions that statistical models cannot answer.',
     link: 'Explore Causal Reasoning',
-    href: '/courses/causal-reasoning',
+    href: '/notes/NEU_causal-reasoning-syllabus',
   },
   {
     title: 'ETHICAL PLAY',
     description:
       'Moral reasoning under uncertainty, value pluralism, and the limits of rule-based ethics. Developing the capacity for ethical judgment that cannot be reduced to optimization or alignment.',
     link: 'Explore Ethical Play',
-    href: '/courses/ethical-play',
+    href: '/notes/NEU_ethical-play-tictoc',
   },
   {
     title: 'AIMAGINEERING',
     description:
       'Generative AI produces outputs. Humans produce meaning. Creative process, aesthetic judgment, conceptual blending, and the difference between novelty and genuine originality.',
     link: 'Explore AIMagineering',
-    href: '/courses/aimagineering',
+    href: '/notes/NEU_aimagineering-syllabus',
   },
   {
     title: 'EMBODIED TEACHING',
     description:
       'Teaching is irreducibly human. Presence, improvisation, emotional attunement, and the embodied skills that make mentorship effective — none of which transfer to a language model.',
     link: 'Explore Embodied Teaching',
-    href: '/courses/embodied-teaching',
+    href: '/notes/NEU_embodied-teaching-syllabus',
+  },
+  {
+    title: 'CONDUCTING AI',
+    description:
+      'The five supervisory capacities: plausibility auditing, problem formulation, tool orchestration, interpretive judgment, and executive integration. The course that teaches you to conduct the orchestra, not play every instrument.',
+    link: 'Explore Conducting AI',
+    href: '/notes/NEU_conducting-ai-concept-brief',
+  },
+  {
+    title: 'THE AI SHERPA',
+    description:
+      'A practitioner\'s guide for experiential learning. The full 18-chapter arc — from design failure diagnosis through the Sherpa infrastructure to domain field guides for co-op, study abroad, clinical, trades, and corporate early career programs.',
+    link: 'Explore The AI Sherpa',
+    href: '/notes/NEU_ai-sherpa-tictoc',
   },
 ]
 
