@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Blog - Irreducibly Human',
-  description: 'Writing on what AI can and can't do and what that means for education.',
+  description: "Writing on what AI can and can't do and what that means for education.",
 }
 
 export default async function BlogPage() {
