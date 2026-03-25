@@ -42,7 +42,10 @@ Brand voice: Academic, clear, direct. Informed by research, accessible to practi
 11. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
 12. `/notes` — Notes browser (searchable card grid, grouped by folder, filesystem-driven)
 13. `/notes/[...slug]` — Full-viewport iframe of a note HTML file (e.g., `/notes/Irreducibly-Human/NEU_botspeak-syllabus`)
-14. `/blog` — Blog feed: published posts newest first, clean card list
+14. `/books` — Books browser (searchable card grid, filesystem-driven via `book.json`)
+15. `/books/[slug]` — Book detail page with metadata and TOC
+16. `/books/[slug]/[...chapter]` — Full-viewport iframe of a book chapter
+17. `/blog` — Blog feed: published posts newest first, clean card list
 13. `/blog/[slug]` — Individual blog post with prose content
 14. `/about` — About the program (prose format, author info)
 15. `/privacy` — Privacy Policy for Irreducibly Human
@@ -192,6 +195,41 @@ Notes are organized into subdirectories under `public/notes/`, each folder repre
 - `app/notes/NotesBrowser.tsx` — Client component: search input, tag filter badges, folder-grouped card grid
 - `app/notes/page.tsx` — Server component: scans `public/notes/` subdirectories via `scanHtmlSubdirs()`
 - `app/notes/[...slug]/page.tsx` — Catch-all route for viewing individual notes in iframe
+
+## Books system — DONE
+
+### Structure
+Books are organized into subdirectories under `public/books/`, one folder per book:
+- `public/books/AI-Sherpa/` — The AI Sherpa
+- `public/books/AImagineering/` — AImagineering
+- `public/books/Botspeak/` — Botspeak
+- `public/books/Causal-Reasoning/` — Causal Reasoning
+- `public/books/Conducting-AI/` — Conducting AI
+- `public/books/Embodied-Teaching/` — Embodied Teaching
+- `public/books/Ethical-Play/` — Ethical Play
+
+Each folder contains:
+- `book.json` — Book-level metadata (title, subtitle, authors, publisher, ISBN, ASIN, series, description, keywords, categories, cover, amazonUrl, relatedCourse, license, parts with chapter lists)
+- `*.html` — Chapter HTML files with standard `<title>`, `<meta name="description">`, `<meta name="keywords">` tags
+- Optional `cover.jpg` — Book cover image
+
+### Adding a new book
+1. Create a folder under `public/books/`
+2. Add a `book.json` with metadata (see existing books for schema)
+3. Add chapter HTML files
+4. It appears automatically on `/books` — no database, no sync needed
+
+### Public pages
+- `/books` — Searchable card grid of all books. Shows title, subtitle, authors, status badge, series position, description, keywords. Tag filter bar.
+- `/books/[slug]` — Book detail page with full metadata, TOC (parts/chapters from `book.json`, falls back to flat HTML file list), cover image, Amazon link, related course link.
+- `/books/[slug]/[...chapter]` — Full-viewport iframe chapter viewer with back navigation to the book.
+
+### Components
+- `lib/book-meta.ts` — `scanBooks(dir)` reads subdirectories, parses `book.json`, extracts chapter HTML metadata. Returns `BookMeta[]` sorted by series position.
+- `app/books/BooksBrowser.tsx` — Client component: search input, tag filter badges, card grid
+- `app/books/page.tsx` — Server component: scans `public/books/` via `scanBooks()`
+- `app/books/[slug]/page.tsx` — Book detail with TOC
+- `app/books/[slug]/[...chapter]/page.tsx` — Chapter iframe viewer
 
 ## Dev Docs system
 
