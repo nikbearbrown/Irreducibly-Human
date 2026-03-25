@@ -128,11 +128,16 @@ export default function NotesBrowser({ groups }: { groups: Group[] }) {
                         )}
                         {doc.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 pt-2">
-                            {doc.tags.map(tag => (
+                            {doc.tags.slice(0, 3).map(tag => (
                               <Badge key={tag} variant="secondary" className="text-[10px]">
                                 {tag}
                               </Badge>
                             ))}
+                            {doc.tags.length > 3 && (
+                              <span className="text-[10px] text-muted-foreground">
+                                +{doc.tags.length - 3} more
+                              </span>
+                            )}
                           </div>
                         )}
                       </CardHeader>
