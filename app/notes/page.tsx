@@ -1,7 +1,7 @@
 import { join } from 'path'
 import type { Metadata } from 'next'
-import { scanHtmlDir } from '@/lib/html-meta'
-import DevBrowser from './DevBrowser'
+import { scanHtmlSubdirs } from '@/lib/html-meta'
+import NotesBrowser from './NotesBrowser'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default function NotesPage() {
-  const docs = scanHtmlDir(join(process.cwd(), 'public', 'notes'))
+  const groups = scanHtmlSubdirs(join(process.cwd(), 'public', 'notes'))
 
   return (
     <div className="container px-4 md:px-6 mx-auto py-12">
@@ -20,7 +20,7 @@ export default function NotesPage() {
         <p className="text-muted-foreground mb-10">
           Machines are superhuman at pattern recognition, fact retrieval, and syntactic correctness. Everything else is irreducibly human. Here is the curriculum for everything else.
         </p>
-        <DevBrowser docs={docs} />
+        <NotesBrowser groups={groups} />
       </div>
     </div>
   )

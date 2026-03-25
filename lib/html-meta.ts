@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'fs'
+import { readFileSync, readdirSync, statSync } from 'fs'
 import { join } from 'path'
 
 export interface HtmlDocMeta {
@@ -7,6 +7,12 @@ export interface HtmlDocMeta {
   title: string
   description: string
   tags: string[]
+}
+
+export interface GroupedHtmlDocs {
+  folder: string
+  folderTitle: string
+  docs: HtmlDocMeta[]
 }
 
 function extractTag(html: string, pattern: RegExp): string | null {
@@ -49,4 +55,41 @@ export function scanHtmlDir(dir: string): HtmlDocMeta[] {
 
     return { slug, filename, title, description, tags }
   })
+}
+
+/** Scan subdirectories of `dir`, returning docs grouped by folder name, sorted alphabetically. */
+export function scanHtmlSubdirs(dir: string): GroupedHtmlDocs[] {
+  let entries: string[]
+  try {
+    entries = readdirSync(dir).sort()
+  } catch {
+    return []
+  }
+
+  const groups: GroupedHtmlDocs[] = []
+
+  for (const entry of entries) {
+    const fullPath = join(dir, entry)
+    try {
+      if (!statSync(fullPath).isDirectory()) continue
+    } catch {
+      continue
+    }
+
+    const docs = scanHtmlDir(fullPath).map(doc => ({
+      ...doc,
+      // prefix slug with folder so routes resolve correctly
+      slug: `${entry}/${doc.slug}`,
+    }))
+
+    if (docs.length > 0) {
+      groups.push({
+        folder: entry,
+        folderTitle: titleCase(entry),
+        docs: docs.sort((a, b) => a.title.localeCompare(b.title)),
+      })
+    }
+  }
+
+  return groups
 }

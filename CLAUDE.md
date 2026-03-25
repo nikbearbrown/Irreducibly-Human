@@ -40,7 +40,9 @@ Brand voice: Academic, clear, direct. Informed by research, accessible to practi
 9. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
 10. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
 11. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
-12. `/blog` — Blog feed: published posts newest first, clean card list
+12. `/notes` — Notes browser (searchable card grid, grouped by folder, filesystem-driven)
+13. `/notes/[...slug]` — Full-viewport iframe of a note HTML file (e.g., `/notes/Irreducibly-Human/NEU_botspeak-syllabus`)
+14. `/blog` — Blog feed: published posts newest first, clean card list
 13. `/blog/[slug]` — Individual blog post with prose content
 14. `/about` — About the program (prose format, author info)
 15. `/privacy` — Privacy Policy for Irreducibly Human
@@ -168,6 +170,29 @@ CREATE POLICY "service_role_tools" ON tools FOR ALL USING (true) WITH CHECK (tru
 - `/tools` — Card grid of all tools. Artifact tools show "Artifact" badge and link to `/tools/[slug]`. Link tools open in new tab.
 - `/tools/[slug]` — Full-page artifact embed with title bar (name, description, "Back to Tools" link, optional "Open External" button). Iframe takes full viewport height minus header.
 
+## Notes system — DONE
+
+### Structure
+Notes are organized into subdirectories under `public/notes/`, each folder representing a collection:
+- `public/notes/Irreducibly-Human/` — Core curriculum documents (syllabi, TIC TOCs, project doc)
+- `public/notes/White-Label/` — White-label workshop materials
+
+### Adding new notes
+1. Create or choose a folder under `public/notes/` (folder name becomes the section heading)
+2. Build the HTML file with `<title>`, `<meta name="description">`, and `<meta name="keywords">` tags
+3. Drop into the appropriate folder
+4. It appears automatically on `/notes` — no database, no sync needed
+5. Filesystem is the source of truth
+
+### Public pages
+- `/notes` — Searchable card browser grouped by folder. Each folder is a section with heading. Tag filter bar from keywords metadata. Alphabetical by folder and title.
+- `/notes/[...slug]` — Full-viewport iframe of the note (catch-all route handles `folder/file` paths)
+
+### Components
+- `app/notes/NotesBrowser.tsx` — Client component: search input, tag filter badges, folder-grouped card grid
+- `app/notes/page.tsx` — Server component: scans `public/notes/` subdirectories via `scanHtmlSubdirs()`
+- `app/notes/[...slug]/page.tsx` — Catch-all route for viewing individual notes in iframe
+
 ## Dev Docs system
 
 ### Adding new dev docs
@@ -186,7 +211,7 @@ CREATE POLICY "service_role_tools" ON tools FOR ALL USING (true) WITH CHECK (tru
 - "Sync Dev Docs" button refreshes the list from the filesystem
 
 ### Shared utility
-- `lib/html-meta.ts` — `scanHtmlDir(dir)` reads all `.html` files from a directory and extracts `<title>`, `<meta name="description">`, `<meta name="keywords">` tags. Returns `HtmlDocMeta[]`. Used by both `/dev` pages and admin.
+- `lib/html-meta.ts` — `scanHtmlDir(dir)` reads all `.html` files from a directory and extracts `<title>`, `<meta name="description">`, `<meta name="keywords">` tags. Returns `HtmlDocMeta[]`. Used by `/dev` pages and admin. `scanHtmlSubdirs(dir)` scans subdirectories and returns `GroupedHtmlDocs[]` (folder + docs). Used by `/notes`.
 
 ## Blog system — DONE
 
@@ -606,7 +631,7 @@ components/
   ui/                               # 60+ shadcn/ui components
 lib/
   utils.ts                          # cn() helper + getReadingTime()
-  html-meta.ts                      # scanHtmlDir() — extract title/desc/keywords from HTML files
+  html-meta.ts                      # scanHtmlDir() + scanHtmlSubdirs() — extract metadata from HTML files
   admin-auth.ts                     # admin_session cookie check
   substack-parser.ts                # Substack ZIP parser (adm-zip)
   db.ts                             # Neon PostgreSQL client (sql tagged template)
