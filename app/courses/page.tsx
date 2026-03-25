@@ -12,7 +12,7 @@ const COURSES = [
     subtitle: "Fluency in AI Communication",
     description:
       "Fluency in AI communication. How to talk to machines — and know when they're talking past you. Prompt engineering, model limitations, hallucination detection, and the rhetorical gap between human intent and machine output.",
-    href: "/notes/NEU_botspeak-syllabus",
+    href: "/notes/Irreducibly-Human/Irreducibly-Human-Botspeak",
     tier: "Tier 4",
   },
   {
@@ -20,7 +20,7 @@ const COURSES = [
     subtitle: "Causal Reasoning and World Modeling",
     description:
       "AI finds correlations. Humans build causal models. Counterfactual thinking, interventionist reasoning, and the kind of \"why\" questions that statistical models cannot answer.",
-    href: "/notes/NEU_causal-reasoning-syllabus",
+    href: "/notes/Irreducibly-Human/Irreducibly-Human-Causal-Reasoning",
     tier: "Tier 5",
   },
   {
@@ -28,7 +28,7 @@ const COURSES = [
     subtitle: "Ethical Play and Moral Imagination",
     description:
       "Moral reasoning under uncertainty, value pluralism, and the limits of rule-based ethics. Developing the capacity for ethical judgment that cannot be reduced to optimization or alignment.",
-    href: "/notes/NEU_ethical-play-tictoc",
+    href: "/notes/Irreducibly-Human/Irreducibly-Human-Ethical-Play",
     tier: "Tier 3",
   },
   {
@@ -36,7 +36,7 @@ const COURSES = [
     subtitle: "Creative Intelligence",
     description:
       "Generative AI produces outputs. Humans produce meaning. Creative process, aesthetic judgment, conceptual blending, and the difference between novelty and genuine originality.",
-    href: "/notes/NEU_aimagineering-syllabus",
+    href: "/notes/Irreducibly-Human/Irreducibly-Human-AImagineering",
     tier: "Tier 4",
   },
   {
@@ -44,7 +44,7 @@ const COURSES = [
     subtitle: "Embodied Teaching and Mentorship",
     description:
       "Teaching is irreducibly human. Presence, improvisation, emotional attunement, and the embodied skills that make mentorship effective — none of which transfer to a language model.",
-    href: "/notes/NEU_embodied-teaching-syllabus",
+    href: "/notes/Embodied-Teaching/Irreducibly-Human-Embodied-Teaching",
     tier: "Tier 2",
   },
   {
@@ -52,7 +52,7 @@ const COURSES = [
     subtitle: "Supervisory Intelligence",
     description:
       "The five supervisory capacities: plausibility auditing, problem formulation, tool orchestration, interpretive judgment, and executive integration. The course that teaches you to conduct the orchestra, not play every instrument.",
-    href: "/notes/NEU_conducting-ai-concept-brief",
+    href: "/notes/Irreducibly-Human/Irreducibly-Human-Conducting-AI",
     tier: "Tier 4",
   },
   {
@@ -60,7 +60,7 @@ const COURSES = [
     subtitle: "Experiential Learning Guide",
     description:
       "A practitioner's guide for experiential learning. The full 18-chapter arc — from design failure diagnosis through the Sherpa infrastructure to domain field guides for co-op, study abroad, clinical, trades, and corporate early career programs.",
-    href: "/notes/NEU_ai-sherpa-tictoc",
+    href: "/notes/AI-Sherpa/Irreducibly-Human-AI-Sherpa",
     tier: "Guide",
   },
 ];

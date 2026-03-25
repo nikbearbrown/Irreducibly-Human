@@ -44,19 +44,19 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold mb-4">The Five Courses</h2>
             <ul>
               <li>
-                <Link href="/notes/NEU_botspeak-syllabus" className="text-primary hover:underline">BotSpeak</Link> — Tier 4: Creative Authorship
+                <Link href="/notes/Irreducibly-Human/Irreducibly-Human-Botspeak" className="text-primary hover:underline">BotSpeak</Link> — Tier 4: Creative Authorship
               </li>
               <li>
-                <Link href="/notes/NEU_causal-reasoning-syllabus" className="text-primary hover:underline">Causal Reasoning</Link> — Tier 5: Causal Reasoning
+                <Link href="/notes/Irreducibly-Human/Irreducibly-Human-Causal-Reasoning" className="text-primary hover:underline">Causal Reasoning</Link> — Tier 5: Causal Reasoning
               </li>
               <li>
-                <Link href="/notes/NEU_ethical-play-tictoc" className="text-primary hover:underline">Ethical Play</Link> — Tier 3: Ethical Play
+                <Link href="/notes/Irreducibly-Human/Irreducibly-Human-Ethical-Play" className="text-primary hover:underline">Ethical Play</Link> — Tier 3: Ethical Play
               </li>
               <li>
-                <Link href="/notes/NEU_aimagineering-syllabus" className="text-primary hover:underline">AIMagineering</Link> — Tier 4: Creative Authorship
+                <Link href="/notes/Irreducibly-Human/Irreducibly-Human-AImagineering" className="text-primary hover:underline">AIMagineering</Link> — Tier 4: Creative Authorship
               </li>
               <li>
-                <Link href="/notes/NEU_embodied-teaching-syllabus" className="text-primary hover:underline">Embodied Teaching</Link> — Tier 2: Embodied Teaching
+                <Link href="/notes/Embodied-Teaching/Irreducibly-Human-Embodied-Teaching" className="text-primary hover:underline">Embodied Teaching</Link> — Tier 2: Embodied Teaching
               </li>
             </ul>
           </section>

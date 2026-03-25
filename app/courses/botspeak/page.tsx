@@ -89,7 +89,7 @@ export default function BotSpeakPage() {
           <section>
             <h2 className="text-3xl font-bold mb-6">Continue the Sequence</h2>
             <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
-              <PrimaryButton href="/notes/NEU_causal-reasoning-syllabus">
+              <PrimaryButton href="/notes/Irreducibly-Human/Irreducibly-Human-Causal-Reasoning">
                 Next: Causal Reasoning
               </PrimaryButton>
               <SecondaryButton href="/courses">
@@ -107,7 +107,7 @@ export default function BotSpeakPage() {
                   bear@bearbrown.co
                 </a>
                 <Link
-                  href="/notes/irreducibly-human-project-doc"
+                  href="/notes/Irreducibly-Human/Irreducibly-Human-Project"
                   className="text-sm text-primary hover:underline"
                 >
                   About the Series

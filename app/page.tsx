@@ -10,49 +10,49 @@ const COURSES = [
     description:
       'Fluency in AI communication. How to talk to machines — and know when they\'re talking past you. Prompt engineering, model limitations, hallucination detection, and the rhetorical gap between human intent and machine output.',
     link: 'Explore BotSpeak',
-    href: '/notes/NEU_botspeak-syllabus',
+    href: '/notes/Irreducibly-Human/Irreducibly-Human-Botspeak',
   },
   {
     title: 'CAUSAL REASONING',
     description:
       'AI finds correlations. Humans build causal models. Counterfactual thinking, interventionist reasoning, and the kind of "why" questions that statistical models cannot answer.',
     link: 'Explore Causal Reasoning',
-    href: '/notes/NEU_causal-reasoning-syllabus',
+    href: '/notes/Irreducibly-Human/Irreducibly-Human-Causal-Reasoning',
   },
   {
     title: 'ETHICAL PLAY',
     description:
       'Moral reasoning under uncertainty, value pluralism, and the limits of rule-based ethics. Developing the capacity for ethical judgment that cannot be reduced to optimization or alignment.',
     link: 'Explore Ethical Play',
-    href: '/notes/NEU_ethical-play-tictoc',
+    href: '/notes/Irreducibly-Human/Irreducibly-Human-Ethical-Play',
   },
   {
     title: 'AIMAGINEERING',
     description:
       'Generative AI produces outputs. Humans produce meaning. Creative process, aesthetic judgment, conceptual blending, and the difference between novelty and genuine originality.',
     link: 'Explore AIMagineering',
-    href: '/notes/NEU_aimagineering-syllabus',
+    href: '/notes/Irreducibly-Human/Irreducibly-Human-AImagineering',
   },
   {
     title: 'EMBODIED TEACHING',
     description:
       'Teaching is irreducibly human. Presence, improvisation, emotional attunement, and the embodied skills that make mentorship effective — none of which transfer to a language model.',
     link: 'Explore Embodied Teaching',
-    href: '/notes/NEU_embodied-teaching-syllabus',
+    href: '/notes/Embodied-Teaching/Irreducibly-Human-Embodied-Teaching',
   },
   {
     title: 'CONDUCTING AI',
     description:
       'The five supervisory capacities: plausibility auditing, problem formulation, tool orchestration, interpretive judgment, and executive integration. The course that teaches you to conduct the orchestra, not play every instrument.',
     link: 'Explore Conducting AI',
-    href: '/notes/NEU_conducting-ai-concept-brief',
+    href: '/notes/Irreducibly-Human/Irreducibly-Human-Conducting-AI',
   },
   {
     title: 'THE AI SHERPA',
     description:
       'A practitioner\'s guide for experiential learning. The full 18-chapter arc — from design failure diagnosis through the Sherpa infrastructure to domain field guides for co-op, study abroad, clinical, trades, and corporate early career programs.',
     link: 'Explore The AI Sherpa',
-    href: '/notes/NEU_ai-sherpa-tictoc',
+    href: '/notes/AI-Sherpa/Irreducibly-Human-AI-Sherpa',
   },
 ]
 
@@ -113,7 +113,7 @@ export default function Home() {
                 <a href="/courses" className={buttonStyles}>
                   Explore the Courses
                 </a>
-                <a href="/notes/irreducibly-human-project-doc" className={buttonOutline}>
+                <a href="/notes/Irreducibly-Human/Irreducibly-Human-Project" className={buttonOutline}>
                   About the Series
                 </a>
               </div>
@@ -222,13 +222,13 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="/notes/NEU_botspeak-syllabus"
+              href="/notes/Irreducibly-Human/Irreducibly-Human-Botspeak"
               className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold tracking-wide transition-colors bg-white text-[var(--bb-2)] shadow hover:bg-white/90"
             >
               START WITH BOTSPEAK
             </a>
             <a
-              href="/notes/irreducibly-human-project-doc"
+              href="/notes/Irreducibly-Human/Irreducibly-Human-Project"
               className="inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-bold tracking-wide transition-colors border border-white/30 text-white hover:bg-white/10"
             >
               ABOUT THE SERIES
