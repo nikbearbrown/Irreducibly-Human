@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { name: 'Books', href: '/books' },
   { name: 'Tools', href: '/tools' },
   { name: 'Notes', href: '/notes' },
+  { name: 'Dev', href: '/dev' },
   { name: 'Blog', href: '/blog' },
 ]
 
