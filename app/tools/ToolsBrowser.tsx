@@ -22,15 +22,17 @@ interface Tool {
   tags: string[]
 }
 
-export default function ToolsBrowser({ tools }: { tools: Tool[] }) {
+export default function ToolsBrowser({ tools, filterTags = [] }: { tools: Tool[]; filterTags?: string[] }) {
   const [query, setQuery] = useState('')
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
+  // Use curated filter tags from filters.json; fall back to extracting from tools if empty
   const allTags = useMemo(() => {
+    if (filterTags.length > 0) return filterTags
     const set = new Set<string>()
     tools.forEach(t => t.tags?.forEach(tag => set.add(tag)))
     return Array.from(set).sort()
-  }, [tools])
+  }, [tools, filterTags])
 
   const filtered = useMemo(() => {
     let result = tools
