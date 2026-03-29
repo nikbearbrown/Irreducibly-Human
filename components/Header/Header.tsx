@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { name: 'Dev', href: '/dev' },
   { name: 'Notes', href: '/notes' },
   { name: 'Tools', href: '/tools' },
+  { name: 'Videos', href: '/irreducibly' },
 ]
 
 const SOCIAL_LINKS = [
