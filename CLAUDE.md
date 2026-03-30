@@ -448,7 +448,6 @@ ADMIN_PASSWORD=                  # Password for /admin/login — set a strong va
 NEXT_PUBLIC_SITE_URL=https://irreduciblyhuman.xyz  # Used in sitemap generation
 BLOB_READ_WRITE_TOKEN=           # Vercel Blob token (from Vercel dashboard → Storage → Blob)
 NEXT_PUBLIC_GA_ID=               # Google Analytics measurement ID (optional, e.g. G-XXXXXXXXXX)
-NEXT_PUBLIC_ANTHROPIC_API_KEY=   # only if embedding AI assistant directly
 ```
 
 ## Deployment
