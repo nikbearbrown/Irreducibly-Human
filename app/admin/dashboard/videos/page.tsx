@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Pencil, Trash2, Plus, Pin, Download, CheckSquare, Square, List } from 'lucide-react'
+import { Pencil, Trash2, Plus, Pin, Download, CheckSquare, Square, List, Eye, EyeOff } from 'lucide-react'
 
 interface Video {
   id: string
@@ -330,6 +330,36 @@ export default function VideosAdminPage() {
     }
   }
 
+  async function bulkUpdatePublished(published: boolean, mode: 'selected' | 'tag') {
+    const label = published ? 'Publish' : 'Unpublish'
+    if (mode === 'selected') {
+      if (selectedIds.size === 0) return
+      if (!confirm(`${label} ${selectedIds.size} selected video(s)?`)) return
+    } else if (mode === 'tag' && filterTag) {
+      const count = videos.filter(v => v.tags?.includes(filterTag)).length
+      if (!confirm(`${label} all ${count} video(s) tagged "${filterTag}"?`)) return
+    }
+    clearMessages()
+    try {
+      const payload: { ids?: string[]; tag?: string; published: boolean } = { published }
+      if (mode === 'selected') payload.ids = Array.from(selectedIds)
+      else if (mode === 'tag' && filterTag) payload.tag = filterTag
+
+      const res = await fetch('/api/admin/videos/bulk-update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || `${label} failed`)
+      setSuccess(`${label}ed ${data.updated} video(s)`)
+      if (mode === 'selected') setSelectedIds(new Set())
+      fetchVideos()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `${label} error`)
+    }
+  }
+
   // --- Filtering ---
 
   const allTags = Array.from(new Set(videos.flatMap(v => v.tags || [])))
@@ -416,18 +446,38 @@ export default function VideosAdminPage() {
             <Button variant="outline" size="sm" onClick={selectAll}>Select All</Button>
             <Button variant="outline" size="sm" onClick={selectNone}>Deselect All</Button>
             {selectedIds.size > 0 && (
-              <Button variant="destructive" size="sm" onClick={bulkDeleteSelected} className="gap-2">
-                <Trash2 className="h-3.5 w-3.5" />
-                Delete {selectedIds.size} Selected
-              </Button>
+              <>
+                <Button size="sm" onClick={() => bulkUpdatePublished(true, 'selected')} className="gap-2">
+                  <Eye className="h-3.5 w-3.5" />
+                  Publish {selectedIds.size} Selected
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => bulkUpdatePublished(false, 'selected')} className="gap-2">
+                  <EyeOff className="h-3.5 w-3.5" />
+                  Unpublish {selectedIds.size} Selected
+                </Button>
+                <Button variant="destructive" size="sm" onClick={bulkDeleteSelected} className="gap-2">
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Delete {selectedIds.size} Selected
+                </Button>
+              </>
             )}
           </>
         )}
         {filterTag && (
-          <Button variant="destructive" size="sm" onClick={() => bulkDeleteByTag(filterTag)} className="gap-2">
-            <Trash2 className="h-3.5 w-3.5" />
-            Delete All &ldquo;{filterTag}&rdquo;
-          </Button>
+          <>
+            <Button size="sm" onClick={() => bulkUpdatePublished(true, 'tag')} className="gap-2">
+              <Eye className="h-3.5 w-3.5" />
+              Publish All &ldquo;{filterTag}&rdquo;
+            </Button>
+            <Button variant="outline" size="sm" onClick={() => bulkUpdatePublished(false, 'tag')} className="gap-2">
+              <EyeOff className="h-3.5 w-3.5" />
+              Unpublish All &ldquo;{filterTag}&rdquo;
+            </Button>
+            <Button variant="destructive" size="sm" onClick={() => bulkDeleteByTag(filterTag)} className="gap-2">
+              <Trash2 className="h-3.5 w-3.5" />
+              Delete All &ldquo;{filterTag}&rdquo;
+            </Button>
+          </>
         )}
       </div>
 
