@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computational Skepticism for AI — INFO 7375</title>
+  <meta name="description" content="Graduate IS students can articulate why AI fluency is necessary but not sufficient — and identify the irreducibly human capacities that no AI can replicate.">
+  <meta name="keywords" content="computational skepticism, AI validation, irreducibly human, supervisory capacities, Pearl's Ladder, causal reasoning, glimmer exercises, Frictional framework">
+  <meta name="author" content="Nik Bear Brown">
+  <meta name="category" content="Irreducibly Human">
+  <meta name="slide-count" content="16">
+  <meta name="audio" content="true">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: hsl(43,23%,93%);
+      --fg: hsl(0,0%,4%);
+      --accent: #ea580c;
+      --muted: hsl(0,0%,40%);
+      --muted-bg: hsl(40,10%,85%);
+      --card-bg: hsl(43,23%,91%);
+      --font: 'JetBrains Mono', 'Courier New', monospace;
+    }
+    [data-theme="dark"] {
+      --bg: hsl(0,0%,6%);
+      --fg: hsl(43,23%,93%);
+      --muted: hsl(0,0%,55%);
+      --muted-bg: hsl(0,0%,11%);
+      --card-bg: hsl(0,0%,8%);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; font-family: var(--font); background: var(--bg); color: var(--fg); overflow: hidden; transition: background 0.2s, color 0.2s; }
+
+    /* dot grid */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: radial-gradient(circle, var(--muted) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .deck { position: relative; width: 100vw; height: 100vh; z-index: 1; }
+
+    /* ── SLIDES ── */
+    .slide {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column;
+      padding: 28px 40px 72px;
+      gap: 14px;
+    }
+    .slide.active { display: flex; }
+    .slide.sdark {
+      background: hsl(0,0%,4%);
+    }
+    .slide.sdark .stitle { color: hsl(43,23%,93%); }
+    .slide.sdark .lbl { color: hsl(0,0%,38%); }
+    .slide.sdark .sdiv { background: hsl(43,23%,93%); opacity: 0.08; }
+
+    /* ── META ROW ── */
+    .smeta { display: flex; align-items: center; gap: 12px; }
+    .sdiv { flex: 1; height: 1px; background: var(--fg); opacity: 0.18; }
+
+    /* ── TYPOGRAPHY ── */
+    .lbl  { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-family: var(--font); }
+    .lbl-o { color: var(--accent); }
+    .txs  { font-size: 10px; color: var(--muted); }
+    .tsm  { font-size: 12px; color: var(--muted); line-height: 1.65; font-family: var(--font); }
+    .txl  { font-size: clamp(32px,5vw,76px); font-weight: 800; line-height: 1.05; font-family: var(--font); }
+    .t2xl { font-size: clamp(48px,8vw,130px); font-weight: 800; line-height: 0.95; font-family: var(--font); }
+    .oc   { color: var(--accent); }
+    .bo   { font-weight: 800; }
+    .mu   { color: var(--muted); }
+
+    .stitle {
+      font-size: clamp(14px,2.1vw,28px);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.25;
+      max-width: 960px;
+      color: var(--fg);
+      font-family: var(--font);
+      letter-spacing: 0.01em;
+    }
+    .stitle .o { color: var(--accent); }
+
+    /* glitch */
+    @keyframes glitch {
+      0%,90%,100% { clip-path:none; transform:none; }
+      91% { clip-path:inset(20% 0 65% 0); transform:translate(-3px,0); }
+      93% { clip-path:inset(60% 0 10% 0); transform:translate(3px,0); }
+      95% { clip-path:none; transform:none; }
+    }
+    .ag { animation: glitch 4s steps(1) infinite; display:inline-block; }
+
+    /* blink dot */
+    .dot8 { width:8px; height:8px; background:var(--accent); flex-shrink:0; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .dot8.ab { animation: blink 1.4s ease-in-out infinite; }
+
+    /* ── CONTENT BOX ── */
+    .cb {
+      border: 2px solid var(--fg);
+      background: var(--card-bg);
+      padding: 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      overflow-y: auto;
+      min-height: 0;
+    }
+
+    /* ── BRUTALIST TABLE ── */
+    .bt { border-collapse: collapse; width: 100%; font-family: var(--font); font-size: 11.5px; }
+    .bt thead tr { background: var(--fg); color: var(--bg); }
+    .bt th { padding: 7px 11px; text-align: left; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 800; }
+    .bt td { padding: 7px 11px; border-bottom: 1px solid var(--fg); color: var(--fg); vertical-align: top; line-height: 1.45; }
+    .bt tbody tr:nth-child(even) td { background: var(--muted-bg); }
+    .warn { color: var(--accent); font-weight: 800; }
+    .good { color: #16a34a; font-weight: 800; }
+    .hl-row td { border-left: 3px solid var(--accent); }
+    .hl-row td:last-child { color: var(--accent); font-weight: 800; }
+
+    /* ── TWO COLUMNS ── */
+    .twoc { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+    .col { padding: 14px 16px; }
+    .col + .col { border-left: 2px solid var(--fg); }
+    .clbl { font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; font-weight: 700; }
+
+    /* ── NUMBERED BLOCKS ── */
+    .nbs { display: flex; flex-direction: column; gap: 0; }
+    .nb  { display: flex; gap: 14px; align-items: flex-start; border-top: 1px solid var(--fg); padding: 11px 0; }
+    .nb:first-child { border-top: none; padding-top: 0; }
+    .nbnum { font-size: 20px; font-weight: 800; color: var(--accent); min-width: 38px; line-height: 1; flex-shrink: 0; }
+    .nbb strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; color: var(--fg); }
+    .nbb p { font-size: 11.5px; color: var(--muted); line-height: 1.55; }
+
+    /* ── TIMELINE ── */
+    .tl { display: flex; flex-direction: column; }
+    .tli { display: grid; grid-template-columns: 148px 1fr; border-top: 1px solid var(--fg); padding: 9px 0; gap: 14px; align-items: start; }
+    .tli:first-child { border-top: none; }
+    .tld { font-size: 10.5px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.4; }
+    .tlb strong { font-size: 11px; display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg); }
+    .tlb p { font-size: 11px; color: var(--muted); line-height: 1.55; }
+
+    /* ── QUOTE ── */
+    .qt { border-left: 4px solid var(--accent); padding: 14px 18px; font-size: clamp(14px,1.7vw,21px); font-weight: 600; line-height: 1.45; color: var(--fg); font-family: var(--font); }
+
+    /* ── STAT PAIR ── */
+    .spair { display: flex; }
+    .sb { flex: 1; padding: 16px; }
+    .sb + .sb { border-left: 2px solid var(--fg); }
+    .sl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 8px; }
+    .sv { font-size: clamp(24px,3.5vw,52px); font-weight: 800; line-height: 1; color: var(--fg); }
+
+    /* ── PROBLEM/COMMIT ── */
+    .pc { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+    .pcc { padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+    .pcc + .pcc { border-left: 2px solid var(--fg); }
+    .pclbl { font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; font-weight: 700; }
+    .pci { display: flex; gap: 8px; font-size: 11.5px; line-height: 1.5; color: var(--fg); }
+    .pci::before { content: '//'; color: var(--accent); font-weight: 800; flex-shrink: 0; }
+
+    /* ── LIST ── */
+    .ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .ul li { display: flex; gap: 8px; font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+    .ul li::before { content: '›'; color: var(--accent); font-weight: 800; flex-shrink: 0; }
+
+    /* ── CALLOUT ── */
+    .ca { border: 1px solid var(--accent); padding: 10px 14px; color: var(--accent); font-size: 11px; letter-spacing: 0.03em; line-height: 1.55; font-family: var(--font); }
+
+    /* ── HR ── */
+    hr.b { border: none; border-top: 2px solid var(--fg); margin: 4px 0; }
+
+    /* ── PROGRESS ── */
+    .progress { position: fixed; bottom: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 200; }
+
+    /* ── COUNTDOWN STRIP ── */
+    .countdown { position: fixed; bottom: 3px; left: 0; height: 2px; background: var(--accent); opacity: 0.45; z-index: 199; display: none; }
+
+    /* ── DOT NAV ── */
+    .dots { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 150; }
+    .dot-nav { width: 6px; height: 6px; background: var(--muted); border: none; padding: 0; cursor: pointer; transition: background 0.2s; opacity: 0.5; }
+    .dot-nav.active { background: var(--accent); opacity: 1; }
+
+    /* ── CONTROLS ── */
+    .controls { position: fixed; top: 14px; right: 14px; display: flex; gap: 6px; z-index: 150; }
+    .ctrl-btn {
+      background: var(--bg); border: 2px solid var(--fg);
+      color: var(--fg); font-family: var(--font); font-size: 10px;
+      padding: 4px 9px; cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background 0.12s, color 0.12s;
+    }
+    .ctrl-btn:hover { background: var(--fg); color: var(--bg); }
+
+    /* sound pulse */
+    .sound-wrap { position: relative; }
+    @keyframes pulse-ring { 0%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(1.6)} }
+    .pulse-ring::after {
+      content: '';
+      position: absolute; inset: -4px;
+      border: 2px solid var(--accent);
+      animation: pulse-ring 1.6s ease-out infinite;
+      pointer-events: none;
+    }
+    .sound-tip {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--accent); color: #fff;
+      font-size: 9px; padding: 3px 7px;
+      white-space: nowrap; letter-spacing: 0.1em;
+      pointer-events: none; font-family: var(--font);
+    }
+
+    /* ── SLIDE NUM ── */
+    .slide-num { position: fixed; bottom: 16px; left: 40px; font-size: 9px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; z-index: 150; font-family: var(--font); }
+
+    /* ── FOOTER ── */
+    .footer-strip {
+      position: fixed; bottom: 14px; right: 40px;
+      font-size: 9px; color: var(--muted); letter-spacing: 0.1em;
+      text-transform: uppercase; z-index: 150;
+      text-align: right; line-height: 1.7;
+      font-family: var(--font);
+    }
+    .footer-strip a { color: var(--muted); text-decoration: none; }
+    .footer-strip a:hover { color: var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .slide { padding: 16px 16px 64px; }
+      .pc, .twoc { grid-template-columns: 1fr; }
+      .pcc+.pcc, .col+.col { border-left: none; border-top: 2px solid var(--fg); }
+      .spair { flex-direction: column; }
+      .sb+.sb { border-left: none; border-top: 2px solid var(--fg); }
+      .tli { grid-template-columns: 1fr; }
+      .footer-strip { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 01 — HOOK                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide active" data-section="HOOK">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 01 — HOOK</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">You are already superhuman at <span class="o">the wrong things.</span></div>
+    <div class="cb" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;">
+      <div class="t2xl ag">YOU ARE<br>ALREADY<br><span class="oc">SUPERHUMAN</span></div>
+      <div class="lbl oc">// AT THE WRONG THINGS</div>
+      <p class="tsm" style="max-width:500px;">INFO 7375 — Computational Skepticism for AI &nbsp;·&nbsp; Nik Bear Brown &nbsp;·&nbsp; Irreducibly Human</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 02 — LEARNING OUTCOMES              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="LEARNING OUTCOMES">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 02 — LEARNING OUTCOMES</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">By the end of this deck, you will be able to <span class="o">do three things.</span></div>
+    <div class="cb">
+      <table class="bt">
+        <thead><tr><th>By the end of this…</th><th>Bloom's Level</th></tr></thead>
+        <tbody>
+          <tr><td>Distinguish between Tier 1 AI fluency and the irreducibly human capacities this course develops</td><td class="oc bo">Analyze</td></tr>
+          <tr><td>Identify at least one supervisory capacity you already exercise and one you need to develop</td><td class="oc bo">Apply</td></tr>
+          <tr><td>Explain why using AI tools is necessary but not sufficient for succeeding in the AI economy</td><td class="oc bo">Evaluate</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 03 — THE PROBLEM                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="THE PROBLEM">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 03 — THE PROBLEM</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">The curriculum spent twelve years training you to do <span class="o">what machines now do better.</span></div>
+    <div class="cb" style="gap:0;">
+      <div class="pc" style="flex:1;min-height:0;">
+        <div class="pcc">
+          <div class="pclbl">What the curriculum trained</div>
+          <div class="pci">Pattern recognition</div>
+          <div class="pci">Fact retrieval</div>
+          <div class="pci">Syntactic correctness</div>
+          <div class="pci">Replicating established reasoning</div>
+          <div class="pci">Producing artifact on demand</div>
+        </div>
+        <div class="pcc">
+          <div class="pclbl" style="color:var(--accent);">What AI now does — superhumanly</div>
+          <div class="pci" style="color:var(--accent);">Pattern recognition</div>
+          <div class="pci" style="color:var(--accent);">Fact retrieval</div>
+          <div class="pci" style="color:var(--accent);">Syntactic correctness</div>
+          <div class="pci" style="color:var(--accent);">Replicating established reasoning</div>
+          <div class="pci" style="color:var(--accent);">Producing artifact on demand</div>
+        </div>
+      </div>
+      <div class="ca" style="margin-top:12px;">This is not an accusation. The curriculum was rational. It optimized for an economy that no longer exists.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 04 — THE FORKLIFT                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="THE FORKLIFT ARGUMENT">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 04 — THE FORKLIFT ARGUMENT</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">The intelligent response to a forklift is not to practice <span class="o">lifting heavier objects.</span></div>
+    <div class="cb">
+      <div class="qt">The intelligent response to a forklift is not to practice lifting heavier objects. It is to learn to operate the machine, understand what it can and cannot lift, and develop the judgment to know what needs lifting in the first place.</div>
+      <hr class="b">
+      <div class="nbs">
+        <div class="nb">
+          <div class="nbnum">01</div>
+          <div class="nbb"><strong>Operate it</strong><p>Learn the tools. Use them well. This is Tier 1 — and it is necessary.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">02</div>
+          <div class="nbb"><strong>Understand its limits</strong><p>Know what the machine cannot lift. That knowledge is irreducibly human.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">03</div>
+          <div class="nbb"><strong>Develop the judgment</strong><p>Decide what needs lifting in the first place. No algorithm formulates that question for you.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 05 — THE TIER MAP                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="THE TIER MAP">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 05 — THE TIER MAP</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Seven tiers of human intelligence. AI is superhuman at one. <span class="o">The rest are yours.</span></div>
+    <div class="cb">
+      <table class="bt">
+        <thead><tr><th>#</th><th>Name</th><th>Tag</th><th>AI Status</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Pattern &amp; Association</td><td class="mu">USE THE TOOL</td><td class="good">Superhuman</td></tr>
+          <tr><td>2</td><td>Embodied &amp; Sensorimotor</td><td class="mu">WHAT THE BODY KNOWS</td><td class="mu">Weak / Emerging</td></tr>
+          <tr><td>3</td><td>Social &amp; Personal</td><td class="mu">NO STAKES, NO SKIN</td><td class="mu">Simulates, doesn't feel</td></tr>
+          <tr class="hl-row"><td>4</td><td>Metacognitive &amp; Supervisory</td><td>THE SUPERVISOR'S GAP</td><td>← THIS COURSE</td></tr>
+          <tr class="hl-row"><td>5</td><td>Causal &amp; Counterfactual</td><td>WHAT WOULD HAPPEN IF</td><td>← THIS COURSE</td></tr>
+          <tr><td>6</td><td>Collective &amp; Distributed</td><td class="mu">CANNOT BE POSSESSED</td><td class="mu">Absent by definition</td></tr>
+          <tr><td>7</td><td>Existential &amp; Wisdom</td><td class="mu">NO LIVED TIME</td><td class="mu">Absent</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 06 — PAUSE & REFLECT                -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="PAUSE AND REFLECT">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 06 — CHECK FOR UNDERSTANDING</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">PAUSE.</div>
+    <div class="cb" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;">
+      <div class="txl">PAUSE.</div>
+      <p class="tsm" style="max-width:540px;">Which tier describes most of what you were asked to demonstrate in your last degree program?<br><br>Which tier describes most of what your current job actually requires?</p>
+      <div class="lbl oc">// CHECK FOR UNDERSTANDING</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 07 — NECESSARY NOT SUFFICIENT       -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="NECESSARY NOT SUFFICIENT">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 07 — NECESSARY BUT NOT SUFFICIENT</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Tier 1 fluency is the entry ticket. <span class="o">It is not the game.</span></div>
+    <div class="cb" style="gap:12px;">
+      <div class="spair" style="border:2px solid var(--fg);flex-shrink:0;">
+        <div class="sb">
+          <div class="sl">Tier 1 AI fluency</div>
+          <div class="sv">NECESSARY</div>
+          <p class="tsm" style="margin-top:10px;">Every graduate in this room can use AI tools. So can everyone else. Tier 1 fluency is rapidly becoming table stakes, not differentiation.</p>
+        </div>
+        <div class="sb">
+          <div class="sl">Irreducibly human capacity</div>
+          <div class="sv oc">NOT<br>SUFFICIENT</div>
+          <p class="tsm" style="margin-top:10px;">The economy will pay a premium for judgment AI cannot replicate. This course develops the specific capacities that remain scarce even as AI scales.</p>
+        </div>
+      </div>
+      <div class="ca">When the AI's output is wrong — who catches it? When the problem is badly formulated — who sees that before the build begins? That person is worth more. That person is who this course builds.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 08 — FIVE SUPERVISORY CAPACITIES    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="THE FIVE SUPERVISORY CAPACITIES">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 08 — TIER 4: THE FIVE SUPERVISORY CAPACITIES</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Five things no AI can do. <span class="o">You will develop all five.</span></div>
+    <div class="cb">
+      <div class="nbs">
+        <div class="nb">
+          <div class="nbnum">PA</div>
+          <div class="nbb"><strong>Plausibility Auditing</strong><p>Hearing the wrong note before you can prove it's wrong. Evaluating AI output for domain-grounded implausibility before any verification step.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">PF</div>
+          <div class="nbb"><strong>Problem Formulation</strong><p>Deciding what question is worth asking before you delegate it. The judgment prior to delegation — no algorithm formulates this for you.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">TO</div>
+          <div class="nbb"><strong>Tool Orchestration</strong><p>Which AI task, in what order, with what context, at what level of trust. Choosing the right tool — and knowing when not to trust its output.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">IJ</div>
+          <div class="nbb"><strong>Interpretive Judgment</strong><p>Supplying meaning, moral legitimacy, or accountability to AI output that the AI cannot supply itself.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">EI</div>
+          <div class="nbb"><strong>Executive Integration</strong><p>Holding multiple concurrent AI outputs toward a unified goal. The capacity that operates across all others.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 09 — PEARL'S LADDER                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="PEARL'S LADDER">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 09 — TIER 5: PEARL'S LADDER</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">AI is superhuman at Rung 1. <span class="o">Rungs 2 and 3 are yours.</span></div>
+    <div class="cb" style="gap:12px;">
+      <div class="tl">
+        <div class="tli">
+          <div class="tld" style="color:var(--muted);">Rung 1<br><span style="font-size:9.5px;color:var(--muted);font-weight:400;">AI: SUPERHUMAN</span></div>
+          <div class="tlb"><strong>Observe — What correlates with what?</strong><p>Pattern recognition in data. Most dashboards, metrics, and model outputs live here. AI is superhuman. So is your Excel pivot table.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld">Rung 2<br><span style="font-size:9.5px;color:var(--muted);font-weight:400;">AI: WEAK</span></div>
+          <div class="tlb"><strong>Intervene — What would change if we acted?</strong><p>Requires a causal model, not just a correlation. If I do X, what happens to Y? Introduced Ch 3, deepened Ch 6.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld" style="font-weight:800;">Rung 3<br><span style="font-size:9.5px;color:var(--muted);font-weight:400;">AI: ABSENT</span></div>
+          <div class="tlb"><strong>Imagine — What would have happened if things were different?</strong><p>Counterfactual reasoning about a world that did not occur. Introduced Ch 8. The arc closes at Ch 13.</p></div>
+        </div>
+      </div>
+      <div class="ca">Most organizational decision-making is Rung 1 dressed as Rung 2. This course corrects that.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 10 — PAUSE & REFLECT                -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="PAUSE AND REFLECT">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 10 — CHECK FOR UNDERSTANDING</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">PAUSE.</div>
+    <div class="cb" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;">
+      <div class="txl">PAUSE.</div>
+      <p class="tsm" style="max-width:540px;">Name a real decision from your work where the data gave you Rung 1 — a correlation — and someone treated it as Rung 2.<br><br>What question should have been asked before acting on it?</p>
+      <div class="lbl oc">// CHECK FOR UNDERSTANDING</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 11 — GLIMMER EXERCISES              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="GLIMMER EXERCISES">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 11 — GLIMMER EXERCISES</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Fourteen exercises. None of them are prompts <span class="o">with a rubric.</span></div>
+    <div class="cb">
+      <div class="nbs">
+        <div class="nb">
+          <div class="nbnum">01</div>
+          <div class="nbb"><strong>Something new must exist at the end</strong><p>An artifact, argument, model, or understanding the learner could not have produced before — that required genuine encounter with resistance to produce.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">02</div>
+          <div class="nbb"><strong>A real judgment that could be wrong</strong><p>Somewhere in the work, you make a call where being wrong has a consequence. Even a small one. If there's no wrong answer, it's not a glimmer exercise.</p></div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">03</div>
+          <div class="nbb"><strong>AI cannot complete it without you</strong><p>The anti-substitution test: accept AI output uncritically → the exercise fails. Your judgment must be load-bearing. Finding where that is — is part of the learning.</p></div>
+        </div>
+      </div>
+      <div class="ca">Use AI as much as you want — up to the point where your judgment becomes decisive. That point is the exercise.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 12 — THE FRICTIONAL FRAMEWORK       -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="THE FRICTIONAL FRAMEWORK">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 12 — THE FRICTIONAL FRAMEWORK</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">The artifact is not the evidence. <span class="o">The process is.</span></div>
+    <div class="cb" style="gap:12px;">
+      <div class="tl">
+        <div class="tli">
+          <div class="tld">/predict<br><span style="font-size:9.5px;color:var(--muted);font-weight:400;">BEFORE</span></div>
+          <div class="tlb"><strong>Before the work — timestamped, locked</strong><p>Commit to a specific, reasoned prediction before you begin. The tool timestamps it. It cannot be revised after the outcome is observed. Predictions written after the fact are an integrity issue.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld">/journal<br><span style="font-size:9.5px;color:var(--muted);font-weight:400;">DURING / AFTER</span></div>
+          <div class="tlb"><strong>During or immediately after — what happened</strong><p>What occurred, what was unexpected, what changed in your understanding. Written while the encounter is still alive in working memory.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld">/trace<br><span style="font-size:9.5px;color:var(--muted);font-weight:400;">END OF WEEK</span></div>
+          <div class="tlb"><strong>End of week — GLP evidence synthesis</strong><p>Synthesizes entries into a Genuine Learning Probability evidence record. The gap between /predict and /journal is where the learning lives.</p></div>
+        </div>
+      </div>
+      <div class="ca">AI decoupled artifact from process. Frictional restores the second evidence stream — the process traces that genuine learning leaves, independent of artifact quality.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 13 — THE COURSE ARC                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="COURSE ARC">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 13 — THE COURSE ARC</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Six parts. Fourteen chapters. <span class="o">One argument.</span></div>
+    <div class="cb">
+      <div class="tl">
+        <div class="tli">
+          <div class="tld" style="color:var(--muted);">Wks 1–4<br><span style="font-size:9px;">PART I</span></div>
+          <div class="tlb"><strong>Foundations of Computational Skepticism</strong><p>Why doubt AI — and what rigorous doubt requires. Pearl's Ladder Rungs 1 &amp; 2 introduced at Ch 3.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld" style="color:var(--muted);">Wks 5–8<br><span style="font-size:9px;">PART II</span></div>
+          <div class="tlb"><strong>Data, Models, and Validation Systems</strong><p>Is your dataset what you think it is? Rung 2 deepened Ch 6. Rung 3 introduced Ch 8. Midterm milestone.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld" style="color:var(--muted);">Wks 9–10<br><span style="font-size:9px;">PART III</span></div>
+          <div class="tlb"><strong>Agency, Delegation, and Human-AI Systems</strong><p>When to trust the tool — and when to override it. Full five supervisory capacities deployed.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld" style="color:var(--muted);">Wks 11–12<br><span style="font-size:9px;">PART IV</span></div>
+          <div class="tlb"><strong>Visualization, Communication, and Epistemics</strong><p>Does a visualization make you understand — or feel like you do?</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld" style="color:var(--muted);">Wks 13–14<br><span style="font-size:9px;">PART V</span></div>
+          <div class="tlb"><strong>Ethics, Governance, and the Limits of the Technical</strong><p>Who is responsible when it fails? Pearl's Ladder Rung 3 completes at Ch 13.</p></div>
+        </div>
+        <div class="tli">
+          <div class="tld">Wk 15<br><span style="font-size:9px;">PART VI</span></div>
+          <div class="tlb"><strong>Final Presentations — The Full Validation Pipeline</strong><p>What a practitioner deploying this system needs to know that performance metrics alone would not tell them.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 14 — THE SERIES                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="THE IRREDUCIBLY HUMAN SERIES">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 14 — THE IRREDUCIBLY HUMAN SERIES</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">This is course one of six. <span class="o">Five more follow.</span></div>
+    <div class="cb" style="gap:14px;">
+      <table class="bt">
+        <thead><tr><th>#</th><th>Course</th><th>Tier(s)</th><th>Core Capacity</th></tr></thead>
+        <tbody>
+          <tr class="hl-row"><td>1</td><td>Computational Skepticism for AI</td><td>4, 5</td><td>← YOU ARE HERE</td></tr>
+          <tr><td>2</td><td>Causal Reasoning</td><td>5</td><td>Interventional &amp; counterfactual reasoning</td></tr>
+          <tr><td>3</td><td>AImagineering</td><td>3, 4, 7</td><td>Post-AI design thinking &amp; judgment</td></tr>
+          <tr><td>4</td><td>Ethical Play</td><td>3</td><td>Moral reasoning under uncertainty</td></tr>
+          <tr><td>5</td><td>Conducting AI</td><td>4</td><td>The five supervisory capacities in full</td></tr>
+          <tr><td>6</td><td>The Collective</td><td>6</td><td>Intelligence that cannot be possessed — only accomplished together</td></tr>
+        </tbody>
+      </table>
+      <p class="tsm">This course builds the validation and causal reasoning foundation every subsequent course depends on. It teaches you to audit what you produce in every course that follows.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 15 — PAUSE & REFLECT                -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide" data-section="PAUSE AND REFLECT">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 15 — CHECK FOR UNDERSTANDING</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">PAUSE.</div>
+    <div class="cb" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;">
+      <div class="txl">PAUSE.</div>
+      <p class="tsm" style="max-width:560px;">Before this session: which of the five supervisory capacities did you think was most important in your work?<br><br>After this session: has that changed — and if so, what changed it?</p>
+      <div class="lbl oc" style="letter-spacing:0.15em;">// OPEN THE FRICTIONAL TOOL &nbsp;·&nbsp; RUN /PREDICT &nbsp;·&nbsp; YOUR ANSWER IS NOW LOCKED</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- SLIDE 16 — CLOSE                          -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="slide sdark" data-section="RESOLUTION">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 16 — RESOLUTION</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Pattern recognition got you here. <span class="o">It is not enough for what comes next.</span></div>
+    <div class="cb" style="border-color:hsl(43,23%,93%);background:hsl(0,0%,6%);flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;padding:32px 36px;">
+      <div class="txl" style="color:hsl(43,23%,93%);">THE TOOLS<br>ARE <span class="oc ag">SUPERHUMAN.</span><br>AT TIER 1.</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:4px;">
+        <span style="color:#16a34a;font-size:10px;letter-spacing:0.18em;font-weight:800;font-family:var(--font);">▸ AUDIT WHAT AI PRODUCES</span>
+        <span style="color:#16a34a;font-size:10px;letter-spacing:0.18em;font-weight:800;font-family:var(--font);">▸ FORMULATE WHAT AI CANNOT</span>
+        <span style="color:#16a34a;font-size:10px;letter-spacing:0.18em;font-weight:800;font-family:var(--font);">▸ INTEGRATE WHAT AI CANNOT HOLD</span>
+      </div>
+      <p class="tsm" style="max-width:640px;color:hsl(0,0%,55%);">This course is about what happens after the tool runs — who catches the failure, who formulates the real problem, who decides what the output means in this specific human context. That person is irreducibly human. That person is the goal.</p>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- Progress bar -->
+<div class="progress" id="progress"></div>
+
+<!-- Countdown strip -->
+<div class="countdown" id="countdown" style="width:0;"></div>
+
+<!-- Dot navigation -->
+<div class="dots" id="dots"></div>
+
+<!-- Controls -->
+<div class="controls">
+  <button class="ctrl-btn" onclick="toggleTheme()">◐ THEME</button>
+  <div class="sound-wrap">
+    <button class="ctrl-btn pulse-ring" id="soundBtn" onclick="toggleSound()">🔇</button>
+    <div class="sound-tip" id="soundTip">▶ tap for audio</div>
+  </div>
+</div>
+
+<!-- Slide number -->
+<div class="slide-num" id="slideNum">01 / 16</div>
+
+<!-- Footer -->
+<div class="footer-strip">
+  Nik Bear Brown &nbsp;·&nbsp; Irreducibly Human — What AI Can and Can't Do<br>
+  <a href="https://www.boondoggling.ai/" target="_blank">boondoggling.ai</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.irreducibly.xyz/" target="_blank">irreducibly.xyz</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.brutalist.art/" target="_blank">brutalist.art</a>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const TOTAL = slides.length;
+  let cur = 0, soundOn = false, audio = null, cdTimer = null, interacted = false;
+
+  // Build dot nav
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot-nav' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function updateUI() {
+    document.getElementById('progress').style.width = ((cur + 1) / TOTAL * 100) + '%';
+    document.getElementById('slideNum').textContent =
+      String(cur + 1).padStart(2,'0') + ' / ' + String(TOTAL).padStart(2,'0');
+    dotsEl.querySelectorAll('.dot-nav').forEach((d,i) =>
+      d.classList.toggle('active', i === cur));
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= TOTAL) return;
+    slides[cur].classList.remove('active');
+    cur = n;
+    slides[cur].classList.add('active');
+    updateUI();
+    stopCountdown();
+    if (soundOn) playAudio();
+    scramble();
+  }
+
+  function scramble() {
+    const title = slides[cur].querySelector('.stitle');
+    if (!title) return;
+    const saved = title.innerHTML;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let i = 0;
+    const iv = setInterval(() => {
+      if (i >= 7) { clearInterval(iv); title.innerHTML = saved; return; }
+      const walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        node.textContent = node.textContent.split('').map(c =>
+          c.trim() === '' ? c : chars[Math.floor(Math.random() * chars.length)]
+        ).join('');
+      }
+      i++;
+    }, 48);
+  }
+
+  function playAudio() {
+    if (audio) { audio.pause(); audio = null; }
+    const src = `./computational-skepticism-intro/slide-${String(cur+1).padStart(2,'0')}.mp3`;
+    audio = new Audio(src);
+    audio.onended = startCountdown;
+    audio.onerror = () => { audio = null; };
+    audio.play().catch(() => { audio = null; });
+  }
+
+  function startCountdown() {
+    stopCountdown();
+    const strip = document.getElementById('countdown');
+    strip.style.display = 'block';
+    strip.style.width = '100%';
+    let pct = 100;
+    cdTimer = setInterval(() => {
+      pct -= 100 / 30;
+      strip.style.width = Math.max(0, pct) + '%';
+      if (pct <= 0) { stopCountdown(); if (soundOn) goTo(cur + 1); }
+    }, 100);
+  }
+
+  function stopCountdown() {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    const strip = document.getElementById('countdown');
+    strip.style.display = 'none';
+    strip.style.width = '0';
+  }
+
+  function toggleSound() {
+    soundOn = !soundOn;
+    const btn = document.getElementById('soundBtn');
+    if (!interacted) {
+      btn.classList.remove('pulse-ring');
+      const tip = document.getElementById('soundTip');
+      if (tip) tip.remove();
+      interacted = true;
+    }
+    btn.textContent = soundOn ? '🔊' : '🔇';
+    if (soundOn) { playAudio(); }
+    else { if (audio) { audio.pause(); audio = null; } stopCountdown(); }
+  }
+
+  function toggleTheme() {
+    const h = document.documentElement;
+    h.dataset.theme = h.dataset.theme === 'dark' ? 'light' : 'dark';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','Space',' '].includes(e.key)) { e.preventDefault(); goTo(cur + 1); }
+    if (e.key === 'ArrowLeft') goTo(cur - 1);
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(TOTAL - 1);
+    if (e.key === 'm' || e.key === 'M') toggleSound();
+  });
+
+  // Init
+  updateUI();
+  scramble();
+</script>
+</body>
+</html>

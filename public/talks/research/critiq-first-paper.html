@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRITIQ: From a Curiosity to a Research Question</title>
+<meta name="description" content="Use CRITIQ's /brainstorm command to move from a vague curiosity to a testable research question — by doing it, not watching it.">
+<meta name="keywords" content="CRITIQ, academic writing, research methods, peer review, brainstorming, problem formulation, plausibility auditing, Irreducibly Human">
+<meta name="author" content="Nik Bear Brown">
+<meta name="category" content="Research">
+<meta name="slide-count" content="14">
+<meta name="audio" content="true">
+<!-- ASSUMPTIONS: keywords cleaned from taxonomy paste — original contained tier map data, not search terms -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400&display=swap');
+
+:root {
+  --bg: hsl(43,23%,93%);
+  --fg: hsl(0,0%,4%);
+  --accent: #ea580c;
+  --muted: hsl(0,0%,40%);
+  --muted-bg: hsl(40,10%,85%);
+  --card-bg: hsl(43,23%,90%);
+}
+
+[data-theme="dark"] {
+  --bg: hsl(0,0%,6%);
+  --fg: hsl(43,23%,93%);
+  --muted: hsl(0,0%,60%);
+  --muted-bg: hsl(0,0%,12%);
+  --card-bg: hsl(0,0%,10%);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+  transition: background 0.2s, color 0.2s;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--muted) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#deck { position: fixed; inset: 0; z-index: 1; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  padding: 32px 48px 72px;
+  gap: 14px;
+}
+
+.slide.active { display: flex; }
+
+.slide.sdark {
+  background: hsl(0,0%,4%);
+  color: hsl(43,23%,93%);
+}
+.slide.sdark .sdiv { background: hsl(43,23%,93%); }
+.slide.sdark .cb {
+  border-color: hsl(43,23%,75%);
+  background: hsl(0,0%,8%);
+}
+
+/* META ROW */
+.smeta { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.sdiv { flex: 1; height: 1px; background: var(--fg); opacity: 0.15; }
+
+/* LABELS */
+.lbl { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.lbl-o { color: var(--accent); }
+.oc  { color: var(--accent); }
+.mu  { color: var(--muted); }
+.bo  { font-weight: 800; }
+.green { color: #16a34a; }
+
+.dot8 { width: 8px; height: 8px; background: var(--accent); flex-shrink: 0; }
+.dot8.ab { animation: blink 1.2s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
+
+/* TITLE */
+.stitle {
+  font-size: clamp(14px, 2vw, 28px);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.2;
+  max-width: 960px;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+.stitle .o { color: var(--accent); }
+
+@keyframes glitch {
+  0%,100%{transform:translate(0)}
+  20%{transform:translate(-2px,1px)}
+  40%{transform:translate(2px,-1px)}
+  60%{transform:translate(-1px,2px)}
+  80%{transform:translate(1px,-2px)}
+}
+.ag { animation: glitch 0.3s ease infinite; }
+
+/* CONTENT BOX */
+.cb {
+  border: 2px solid var(--fg);
+  background: var(--card-bg);
+  flex: 1;
+  padding: 22px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* TEXT */
+.txs  { font-size: 10px; color: var(--muted); }
+.tsm  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.txl  { font-size: clamp(30px,5vw,76px); font-weight: 800; line-height: 1.05; }
+.t2xl { font-size: clamp(48px,8.5vw,128px); font-weight: 800; line-height: 0.95; }
+
+hr.b { border: none; border-top: 2px solid var(--fg); margin: 8px 0; opacity: 0.12; }
+
+/* TABLE */
+.bt { width: 100%; border-collapse: collapse; font-size: 13px; }
+.bt thead tr { background: var(--fg); color: var(--bg); }
+.bt th { padding: 10px 14px; text-align: left; font-weight: 800; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; }
+.bt td { padding: 10px 14px; border-bottom: 1px solid var(--muted-bg); vertical-align: top; line-height: 1.5; }
+.bt tr:last-child td { border-bottom: none; }
+.bt .warn { color: var(--accent); font-weight: 800; }
+.bt .good { color: #16a34a; font-weight: 800; }
+
+/* TWO COL */
+.twoc { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.col { padding: 18px 20px; }
+.col:first-child { border-right: 2px solid var(--fg); }
+.clbl { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; margin-bottom: 14px; color: var(--accent); }
+
+/* NUMBERED BLOCKS */
+.nbs { display: flex; flex-direction: column; gap: 10px; }
+.nb  { display: flex; gap: 14px; align-items: flex-start; }
+.nbnum { font-size: clamp(16px,1.8vw,26px); font-weight: 800; color: var(--accent); min-width: 34px; flex-shrink: 0; line-height: 1.1; }
+.nbb { display: flex; flex-direction: column; gap: 3px; }
+.nbb strong { font-size: 13px; font-weight: 800; }
+.nbb p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* QUOTE */
+.qt { border-left: 4px solid var(--accent); padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+.qt .qtext { font-size: clamp(14px,1.6vw,22px); font-weight: 600; line-height: 1.4; }
+.qt .qsub  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* STAT PAIR */
+.spair { display: flex; gap: 20px; }
+.sb { display: flex; flex-direction: column; gap: 4px; border: 2px solid var(--fg); padding: 18px; flex: 1; }
+.sl { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+.sv { font-size: clamp(26px,3.2vw,48px); font-weight: 800; }
+
+/* PROBLEM / COMMIT */
+.pc { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.pcc { padding: 18px 20px; }
+.pcc:first-child { border-right: 2px solid var(--fg); }
+.pclbl { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 800; margin-bottom: 14px; }
+.pci { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 7px; padding-left: 22px; position: relative; }
+.pci::before { content: '// '; color: var(--accent); font-weight: 800; position: absolute; left: 0; }
+
+/* CALLOUT */
+.ca { border: 1px solid var(--accent); padding: 18px; color: var(--accent); font-size: 13px; line-height: 1.6; }
+
+/* LIST */
+.ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.ul li { font-size: 13px; color: var(--muted); line-height: 1.5; padding-left: 18px; position: relative; }
+.ul li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+
+/* PAUSE CENTER */
+.pause-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; }
+
+/* PROGRESS */
+#progress { position: fixed; bottom: 0; left: 0; height: 3px; background: var(--accent); transition: width 0.3s ease; z-index: 100; }
+#countdown { position: fixed; bottom: 3px; left: 0; height: 2px; background: hsl(43,23%,80%); opacity: 0.5; width: 0; z-index: 99; }
+
+/* DOTS */
+#dots { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 100; }
+.doti { width: 6px; height: 6px; background: var(--muted); cursor: pointer; opacity: 0.35; transition: background 0.2s, opacity 0.2s; }
+.doti.on { background: var(--accent); opacity: 1; }
+
+/* CONTROLS */
+#controls { position: fixed; top: 14px; right: 16px; display: flex; gap: 7px; z-index: 100; }
+.ctrl {
+  background: var(--fg); color: var(--bg);
+  border: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; padding: 6px 10px;
+  cursor: pointer; letter-spacing: 0.05em;
+  position: relative;
+}
+.ctrl:hover { background: var(--accent); color: #fff; }
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(234,88,12,0.7); }
+  70%  { box-shadow: 0 0 0 8px rgba(234,88,12,0); }
+  100% { box-shadow: 0 0 0 0 rgba(234,88,12,0); }
+}
+.ctrl.pulse { animation: pulse-ring 1.5s ease-out infinite; }
+
+#sound-tooltip {
+  position: absolute; top: 34px; right: 0;
+  background: var(--fg); color: var(--bg);
+  font-size: 9px; padding: 4px 8px;
+  white-space: nowrap; letter-spacing: 0.1em;
+  pointer-events: none;
+}
+
+/* FOOTER */
+#footer { position: fixed; bottom: 26px; left: 48px; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); z-index: 100; opacity: 0.55; }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- SLIDE 01 — HOOK -->
+  <div class="slide sdark active" data-section="HOOK">
+    <div class="smeta">
+      <span class="lbl" style="color:hsl(0,0%,50%)">// SLIDE 01 — HOOK</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle" style="color:hsl(43,23%,93%)">A masters student had an idea. Six months later, <span class="o">it was a published preprint.</span></div>
+    <div class="cb" style="gap:24px;justify-content:center;">
+      <div class="qt" style="border-left-color:#ea580c;">
+        <div class="qtext" style="color:hsl(43,23%,88%);font-size:clamp(14px,1.5vw,20px);">Aravind Balaji, Northeastern University, 2026. No paper. No structure. A curiosity about quantum memory and graph neural networks.</div>
+        <div class="qsub" style="color:hsl(0,0%,55%);">Used CRITIQ to find the research question hidden inside the idea.</div>
+      </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;margin-top:8px;">
+        <div>
+          <div class="lbl" style="color:#ea580c;margin-bottom:6px;">// RESULT</div>
+          <div style="font-size:clamp(14px,1.5vw,20px);font-weight:800;color:hsl(43,23%,93%);margin-bottom:4px;">QEMA-G</div>
+          <div class="tsm" style="color:hsl(0,0%,55%);">Quantum-Enhanced Memory Architecture<br>for Graph-Based AI Systems</div>
+        </div>
+        <div>
+          <div class="lbl" style="color:#ea580c;margin-bottom:6px;">// SUBMITTED TO</div>
+          <div style="font-size:clamp(12px,1.2vw,16px);font-weight:800;color:hsl(43,23%,93%);margin-bottom:4px;">ACM Transactions on Quantum Computing</div>
+          <div class="tsm" style="color:hsl(0,0%,55%);">TechRxiv preprint — February 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 02 — LEARNING OUTCOMES -->
+  <div class="slide" data-section="LEARNING OUTCOMES">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 02 — LEARNING OUTCOMES</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">What you'll be able to <span class="o">do</span> by the end of this.</div>
+    <div class="cb">
+      <table class="bt">
+        <thead>
+          <tr>
+            <th>By the end of this, you will be able to…</th>
+            <th>Bloom's Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Distinguish a research topic from a testable research question</td>
+            <td><span class="lbl">Analyze</span></td>
+          </tr>
+          <tr>
+            <td>Use /brainstorm to move from a raw observation to a working hypothesis</td>
+            <td><span class="lbl">Apply</span></td>
+          </tr>
+          <tr>
+            <td>Identify the six questions /brainstorm asks — and why each one matters</td>
+            <td><span class="lbl">Understand</span></td>
+          </tr>
+          <tr>
+            <td>Recognize what a complete /brainstorm output looks like, using a real paper as anchor</td>
+            <td><span class="lbl">Evaluate</span></td>
+          </tr>
+          <tr>
+            <td>Initiate your own /brainstorm session with a genuine curiosity you already have</td>
+            <td><span class="lbl">Create</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLIDE 03 — WHAT CRITIQ IS -->
+  <div class="slide" data-section="WHAT CRITIQ IS">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 03 — WHAT CRITIQ IS</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">CRITIQ is a peer review tool for <span class="o">serious researchers.</span> Today it's for you.</div>
+    <div class="cb" style="padding:0;gap:0;">
+      <div class="twoc" style="flex:1;">
+        <div class="col">
+          <div class="clbl">For experienced researchers</div>
+          <ul class="ul">
+            <li>Full eight-dimension peer review</li>
+            <li>Methods, stats, structure, ethics, writing</li>
+            <li>Reviewer response drafting</li>
+            <li>Journal selection + pre-submission checklist</li>
+            <li>Used before high-stakes journal submission</li>
+          </ul>
+        </div>
+        <div class="col">
+          <div class="clbl">For your first paper</div>
+          <ul class="ul">
+            <li>Start with /brainstorm — a curiosity, not a paper</li>
+            <li>Six questions that surface your research question</li>
+            <li>Teaches as it goes — explains every step</li>
+            <li>Same rigor. Better explanation.</li>
+            <li>From zero to a question worth pursuing</li>
+          </ul>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:2px solid var(--fg);">
+        <span class="lbl oc">// Same tool. Same standard. Different starting point.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 04 — THE FIRST PAPER PROBLEM -->
+  <div class="slide" data-section="THE FIRST PAPER PROBLEM">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 04 — THE FIRST PAPER PROBLEM</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">The problem isn't writing. It's <span class="o">not knowing what to write about.</span></div>
+    <div class="cb" style="gap:22px;">
+      <div class="qt">
+        <div class="qtext">"I'm interested in AI."</div>
+        <div class="qsub">That's a topic. Not a paper.</div>
+      </div>
+      <ul class="ul">
+        <li>Most first papers fail before a word is typed</li>
+        <li>The gap: a vague interest where a testable question should be</li>
+        <li>"I'm interested in AI" + six hard questions = a hypothesis worth testing</li>
+        <li>/brainstorm is the tool that runs those six questions</li>
+      </ul>
+      <div class="ca" style="margin-top:auto;">
+        The obstacle is not intelligence. It is the missing question that turns an interest into a research problem.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 05 — THE SIX QUESTIONS -->
+  <div class="slide" data-section="THE SIX QUESTIONS">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 05 — THE SIX QUESTIONS</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">/brainstorm asks six questions. <span class="o">Each one does a specific job.</span></div>
+    <div class="cb">
+      <div class="nbs">
+        <div class="nb">
+          <div class="nbnum">01</div>
+          <div class="nbb">
+            <strong>What caught your attention?</strong>
+            <p>Surfaces the raw observation — the thing you noticed before you had a framework for it.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">02</div>
+          <div class="nbb">
+            <strong>What's your gut explanation?</strong>
+            <p>This becomes the working hypothesis — the mechanism you think is operating.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">03</div>
+          <div class="nbb">
+            <strong>What have you read about this?</strong>
+            <p>Locates the gap — the space between what's known and what your question addresses.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">04</div>
+          <div class="nbb">
+            <strong>Who would care about the answer?</strong>
+            <p>Identifies the audience — and therefore what counts as a contribution.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">05</div>
+          <div class="nbb">
+            <strong>What study would you run?</strong>
+            <p>Shapes the method — observational, experimental, theoretical, archival.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">06</div>
+          <div class="nbb">
+            <strong>What result would prove you wrong?</strong>
+            <p>Tests falsifiability — the requirement that makes this science, not advocacy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 06 — PAUSE & REFLECT -->
+  <div class="slide" data-section="CHECK FOR UNDERSTANDING">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 06 — CHECK FOR UNDERSTANDING</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Before the example. <span class="o">Your turn first.</span></div>
+    <div class="cb">
+      <div class="pause-center">
+        <div class="txl">PAUSE.</div>
+        <p class="tsm" style="max-width:520px;">What's a topic you're vaguely interested in? Write one sentence. Don't worry if it's not a research question yet. That's exactly the point.</p>
+        <div class="lbl oc">// CHECK FOR UNDERSTANDING</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 07 — ARAVIND'S OBSERVATION -->
+  <div class="slide" data-section="ARAVIND'S OBSERVATION">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 07 — ARAVIND'S OBSERVATION</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Aravind noticed something. <span class="o">That's where every paper starts.</span></div>
+    <div class="cb" style="gap:20px;">
+      <div class="qt">
+        <div class="qtext">"Graph Neural Networks face critical memory bottlenecks when scaling. I wondered if quantum memory could change that."</div>
+        <div class="qsub">— the observation that became QEMA-G</div>
+      </div>
+      <ul class="ul">
+        <li>GNNs choke on large graphs — memory and compute both break at scale</li>
+        <li>Gut read: quantum memory primitives might change the scaling relationship</li>
+        <li>Not a hypothesis yet — a hunch about a mechanism</li>
+        <li>/brainstorm question 1 surfaced it: <span class="oc bo">"What caught your attention?"</span></li>
+        <li>Most students are never asked that question in academic terms</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 08 — FROM OBSERVATION TO HYPOTHESIS -->
+  <div class="slide" data-section="FROM OBSERVATION TO HYPOTHESIS">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 08 — FROM OBSERVATION TO HYPOTHESIS</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">By question 2, a hunch becomes <span class="o">a testable claim.</span></div>
+    <div class="cb" style="padding:0;gap:0;">
+      <div class="twoc" style="flex:1;">
+        <div class="col">
+          <div class="clbl">Before /brainstorm</div>
+          <div class="qt" style="margin-top:10px;">
+            <div class="qtext" style="font-size:clamp(13px,1.4vw,19px);">"I'm interested in quantum memory for GNNs."</div>
+            <div class="qsub">A topic. Cannot be tested. Cannot fail.</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="clbl">After question 2</div>
+          <div class="qt" style="margin-top:10px;">
+            <div class="qtext" style="font-size:clamp(12px,1.3vw,17px);">"QRAM-backed graph store could reduce retrieval depth from O(N) to O(log N) — testable against a classical baseline."</div>
+            <div class="qsub">A mechanism. Can be tested. Can fail.</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:2px solid var(--fg);">
+        <span class="lbl oc">// Same student. Same idea. Two minutes later, it's a hypothesis. That's the tool working.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 09 — THE GAP AND THE AUDIENCE -->
+  <div class="slide" data-section="THE GAP AND THE AUDIENCE">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 09 — THE GAP AND THE AUDIENCE</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Who cares, and what don't they know yet? <span class="o">That's the paper.</span></div>
+    <div class="cb" style="padding:0;gap:0;">
+      <div class="pc" style="flex:1;">
+        <div class="pcc">
+          <div class="pclbl" style="color:var(--accent);">The Gap — Question 3</div>
+          <div class="pci">GNN scaling is a known problem — well-studied</div>
+          <div class="pci">Quantum integration with GNNs is theoretical — not yet combined</div>
+          <div class="pci">No existing framework provides hardware targets</div>
+          <div class="pci">The space between these bodies of work is the paper</div>
+        </div>
+        <div class="pcc">
+          <div class="pclbl" style="color:var(--accent);">The Audience — Question 4</div>
+          <div class="pci">Quantum hardware researchers who need actionable engineering specs</div>
+          <div class="pci">GNN researchers exploring scaling solutions</div>
+          <div class="pci">ACM Transactions on Quantum Computing readership</div>
+          <div class="pci">Knowing the audience determined what counted as a contribution</div>
+        </div>
+      </div>
+      <div style="padding:14px 22px;border-top:2px solid var(--fg);">
+        <span class="lbl oc">// "Actionable engineering targets for the quantum hardware community" — that language came from question 4.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10 — FALSIFIABILITY -->
+  <div class="slide" data-section="FALSIFIABILITY">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 10 — FALSIFIABILITY</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">What result would prove you wrong? <span class="o">That's not a trap. That's science.</span></div>
+    <div class="cb" style="gap:22px;">
+      <div class="qt">
+        <div class="qtext">"We acknowledge that fault-tolerant QRAM remains experimentally immature."</div>
+        <div class="qsub">This is not a weakness. This is the falsifiability that makes the paper credible.</div>
+      </div>
+      <ul class="ul">
+        <li>Question 6: <span class="oc bo">"What result would convince you your explanation is wrong?"</span></li>
+        <li>Aravind's answer shaped the realistic regime analysis — NISQ-era noise might eliminate any quantum advantage</li>
+        <li>QEMA-G explicitly acknowledges the disadvantage regime — that's the falsifiability built in</li>
+        <li>A paper that can't fail isn't a paper. It's advocacy.</li>
+      </ul>
+      <div class="ca" style="margin-top:auto;">
+        CRITIQ will not accept a hypothesis that can only be confirmed. The acknowledged disadvantage regime is what got this paper submitted to ACM.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11 — WHAT /BRAINSTORM PRODUCES -->
+  <div class="slide" data-section="WHAT BRAINSTORM PRODUCES">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 11 — WHAT /BRAINSTORM PRODUCES</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">At the end of /brainstorm, you have <span class="o">five things you didn't have before.</span></div>
+    <div class="cb">
+      <div class="nbs">
+        <div class="nb">
+          <div class="nbnum">01</div>
+          <div class="nbb">
+            <strong>A research question</strong>
+            <p>Specific, answerable, scoped. Not a topic — a question with a knowable answer.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">02</div>
+          <div class="nbb">
+            <strong>A working hypothesis</strong>
+            <p>Testable and falsifiable. A mechanism you believe is operating — that could be wrong.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">03</div>
+          <div class="nbb">
+            <strong>A gap statement</strong>
+            <p>What's known, what's not, and why your question sits in the space between them.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">04</div>
+          <div class="nbb">
+            <strong>A rough study design</strong>
+            <p>The simplest viable approach to test the hypothesis — not the ideal, the feasible.</p>
+          </div>
+        </div>
+        <div class="nb">
+          <div class="nbnum">05</div>
+          <div class="nbb">
+            <strong>Concepts to learn before drafting</strong>
+            <p>Type <span style="color:var(--accent);font-weight:800;">/learn [term]</span> for any concept you don't recognize yet. CRITIQ will explain it before you continue.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 — PAUSE & REFLECT -->
+  <div class="slide" data-section="CHECK FOR UNDERSTANDING">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 12 — CHECK FOR UNDERSTANDING</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Back to your topic. <span class="o">Which output would be hardest?</span></div>
+    <div class="cb">
+      <div class="pause-center">
+        <div class="txl">PAUSE.</div>
+        <p class="tsm" style="max-width:560px;">Look at the topic sentence you wrote in the first Pause. Which of the five /brainstorm outputs would be hardest for you to produce right now — the research question, the hypothesis, the gap, the study design, or the concepts to learn?</p>
+        <div class="lbl oc">// CHECK FOR UNDERSTANDING</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13 — YOUR TURN -->
+  <div class="slide" data-section="YOUR TURN">
+    <div class="smeta">
+      <span class="lbl">// SLIDE 13 — YOUR TURN</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle">Open CRITIQ. Type /brainstorm. <span class="o">Start with what you already noticed.</span></div>
+    <div class="cb" style="gap:20px;">
+      <div class="ca" style="text-align:center;padding:26px 22px;">
+        <div style="font-size:clamp(18px,2.2vw,34px);font-weight:800;letter-spacing:0.06em;margin-bottom:10px;">/brainstorm</div>
+        <div class="tsm" style="color:var(--accent);">Answer six questions. Get a research question, a hypothesis, a gap, a study design, and a reading list.</div>
+      </div>
+      <ul class="ul">
+        <li>You don't need a polished idea — you need an observation or a curiosity</li>
+        <li>Answer the six questions honestly, in plain language — no academic framing needed</li>
+        <li>CRITIQ teaches as it goes — each answer gets a one-sentence explanation of why it matters</li>
+        <li>If your first hypothesis is unmeasurable, CRITIQ will tell you — and show you how to fix it</li>
+        <li>Aravind started here. The preprint is on TechRxiv. The journal submission is in review.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 14 — CLOSE -->
+  <div class="slide sdark" data-section="CLOSE">
+    <div class="smeta">
+      <span class="lbl" style="color:hsl(0,0%,45%)">// SLIDE 14 — CLOSE</span>
+      <div class="sdiv"></div>
+      <span class="dot8 ab"></span>
+    </div>
+    <div class="stitle" style="color:hsl(43,23%,93%)">The paper was always there. <span class="o">You just needed the right questions.</span></div>
+    <div class="cb" style="align-items:center;justify-content:center;text-align:center;gap:24px;">
+      <div class="txl" style="color:hsl(43,23%,93%);">The paper was always there.</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+        <span class="lbl green">// TESTABLE</span>
+        <span class="lbl green">// FALSIFIABLE</span>
+        <span class="lbl green">// YOURS</span>
+      </div>
+      <p class="tsm" style="max-width:500px;color:hsl(0,0%,52%);">Start with /brainstorm. When your question is locked, /outline builds the IMRaD structure. When you have a draft, /review applies the same standard used for journal submission.</p>
+      <div>
+        <div class="lbl" style="color:#ea580c;margin-bottom:6px;">// ARAVIND'S PAPER</div>
+        <div style="font-size:11px;color:hsl(0,0%,50%);letter-spacing:0.04em;">doi.org/10.36227/techrxiv.177162482.24655380</div>
+      </div>
+      <div style="margin-top:4px;">
+        <span class="lbl" style="color:hsl(0,0%,38%);">CRITIQ — from curiosity to submission &nbsp;//&nbsp; Nik Bear Brown</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<div id="progress"></div>
+<div id="countdown"></div>
+<div id="dots"></div>
+
+<div id="controls">
+  <button class="ctrl" onclick="toggleTheme()">◐ THEME</button>
+  <button class="ctrl pulse" id="sound-btn" onclick="toggleSound()">🔇<div id="sound-tooltip">▶ tap for audio</div></button>
+</div>
+
+<div id="footer">CRITIQ: YOUR FIRST PAPER &nbsp;//&nbsp; NIK BEAR BROWN &nbsp;//&nbsp; <span id="slide-counter">1 / 14</span></div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const total  = slides.length;
+let current  = 0;
+let soundOn  = false;
+let soundInit = false;
+let audio    = null;
+let cdAnim   = null;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'doti' + (i === 0 ? ' on' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function updateUI() {
+  document.querySelectorAll('.doti').forEach((d, i) => d.classList.toggle('on', i === current));
+  document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+  document.getElementById('slide-counter').textContent = (current + 1) + ' / ' + total;
+}
+
+function goTo(n) {
+  cancelCD();
+  slides[current].classList.remove('active');
+  current = Math.max(0, Math.min(n, total - 1));
+  slides[current].classList.add('active');
+  updateUI();
+  if (soundOn) playAudio();
+}
+
+function next() { if (current < total - 1) goTo(current + 1); }
+function prev() { if (current > 0) goTo(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+  else if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
+  else if (e.key === 'Home')       goTo(0);
+  else if (e.key === 'End')        goTo(total - 1);
+  else if (e.key === 'm' || e.key === 'M') toggleSound();
+});
+
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+});
+
+function toggleTheme() {
+  const h = document.documentElement;
+  h.dataset.theme = h.dataset.theme === 'dark' ? 'light' : 'dark';
+}
+
+function playAudio() {
+  if (audio) { audio.pause(); audio = null; }
+  cancelCD();
+  const n = String(current + 1).padStart(2, '0');
+  audio = new Audio('./critiq-first-paper/slide-' + n + '.mp3');
+  audio.addEventListener('ended', startCD);
+  audio.play().catch(() => {});
+}
+
+function startCD() {
+  if (!soundOn) return;
+  const cd = document.getElementById('countdown');
+  const dur = 3000;
+  const t0  = performance.now();
+  cd.style.width = '0';
+  function frame(t) {
+    const pct = Math.min((t - t0) / dur, 1);
+    cd.style.width = (pct * 100) + '%';
+    if (pct < 1) { cdAnim = requestAnimationFrame(frame); }
+    else { cd.style.width = '0'; next(); }
+  }
+  cdAnim = requestAnimationFrame(frame);
+}
+
+function cancelCD() {
+  if (cdAnim) { cancelAnimationFrame(cdAnim); cdAnim = null; }
+  document.getElementById('countdown').style.width = '0';
+}
+
+function toggleSound() {
+  soundOn = !soundOn;
+  const btn = document.getElementById('sound-btn');
+  if (!soundInit) {
+    soundInit = true;
+    btn.classList.remove('pulse');
+    const tip = document.getElementById('sound-tooltip');
+    if (tip) tip.remove();
+  }
+  btn.childNodes[0].textContent = soundOn ? '🔊' : '🔇';
+  if (soundOn) { playAudio(); }
+  else { if (audio) { audio.pause(); audio = null; } cancelCD(); }
+}
+
+updateUI();
+</script>
+</body>
+</html>
