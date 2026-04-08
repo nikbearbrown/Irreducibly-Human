@@ -9,9 +9,9 @@ import ThemeToggle from '@/components/ThemeToggle'
 
 const NAV_ITEMS = [
   { name: 'Blog', href: '/blog' },
-  { name: 'Books', href: '/books' },
   { name: 'Dev', href: '/dev' },
   { name: 'Notes', href: '/notes' },
+  { name: 'Talks', href: '/talks' },
   { name: 'Tools', href: '/tools' },
   { name: 'Videos', href: '/irreducibly' },
 ]
