@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Heatmap | Irreducibly Human</title>
+<meta name="description" content="A matrix where individual values are encoded as colors. Reveals patterns across two categorical dimensions simultaneously.">
+<meta name="keywords" content="heatmap, matrix, color encoding, categorical, D3, data visualization">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Heatmap</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680";
+const days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const hours=["6am","8am","10am","12pm","2pm","4pm","6pm","8pm","10pm"];
+const data=[];
+days.forEach((d,di)=>{hours.forEach((h,hi)=>{
+  let v=Math.random()*40+20;
+  if(di<5&&hi>=2&&hi<=5)v+=35;
+  if(di>=5)v-=15;
+  if(hi===0||hi===8)v-=10;
+  data.push({d:di,h:hi,v:Math.max(5,Math.min(100,v))});
+});});
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:40,b:60,l:55};
+  const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const cW=iW/hours.length,cH=iH/days.length;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const g=svg.append("g").attr("transform","translate("+m.l+","+m.t+")");
+  const col=d3.scaleSequential().domain([5,100]).interpolator(t=>d3.interpolateRgb(dark?"#1a1a1a":"#E8E0D0","#8B0000")(t));
+  g.selectAll("rect").data(data).enter().append("rect")
+    .attr("x",d=>d.h*cW).attr("y",d=>d.d*cH).attr("width",cW-2).attr("height",cH-2)
+    .attr("fill",d=>col(d.v)).attr("rx",3);
+  g.selectAll(".val").data(data).enter().append("text").classed("val",true)
+    .attr("x",d=>d.h*cW+cW/2).attr("y",d=>d.d*cH+cH/2+4)
+    .attr("text-anchor","middle").attr("font-size",9).attr("fill",d=>d.v>60?"#E8E0D0":"#4A4A4A")
+    .text(d=>Math.round(d.v));
+  days.forEach((d,i)=>{
+    g.append("text").attr("x",-8).attr("y",i*cH+cH/2+4)
+      .attr("text-anchor","end").attr("font-size",11).attr("fill",fg).text(d);
+  });
+  hours.forEach((h,i)=>{
+    g.append("text").attr("x",i*cW+cW/2).attr("y",-8)
+      .attr("text-anchor","middle").attr("font-size",10).attr("fill",fg).text(h);
+  });
+  svg.append("text").attr("x",W/2).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Cognitive load by day and hour — darker cells = higher intensity");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

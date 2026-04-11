@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, statSync } from 'fs'
+import { readFileSync, readdirSync, statSync, existsSync } from 'fs'
 import { join } from 'path'
 
 export interface HtmlDocMeta {
@@ -92,4 +92,65 @@ export function scanHtmlSubdirs(dir: string): GroupedHtmlDocs[] {
   }
 
   return groups
+}
+
+// ── D3 visualization scanner ──────────────────────────────────────────────────
+
+export interface D3DocMeta {
+  slug: string
+  filename: string
+  title: string
+  description: string
+  keywords: string[]
+  path: string
+}
+
+export interface D3Group {
+  folder: string
+  docs: D3DocMeta[]
+}
+
+/**
+ * Scans subdirectories of `dir` for D3 visualization HTML files.
+ * Skips folders named `json` or `images`.
+ * Returns docs grouped by folder, sorted alphabetically.
+ */
+export async function scanD3Dir(dir: string): Promise<D3Group[]> {
+  if (!existsSync(dir)) return []
+
+  const subdirs = readdirSync(dir, { withFileTypes: true })
+    .filter(d => d.isDirectory() && d.name !== 'json' && d.name !== 'images')
+    .map(d => d.name)
+    .sort()
+
+  return subdirs
+    .map(folder => {
+      const folderPath = join(dir, folder)
+      const files = readdirSync(folderPath)
+        .filter(f => f.endsWith('.html'))
+        .sort()
+
+      const docs: D3DocMeta[] = files.map(filename => {
+        const filePath = join(folderPath, filename)
+        const content = readFileSync(filePath, 'utf-8')
+        const slug = filename.replace(/\.html$/, '')
+        const title =
+          content.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]
+            ?.replace(' | Irreducibly Human', '')
+            .trim() ?? slug
+        const description =
+          content.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1] ?? ''
+        const keywords = (
+          content.match(/<meta\s+name=["']keywords["']\s+content=["']([^"']+)["']/i)?.[1] ?? ''
+        )
+          .split(',')
+          .map(k => k.trim())
+          .filter(Boolean)
+
+        return { slug, filename, title, description, keywords, path: `/d3/${folder}/${slug}` }
+      })
+
+      return { folder, docs }
+    })
+    .filter(g => g.docs.length > 0)
 }

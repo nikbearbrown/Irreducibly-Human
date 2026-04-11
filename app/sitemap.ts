@@ -1,9 +1,25 @@
 import { MetadataRoute } from 'next'
 import { neon } from '@neondatabase/serverless'
+import path from 'path'
+import { scanD3Dir } from '@/lib/html-meta'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://irreduciblyhuman.xyz'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // D3 visualizations (filesystem-driven, no DB required)
+  const d3Groups = await scanD3Dir(path.join(process.cwd(), 'public/d3'))
+  const d3Urls: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/d3`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ...d3Groups.flatMap(g =>
+      g.docs.map(doc => ({
+        url: `${BASE_URL}/d3/${g.folder}/${doc.slug}.html`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
+      }))
+    ),
+  ]
+
   const entries: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE_URL}/tools`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
@@ -75,5 +91,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // If database is not configured, just return static pages
   }
 
-  return entries
+  return [...entries, ...d3Urls]
 }

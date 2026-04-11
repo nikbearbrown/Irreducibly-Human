@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Venn Diagram | Irreducibly Human</title>
+<meta name="description" content="Overlapping circles representing sets. Overlap regions show shared elements. Effective for showing logical relationships between two or three groups.">
+<meta name="keywords" content="Venn diagram, sets, overlap, intersection, D3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Venn Diagram</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680";
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("text").attr("x",W/2).attr("y",28).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu)
+    .text("The irreducibly human zone — capacities that require all three domains simultaneously");
+  const cx=W/2,cy=H/2+20,R=Math.min(W,H)*.26;
+  const sets=[
+    {cx:cx-R*.55,cy:cy-R*.32,col:"#8B0000",label:"Domain
+Knowledge"},
+    {cx:cx+R*.55,cy:cy-R*.32,col:"#8B7536",label:"Contextual
+Judgment"},
+    {cx:cx,cy:cy+R*.4,col:"#6B6B5E",label:"Moral
+Accountability"}
+  ];
+  // Circles
+  sets.forEach(s=>{
+    svg.append("circle").attr("cx",s.cx).attr("cy",s.cy).attr("r",R)
+      .attr("fill",s.col).attr("opacity",.22).attr("stroke",s.col).attr("stroke-width",1.5);
+  });
+  // Set labels
+  const offsets=[[[-R*.4,-R*.35],[-R*.4,-R*.35]],[[R*.4,-R*.35],[R*.4,-R*.35]],[[-0,R*.4],[0,R*.4]]];
+  sets.forEach((s,i)=>{
+    const lx=s.cx+[-1,1,0][i]*R*.65,ly=s.cy+[-1,-1,1][i]*R*.55;
+    s.label.split("
+").forEach((line,li)=>{
+      svg.append("text").attr("x",lx).attr("y",ly+li*15).attr("text-anchor","middle")
+        .attr("font-size",13).attr("font-weight","500").attr("fill",s.col).text(line);
+    });
+  });
+  // Intersection labels
+  const ints=[
+    {x:cx,y:cy-R*.15,col:"#9C9680",label:"Expertise
++ Ethics",fs:11},
+    {x:cx-R*.28,y:cy+R*.08,col:"#9C9680",label:"Situated
+Knowledge",fs:10},
+    {x:cx+R*.28,y:cy+R*.08,col:"#9C9680",label:"Accountable
+Reasoning",fs:10},
+    {x:cx,y:cy+R*.06,col:fg,label:"Irreducibly
+Human",fs:13,fw:"500"}
+  ];
+  ints.forEach(l=>{
+    l.label.split("
+").forEach((line,li)=>{
+      const t=svg.append("text").attr("x",l.x).attr("y",l.y+li*14).attr("text-anchor","middle")
+        .attr("font-size",l.fs).attr("fill",l.col).text(line);
+      if(l.fw)t.attr("font-weight",l.fw);
+    });
+  });
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

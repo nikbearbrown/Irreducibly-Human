@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Spiral Plot | Irreducibly Human</title>
+<meta name="description" content="Maps time-series data onto a spiral, making cyclic patterns visible. Each revolution represents one full cycle (year, week, day).">
+<meta name="keywords" content="spiral plot, cyclic data, time series, radial, D3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Spiral Plot</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680";
+const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+// 3 years of monthly data
+const data=[];
+for(let y=0;y<3;y++){for(let m=0;m<12;m++){
+  const seasonal=Math.sin((m-2)*Math.PI/6)*30;
+  const trend=y*8;
+  const noise=(Math.random()-.5)*12;
+  data.push({y,m,v:50+seasonal+trend+noise});
+}}
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const cx=W/2,cy=H/2+10;
+  const rMin=50,rMax=Math.min(W,H)*.38;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("text").attr("x",cx).attr("y",28).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("AI usage patterns over 3 years — each ring is one year, color encodes intensity");
+  const rScale=d3.scaleLinear().domain([0,3]).range([rMin,rMax]);
+  const vScale=d3.scaleLinear().domain([d3.min(data,d=>d.v),d3.max(data,d=>d.v)]).range([0,12]);
+  const col=d3.scaleSequential().domain([d3.min(data,d=>d.v),d3.max(data,d=>d.v)])
+    .interpolator(t=>d3.interpolateRgb("#9C9680","#8B0000")(t));
+  // Guide circles
+  [0,1,2,3].forEach(y=>{
+    svg.append("circle").attr("cx",cx).attr("cy",cy).attr("r",rScale(y))
+      .attr("fill","none").attr("stroke",dark?"rgba(255,255,255,.08)":"rgba(0,0,0,.08)").attr("stroke-width",1);
+    if(y>0)svg.append("text").attr("x",cx+4).attr("y",cy-rScale(y)+3).attr("font-size",9).attr("fill",mu).text("Y"+y);
+  });
+  // Month spokes
+  months.forEach((_,mi)=>{
+    const a=mi*2*Math.PI/12-Math.PI/2;
+    svg.append("line").attr("x1",cx+rMin*Math.cos(a)).attr("y1",cy+rMin*Math.sin(a))
+      .attr("x2",cx+rMax*Math.cos(a)).attr("y2",cy+rMax*Math.sin(a))
+      .attr("stroke",dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.05)").attr("stroke-width",1);
+    svg.append("text").attr("x",cx+(rMax+20)*Math.cos(a)).attr("y",cy+(rMax+20)*Math.sin(a)+4)
+      .attr("text-anchor","middle").attr("font-size",10).attr("fill",fg).text(months[mi]);
+  });
+  // Bars
+  data.forEach(d=>{
+    const angle=d.m*2*Math.PI/12-Math.PI/2;
+    const r0=rScale(d.y),r1=r0+vScale(d.v);
+    const arc=d3.arc().innerRadius(r0).outerRadius(r1)
+      .startAngle(angle-0.22).endAngle(angle+0.22);
+    svg.append("path").attr("transform","translate("+cx+","+cy+")").attr("d",arc())
+      .attr("fill",col(d.v)).attr("opacity",.82);
+  });
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

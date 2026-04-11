@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sankey Diagram | Irreducibly Human</title>
+<meta name="description" content="Shows flow and proportional quantities through a system. Node width and link width encode the volume of flow between stages.">
+<meta name="keywords" content="sankey diagram, flow, energy, proportional, D3, network">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Sankey Diagram</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",bg=dark?"#0D0D0D":"#E8E0D0";
+const snodes=[
+  {name:"Human Capacity"},{name:"AI Tools"},{name:"Boondoggling"},{name:"Problem Formulation"},
+  {name:"Tool Orchestration"},{name:"Plausibility Auditing"},{name:"Interpretive Judgment"},
+  {name:"Verified Output"},{name:"Unverified Output"}
+];
+const slinks=[
+  {source:0,target:2,value:60},{source:1,target:2,value:40},{source:2,target:3,value:25},
+  {source:2,target:4,value:25},{source:2,target:5,value:20},{source:2,target:6,value:20},
+  {source:2,target:7,value:10},{source:3,target:7,value:20},{source:4,target:7,value:18},
+  {source:5,target:7,value:16},{source:6,target:7,value:14},{source:1,target:8,value:15}
+];
+const palette=["#8B0000","#8B7536","#6B6B5E","#4A4A4A","#9C9680"];
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:20,b:20,l:20};
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("text").attr("x",W/2).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Flow of capacity through the boondoggling framework — width encodes volume");
+  if(typeof d3.sankey==="undefined"&&typeof sankey!=="undefined"){d3.sankey=sankey;}
+  if(typeof d3.sankey==="undefined"){
+    svg.append("text").attr("x",W/2).attr("y",H/2).attr("text-anchor","middle").attr("font-size",14).attr("fill",fg)
+      .text("Loading Sankey library…");return;
+  }
+  const sk=d3.sankey().nodeId(d=>d.index).nodeWidth(18).nodePadding(14)
+    .extent([[m.l,m.t],[W-m.r,H-m.b]]);
+  const {nodes,links}=sk({nodes:snodes.map((d,i)=>({...d,index:i})),links:slinks.map(d=>({...d}))});
+  // Links
+  const linkGen=d3.sankeyLinkHorizontal();
+  svg.append("g").selectAll("path").data(links).enter().append("path")
+    .attr("d",linkGen).attr("fill","none")
+    .attr("stroke",d=>palette[d.source.index%palette.length]).attr("stroke-opacity",.35)
+    .attr("stroke-width",d=>Math.max(1,d.width));
+  // Nodes
+  svg.append("g").selectAll("rect").data(nodes).enter().append("rect")
+    .attr("x",d=>d.x0).attr("y",d=>d.y0).attr("width",d=>d.x1-d.x0).attr("height",d=>d.y1-d.y0)
+    .attr("fill",d=>palette[d.index%palette.length]).attr("rx",3);
+  // Labels
+  svg.append("g").selectAll("text").data(nodes).enter().append("text")
+    .attr("x",d=>d.x0<W/2?d.x1+6:d.x0-6).attr("y",d=>(d.y0+d.y1)/2+4)
+    .attr("text-anchor",d=>d.x0<W/2?"start":"end").attr("font-size",11).attr("fill",fg).text(d=>d.name);
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

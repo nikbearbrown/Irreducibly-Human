@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Brainstorm | Irreducibly Human</title>
+<meta name="description" content="A mind map rendered as a force-directed graph. A central concept radiates outward to related ideas, which connect further to supporting concepts.">
+<meta name="keywords" content="brainstorm, mind map, force directed, graph, D3, ideation">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Brainstorm</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",bg=dark?"#0D0D0D":"#E8E0D0",mu="#9C9680";
+const linkC=dark?"rgba(255,255,255,.15)":"rgba(0,0,0,.12)";
+const nodes=[
+  {id:"Irreducibly Human",r:30,color:"#8B0000",ring:0},
+  {id:"Plausibility Auditing",r:20,color:"#8B7536",ring:1},{id:"Problem Formulation",r:20,color:"#8B7536",ring:1},
+  {id:"Tool Orchestration",r:20,color:"#8B7536",ring:1},{id:"Interpretive Judgment",r:20,color:"#8B7536",ring:1},
+  {id:"Executive Integration",r:20,color:"#8B7536",ring:1},
+  {id:"Domain knowledge",r:13,color:"#6B6B5E",ring:2},{id:"Intuition",r:13,color:"#6B6B5E",ring:2},
+  {id:"Calibration",r:13,color:"#6B6B5E",ring:2},{id:"Framing",r:13,color:"#6B6B5E",ring:2},
+  {id:"Ambiguity",r:13,color:"#6B6B5E",ring:2},{id:"Sequencing",r:13,color:"#6B6B5E",ring:2},
+  {id:"Accountability",r:13,color:"#6B6B5E",ring:2},{id:"Context",r:13,color:"#6B6B5E",ring:2},
+  {id:"Synthesis",r:13,color:"#6B6B5E",ring:2},{id:"Values",r:13,color:"#6B6B5E",ring:2}
+];
+const links=[
+  {s:0,t:1},{s:0,t:2},{s:0,t:3},{s:0,t:4},{s:0,t:5},
+  {s:1,t:6},{s:1,t:7},{s:2,t:8},{s:2,t:9},{s:3,t:10},{s:3,t:11},
+  {s:4,t:12},{s:4,t:13},{s:5,t:14},{s:5,t:15}
+];
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("text").attr("x",W/2).attr("y",26).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("The five supervisory capacities of the Irreducibly Human framework");
+  const sim=d3.forceSimulation(nodes)
+    .force("link",d3.forceLink(links).id((_,i)=>i).distance(d=>d.target.ring===1?110:80).strength(.8))
+    .force("charge",d3.forceManyBody().strength(d=>d.ring===0?-600:d.ring===1?-300:-150))
+    .force("center",d3.forceCenter(W/2,H/2))
+    .force("collision",d3.forceCollide(d=>d.r+12));
+  const link=svg.append("g").selectAll("line").data(links).enter().append("line")
+    .attr("stroke",linkC).attr("stroke-width",d=>d.target.ring===1?1.5:.8);
+  const node=svg.append("g").selectAll("g").data(nodes).enter().append("g").style("cursor","default");
+  node.append("circle").attr("r",d=>d.r).attr("fill",d=>d.color)
+    .attr("opacity",d=>d.ring===0?.95:d.ring===1?.8:.65).attr("stroke",bg).attr("stroke-width",2);
+  node.append("text").attr("text-anchor","middle").attr("dominant-baseline","central")
+    .attr("fill","#E8E0D0").attr("font-size",d=>d.ring===0?11:d.ring===1?9:8)
+    .attr("font-weight",d=>d.ring===0?"500":"400")
+    .each(function(d){
+      const words=d.id.split(" ");
+      if(words.length<=2||d.ring===2){d3.select(this).text(d.id);}
+      else{
+        const t=d3.select(this);
+        t.text("");
+        words.forEach((w,i)=>{
+          t.append("tspan").attr("x",0).attr("dy",i===0?-(words.length-1)*6+"px":"12px").text(w);
+        });
+      }
+    });
+  sim.on("tick",()=>{
+    link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+        .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+    node.attr("transform",d=>"translate("+Math.max(d.r,Math.min(W-d.r,d.x))+","+Math.max(d.r,Math.min(H-d.r,d.y))+")");
+  });
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

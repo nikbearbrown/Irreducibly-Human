@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Illustration Diagram | Irreducibly Human</title>
+<meta name="description" content="An annotated conceptual diagram using visual metaphor to explain a system or process. Spatial arrangement carries meaning; labels annotate.">
+<meta name="keywords" content="illustration diagram, conceptual, annotated, visual metaphor, D3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Illustration Diagram</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",bg=dark?"#0D0D0D":"#E8E0D0";
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const cx=W/2,cy=H/2;
+  svg.append("text").attr("x",cx).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("The solve–verify asymmetry — Claude solves instantly; humans verify in context");
+  // Claude side
+  const lx=cx-W*.22,rx=cx+W*.22;
+  // Circles representing layers
+  const layers=[
+    {r:W*.18,col:"#8B7536",op:.12,label:"Speed layer"},
+    {r:W*.12,col:"#8B7536",op:.2,label:""},
+    {r:W*.06,col:"#8B7536",op:.5,label:"Claude"}
+  ];
+  layers.forEach(l=>{
+    svg.append("circle").attr("cx",lx).attr("cy",cy).attr("r",l.r)
+      .attr("fill",l.col).attr("opacity",l.op).attr("stroke",l.col).attr("stroke-width",.5).attr("stroke-opacity",.3);
+    if(l.label){
+      svg.append("text").attr("x",lx).attr("y",cy+l.r+14).attr("text-anchor","middle")
+        .attr("font-size",10).attr("fill",mu).text(l.label);
+    }
+  });
+  svg.append("text").attr("x",lx).attr("y",cy+5).attr("text-anchor","middle").attr("font-size",12).attr("font-weight","500").attr("fill","#8B7536").text("Claude");
+  svg.append("text").attr("x",lx).attr("y",cy+20).attr("text-anchor","middle").attr("font-size",10).attr("fill","#8B7536").text("solves");
+  // Human side
+  const hLayers=[
+    {r:W*.18,col:"#8B0000",op:.12},{r:W*.12,col:"#8B0000",op:.2},{r:W*.06,col:"#8B0000",op:.5}
+  ];
+  hLayers.forEach(l=>{
+    svg.append("circle").attr("cx",rx).attr("cy",cy).attr("r",l.r)
+      .attr("fill",l.col).attr("opacity",l.op).attr("stroke",l.col).attr("stroke-width",.5).attr("stroke-opacity",.3);
+  });
+  svg.append("text").attr("x",rx).attr("y",cy+5).attr("text-anchor","middle").attr("font-size",12).attr("font-weight","500").attr("fill","#8B0000").text("Human");
+  svg.append("text").attr("x",rx).attr("y",cy+20).attr("text-anchor","middle").attr("font-size",10).attr("fill","#8B0000").text("verifies");
+  // Capacities around human circle
+  const caps=["Plausibility
+Auditing","Problem
+Formulation","Interpretive
+Judgment","Tool
+Orchestration","Executive
+Integration"];
+  const angles=[-80,-35,10,55,100].map(a=>a*Math.PI/180);
+  caps.forEach((c,i)=>{
+    const a=angles[i],dist=W*.22;
+    const tx=rx+Math.cos(a)*dist,ty=cy+Math.sin(a)*dist;
+    svg.append("line").attr("x1",rx+Math.cos(a)*W*.065).attr("y1",cy+Math.sin(a)*W*.065)
+      .attr("x2",tx-Math.cos(a)*12).attr("y2",ty-Math.sin(a)*12)
+      .attr("stroke",mu).attr("stroke-width",.8).attr("stroke-dasharray","3,3");
+    c.split("
+").forEach((line,li)=>{
+      svg.append("text").attr("x",tx).attr("y",ty+(li-0.5)*13)
+        .attr("text-anchor","middle").attr("font-size",10).attr("fill",fg).text(line);
+    });
+  });
+  // Gap annotation
+  svg.append("line").attr("x1",lx+W*.065).attr("y1",cy).attr("x2",rx-W*.065).attr("y2",cy)
+    .attr("stroke","#4A4A4A").attr("stroke-width",1.5).attr("marker-end","url(#arr)");
+  svg.append("line").attr("x1",rx-W*.065).attr("y1",cy).attr("x2",lx+W*.065).attr("y2",cy)
+    .attr("stroke","#4A4A4A").attr("stroke-width",1.5).attr("marker-end","url(#arr2)");
+  const defs=svg.append("defs");
+  defs.append("marker").attr("id","arr").attr("viewBox","0 0 10 10").attr("refX",8).attr("refY",5)
+    .attr("markerWidth",6).attr("markerHeight",6).attr("orient","auto-start-reverse")
+    .append("path").attr("d","M2 1L8 5L2 9").attr("fill","none").attr("stroke","#4A4A4A").attr("stroke-width",1.5);
+  defs.append("marker").attr("id","arr2").attr("viewBox","0 0 10 10").attr("refX",8).attr("refY",5)
+    .attr("markerWidth",6).attr("markerHeight",6).attr("orient","auto")
+    .append("path").attr("d","M2 1L8 5L2 9").attr("fill","none").attr("stroke","#4A4A4A").attr("stroke-width",1.5);
+  svg.append("text").attr("x",cx).attr("y",cy-14).attr("text-anchor","middle").attr("font-size",10).attr("fill","#4A4A4A").text("The gap");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

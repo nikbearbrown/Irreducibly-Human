@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bubble Chart | Irreducibly Human</title>
+<meta name="description" content="A scatterplot extended with a third variable encoded as bubble size. Reveals relationships between three continuous dimensions simultaneously.">
+<meta name="keywords" content="bubble chart, scatterplot, three variables, D3, data visualization">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Bubble Chart</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",gridC=dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.07)";
+const palette=["#8B0000","#8B7536","#6B6B5E"];
+const cats=["Human-primary","Hybrid","AI-primary"];
+const raw=[
+  {x:85,y:22,s:48,c:0,l:"Empathy"},{x:78,y:18,s:40,c:0,l:"Moral Judgment"},
+  {x:72,y:30,s:55,c:0,l:"Creativity"},{x:68,y:15,s:38,c:0,l:"Embodied Teaching"},
+  {x:62,y:35,s:42,c:0,l:"Mentorship"},{x:58,y:48,s:60,c:1,l:"Causal Reasoning"},
+  {x:52,y:55,s:50,c:1,l:"Problem Framing"},{x:48,y:58,s:52,c:1,l:"Research Design"},
+  {x:45,y:62,s:44,c:1,l:"Interpretation"},{x:42,y:65,s:48,c:1,l:"Synthesis"},
+  {x:35,y:75,s:58,c:2,l:"Pattern Match"},{x:28,y:82,s:70,c:2,l:"Data Processing"},
+  {x:22,y:88,s:68,c:2,l:"Code Generation"},{x:18,y:92,s:75,c:2,l:"Recall"},
+  {x:15,y:95,s:72,c:2,l:"Translation"}
+];
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:150,b:60,l:60};
+  const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const g=svg.append("g").attr("transform","translate("+m.l+","+m.t+")");
+  const x=d3.scaleLinear().domain([0,100]).range([0,iW]);
+  const y=d3.scaleLinear().domain([0,100]).range([iH,0]);
+  const r=d3.scaleSqrt().domain([30,80]).range([8,28]);
+  [20,40,60,80].forEach(t=>{
+    g.append("line").attr("x1",x(t)).attr("x2",x(t)).attr("y1",0).attr("y2",iH).attr("stroke",gridC).attr("stroke-width",1);
+    g.append("line").attr("x1",0).attr("x2",iW).attr("y1",y(t)).attr("y2",y(t)).attr("stroke",gridC).attr("stroke-width",1);
+  });
+  g.selectAll("circle").data(raw).enter().append("circle")
+    .attr("cx",d=>x(d.x)).attr("cy",d=>y(d.y)).attr("r",d=>r(d.s))
+    .attr("fill",d=>palette[d.c]).attr("opacity",.72).attr("stroke",d=>palette[d.c]).attr("stroke-width",1);
+  g.selectAll(".bl").data(raw).enter().append("text").classed("bl",true)
+    .attr("x",d=>x(d.x)+r(d.s)+4).attr("y",d=>y(d.y)+4)
+    .attr("font-size",10).attr("fill",fg).text(d=>d.l);
+  g.append("g").attr("transform","translate(0,"+iH+")").call(d3.axisBottom(x).ticks(5)).call(a=>{
+    a.select(".domain").attr("stroke",mu);a.selectAll("text").attr("fill",fg).attr("font-size",11);a.selectAll(".tick line").attr("stroke",mu);
+  });
+  g.append("g").call(d3.axisLeft(y).ticks(5)).call(a=>{
+    a.select(".domain").attr("stroke",mu);a.selectAll("text").attr("fill",fg).attr("font-size",11);a.selectAll(".tick line").attr("stroke",mu);
+  });
+  // Legend
+  cats.forEach((c,i)=>{
+    svg.append("circle").attr("cx",W-m.r+20).attr("cy",m.t+20+i*22).attr("r",7).attr("fill",palette[i]).attr("opacity",.75);
+    svg.append("text").attr("x",W-m.r+33).attr("y",m.t+24+i*22).attr("font-size",11).attr("fill",fg).text(c);
+  });
+  g.append("text").attr("x",iW/2).attr("y",iH+46).attr("text-anchor","middle").attr("font-size",11).attr("fill",fg).text("Human irreducibility score");
+  g.append("text").attr("x",-iH/2).attr("y",-42).attr("transform","rotate(-90)").attr("text-anchor","middle").attr("font-size",11).attr("fill",fg).text("AI automation risk");
+  svg.append("text").attr("x",(W-m.r)/2+m.l).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Bubble size = industry prevalence — upper-left = most irreducibly human");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

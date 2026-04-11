@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tree Diagram | Irreducibly Human</title>
+<meta name="description" content="A hierarchical layout showing parent-child relationships as a branching tree. Radial or vertical layouts reveal depth and branching structure.">
+<meta name="keywords" content="tree diagram, hierarchy, radial tree, D3, taxonomy">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Tree Diagram</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",bg=dark?"#0D0D0D":"#E8E0D0";
+const treeData={name:"Irreducibly Human",children:[
+  {name:"Tier 4 Intelligences",children:[
+    {name:"Plausibility Auditing"},{name:"Problem Formulation"},
+    {name:"Tool Orchestration"},{name:"Interpretive Judgment"},{name:"Executive Integration"}
+  ]},
+  {name:"5 Courses",children:[
+    {name:"BotSpeak"},{name:"Causal Reasoning"},
+    {name:"Ethical Play"},{name:"AImagineering"},{name:"Embodied Teaching"}
+  ]},
+  {name:"AI Cannot",children:[
+    {name:"Verify context"},{name:"Reframe problems"},
+    {name:"Hold accountability"},{name:"Integrate conflict"}
+  ]}
+]};
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("text").attr("x",W/2).attr("y",28).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Knowledge taxonomy of the Irreducibly Human curriculum");
+  const R=Math.min(W,H)*.42;
+  const root=d3.hierarchy(treeData);
+  const tree=d3.tree().size([2*Math.PI,R]).separation((a,b)=>a.parent===b.parent?1.2:2);
+  tree(root);
+  const cx=W/2,cy=H/2+10;
+  const radPt=d=>[cx+d.y*Math.cos(d.x-Math.PI/2),cy+d.y*Math.sin(d.x-Math.PI/2)];
+  // Links
+  svg.append("g").selectAll("path").data(root.links()).enter().append("path")
+    .attr("d",d=>{
+      const [sx,sy]=radPt(d.source),[tx,ty]=radPt(d.target);
+      return "M"+sx+","+sy+" C"+((sx+tx)/2)+","+sy+" "+((sx+tx)/2)+","+ty+" "+tx+","+ty;
+    }).attr("fill","none").attr("stroke",dark?"rgba(255,255,255,.2)":"rgba(0,0,0,.15)").attr("stroke-width",1.2);
+  // Nodes
+  const node=svg.append("g").selectAll("g").data(root.descendants()).enter().append("g")
+    .attr("transform",d=>{const [x,y]=radPt(d);return "translate("+x+","+y+")";});
+  node.append("circle").attr("r",d=>d.depth===0?10:d.depth===1?7:5)
+    .attr("fill",d=>d.depth===0?"#8B0000":d.depth===1?"#8B7536":"#6B6B5E")
+    .attr("stroke",bg).attr("stroke-width",2);
+  node.append("text").attr("dy","0.31em").attr("x",d=>{
+    const a=d.x-Math.PI/2;return d.depth===0?0:Math.cos(a)*12*(d.x<Math.PI?1:-1);
+  }).attr("text-anchor",d=>d.depth===0?"middle":d.x<Math.PI?"start":"end")
+    .attr("font-size",d=>d.depth===0?12:d.depth===1?11:10)
+    .attr("fill",fg).text(d=>d.data.name);
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

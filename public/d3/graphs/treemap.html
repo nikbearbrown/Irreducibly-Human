@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Treemap | Irreducibly Human</title>
+<meta name="description" content="Nested rectangles represent a hierarchy. Area encodes quantitative value. Color can encode a second variable or group membership.">
+<meta name="keywords" content="treemap, hierarchy, nested rectangles, area encoding, D3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Treemap</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",bg=dark?"#0D0D0D":"#E8E0D0";
+const tmData={name:"root",children:[
+  {name:"Human-Primary",children:[
+    {name:"Moral Judgment",v:22},{name:"Embodied Teaching",v:28},{name:"Empathy",v:18},
+    {name:"Creative Vision",v:20},{name:"Mentorship",v:15}
+  ]},
+  {name:"AI-Primary",children:[
+    {name:"Code Generation",v:35},{name:"Pattern Matching",v:30},{name:"Data Processing",v:28},
+    {name:"Translation",v:22},{name:"Recall",v:25}
+  ]},
+  {name:"Collaborative",children:[
+    {name:"Research Design",v:20},{name:"Causal Reasoning",v:18},{name:"Tool Orchestration",v:16},
+    {name:"Problem Framing",v:19},{name:"Synthesis",v:17}
+  ]}
+]};
+const groupCols={"Human-Primary":"#8B0000","AI-Primary":"#8B7536","Collaborative":"#6B6B5E"};
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:52,r:4,b:4,l:4};
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("text").attr("x",W/2).attr("y",26).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Task domains by type — area encodes relative size of each category");
+  const root=d3.hierarchy(tmData).sum(d=>d.v||0).sort((a,b)=>b.value-a.value);
+  d3.treemap().size([W-m.l-m.r,H-m.t-m.b]).padding(3).paddingTop(20)(root);
+  const g=svg.append("g").attr("transform","translate("+m.l+","+m.t+")");
+  // Group headers
+  root.children.forEach(grp=>{
+    g.append("rect").attr("x",grp.x0).attr("y",grp.y0).attr("width",grp.x1-grp.x0)
+      .attr("height",grp.y1-grp.y0).attr("fill",groupCols[grp.data.name]).attr("opacity",.15).attr("rx",4);
+    g.append("text").attr("x",grp.x0+6).attr("y",grp.y0+13).attr("font-size",10).attr("font-weight","500")
+      .attr("fill",groupCols[grp.data.name]).text(grp.data.name);
+  });
+  // Leaves
+  const leaves=root.leaves();
+  g.selectAll(".leaf").data(leaves).enter().append("rect").classed("leaf",true)
+    .attr("x",d=>d.x0).attr("y",d=>d.y0).attr("width",d=>d.x1-d.x0).attr("height",d=>d.y1-d.y0)
+    .attr("fill",d=>groupCols[d.parent.data.name]).attr("opacity",.72).attr("rx",3).attr("stroke",bg).attr("stroke-width",1);
+  g.selectAll(".lt").data(leaves).enter().append("text").classed("lt",true)
+    .attr("x",d=>(d.x0+d.x1)/2).attr("y",d=>(d.y0+d.y1)/2)
+    .attr("text-anchor","middle").attr("dominant-baseline","central")
+    .attr("font-size",d=>Math.min(13,Math.max(8,(d.x1-d.x0)/8))).attr("fill","#E8E0D0")
+    .text(d=>d.x1-d.x0>50&&d.y1-d.y0>20?d.data.name:"");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

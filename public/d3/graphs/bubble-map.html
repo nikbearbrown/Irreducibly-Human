@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bubble Map | Irreducibly Human</title>
+<meta name="description" content="Bubbles overlaid on a geographic map, with size encoding a quantitative variable. Reveals spatial patterns in data.">
+<meta name="keywords" content="bubble map, geographic visualization, spatial data, D3, cartography">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Bubble Map</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680";
+const landC=dark?"#2F2F2F":"#D3D1C7",oceanC=dark?"#1a1a1a":"#E8E0D0",borderC=dark?"#444":"#B4B2A9";
+const cities=[
+  {name:"New York",lat:40.7,lng:-74,val:82},{name:"London",lat:51.5,lng:-0.1,val:78},
+  {name:"Tokyo",lat:35.7,lng:139.7,val:90},{name:"Beijing",lat:39.9,lng:116.4,val:85},
+  {name:"Berlin",lat:52.5,lng:13.4,val:70},{name:"São Paulo",lat:-23.5,lng:-46.6,val:55},
+  {name:"Mumbai",lat:19.1,lng:72.9,val:60},{name:"Lagos",lat:6.5,lng:3.4,val:40},
+  {name:"Sydney",lat:-33.9,lng:151.2,val:65},{name:"Toronto",lat:43.7,lng:-79.4,val:68},
+  {name:"Paris",lat:48.9,lng:2.3,val:72},{name:"Singapore",lat:1.3,lng:103.8,val:75},
+  {name:"Nairobi",lat:-1.3,lng:36.8,val:38},{name:"Cairo",lat:30.0,lng:31.2,val:45},
+  {name:"Buenos Aires",lat:-34.6,lng:-58.4,val:52}
+];
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  svg.append("rect").attr("width",W).attr("height",H).attr("fill",oceanC);
+  const proj=d3.geoNaturalEarth1().scale(W/6.5).translate([W/2,H/2]);
+  const path=d3.geoPath().projection(proj);
+  const graticule=d3.geoGraticule()();
+  svg.append("path").datum(graticule).attr("d",path)
+    .attr("fill","none").attr("stroke",dark?"rgba(255,255,255,.05)":"rgba(0,0,0,.06)").attr("stroke-width",.5);
+  fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json").then(r=>r.json()).then(world=>{
+    const countries=topojson_feature(world,"countries");
+    svg.insert("path","circle").datum(countries).attr("d",path).attr("fill",landC).attr("stroke",borderC).attr("stroke-width",.4);
+    addBubbles();
+  }).catch(()=>addBubbles());
+  const r=d3.scaleSqrt().domain([30,95]).range([6,32]);
+  function addBubbles(){
+    const g=svg.append("g");
+    cities.sort((a,b)=>b.val-a.val).forEach(c=>{
+      const [px,py]=proj([c.lng,c.lat]);
+      if(!px||!py)return;
+      g.append("circle").attr("cx",px).attr("cy",py).attr("r",r(c.val))
+        .attr("fill","#8B0000").attr("opacity",.6).attr("stroke","#8B0000").attr("stroke-width",1);
+      if(c.val>65){
+        g.append("text").attr("x",px).attr("y",py-r(c.val)-4)
+          .attr("text-anchor","middle").attr("font-size",10).attr("fill",fg).text(c.name);
+      }
+    });
+  }
+  svg.append("text").attr("x",W/2).attr("y",28).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("AI research activity by city — bubble size encodes relative intensity");
+  // Legend
+  [30,60,90].forEach((v,i)=>{
+    const cx=W-80,cy=H-80+i*(-r(v)-10);
+    svg.append("circle").attr("cx",cx).attr("cy",H-80).attr("r",r(v))
+      .attr("fill","none").attr("stroke",mu).attr("stroke-width",1).attr("opacity",.7);
+    svg.append("text").attr("x",cx+r(v)+6).attr("y",H-80+4-i*0)
+      .attr("font-size",9).attr("fill",mu).text(v);
+  });
+}
+function topojson_feature(topology,name){
+  const o=topology.objects[name];
+  return{type:"FeatureCollection",features:o.geometries.map(g=>({type:"Feature",geometry:topojson_geometryToGeoJSON(topology,g),properties:g.properties||{}}))}
+}
+function topojson_geometryToGeoJSON(t,g){
+  const arcs=t.arcs;
+  function decode(arc){
+    let x=0,y=0,scale=t.transform?t.transform.scale:[1,1],trans=t.transform?t.transform.translate:[0,0];
+    return arc.map(([dx,dy])=>{x+=dx;y+=dy;return[x*scale[0]+trans[0],y*scale[1]+trans[1]];});
+  }
+  function ring(indices){const pts=[];indices.forEach(i=>{const a=i<0?decode(arcs[~i]).reverse():decode(arcs[i]);a.forEach(p=>pts.push(p));});return pts;}
+  if(g.type==="Polygon")return{type:"Polygon",coordinates:g.arcs.map(ring)};
+  if(g.type==="MultiPolygon")return{type:"MultiPolygon",coordinates:g.arcs.map(a=>a.map(ring))};
+  return{type:g.type};
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

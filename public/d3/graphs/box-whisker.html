@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Box & Whisker Plot | Irreducibly Human</title>
+<meta name="description" content="Shows the distribution of data through quartiles. The box spans Q1 to Q3, the line marks the median, and whiskers extend to min/max (excluding outliers).">
+<meta name="keywords" content="box plot, whisker, quartile, distribution, statistics, D3">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Box & Whisker Plot</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",gridC=dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.07)";
+function rnd(mu,sd){let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return mu+sd*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function stats(arr){
+  const s=arr.slice().sort((a,b)=>a-b),n=s.length;
+  const q=p=>s[Math.floor(p*n)];
+  const q1=q(.25),med=q(.5),q3=q(.75),iqr=q3-q1;
+  const pts=s.filter(v=>v>=q1-1.5*iqr&&v<=q3+1.5*iqr);
+  const out=s.filter(v=>v<q1-1.5*iqr||v>q3+1.5*iqr);
+  return{min:pts[0],q1,med,q3,max:pts[pts.length-1],out};
+}
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:40,b:60,l:60};
+  const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const g=svg.append("g").attr("transform","translate("+m.l+","+m.t+")");
+  const groups=[
+    {k:"Causal Reasoning",data:Array.from({length:80},()=>rnd(62,14))},
+    {k:"Pattern Recognition",data:Array.from({length:80},()=>rnd(85,8))},
+    {k:"Moral Judgment",data:Array.from({length:80},()=>rnd(54,18))},
+    {k:"Creative Synthesis",data:Array.from({length:80},()=>rnd(70,20))},
+    {k:"Embodied Teaching",data:Array.from({length:80},()=>rnd(45,12))}
+  ];
+  const x=d3.scaleBand().domain(groups.map(d=>d.k)).range([0,iW]).padding(.35);
+  const y=d3.scaleLinear().domain([10,100]).range([iH,0]);
+  const palette=["#8B0000","#8B7536","#6B6B5E","#4A4A4A","#9C9680"];
+  y.ticks(5).forEach(t=>{
+    g.append("line").attr("x1",0).attr("x2",iW).attr("y1",y(t)).attr("y2",y(t))
+      .attr("stroke",gridC).attr("stroke-width",1);
+  });
+  groups.forEach((grp,i)=>{
+    const st=stats(grp.data);
+    const cx=x(grp.k)+x.bandwidth()/2,bw=x.bandwidth();
+    const col=palette[i%palette.length];
+    // Whiskers
+    g.append("line").attr("x1",cx).attr("x2",cx).attr("y1",y(st.min)).attr("y2",y(st.q1)).attr("stroke",col).attr("stroke-width",1.5).attr("stroke-dasharray","3,3");
+    g.append("line").attr("x1",cx).attr("x2",cx).attr("y1",y(st.q3)).attr("y2",y(st.max)).attr("stroke",col).attr("stroke-width",1.5).attr("stroke-dasharray","3,3");
+    g.append("line").attr("x1",cx-bw*.2).attr("x2",cx+bw*.2).attr("y1",y(st.min)).attr("y2",y(st.min)).attr("stroke",col).attr("stroke-width",1.5);
+    g.append("line").attr("x1",cx-bw*.2).attr("x2",cx+bw*.2).attr("y1",y(st.max)).attr("y2",y(st.max)).attr("stroke",col).attr("stroke-width",1.5);
+    // Box
+    g.append("rect").attr("x",x(grp.k)).attr("y",y(st.q3)).attr("width",bw)
+      .attr("height",y(st.q1)-y(st.q3)).attr("fill",col).attr("opacity",.25).attr("rx",2);
+    g.append("rect").attr("x",x(grp.k)).attr("y",y(st.q3)).attr("width",bw)
+      .attr("height",y(st.q1)-y(st.q3)).attr("fill","none").attr("stroke",col).attr("stroke-width",1.5).attr("rx",2);
+    // Median
+    g.append("line").attr("x1",x(grp.k)).attr("x2",x(grp.k)+bw).attr("y1",y(st.med)).attr("y2",y(st.med)).attr("stroke",col).attr("stroke-width",2.5);
+    // Outliers
+    st.out.forEach(v=>{
+      g.append("circle").attr("cx",cx+(Math.random()-.5)*bw*.3).attr("cy",y(v)).attr("r",2.5).attr("fill",col).attr("opacity",.5);
+    });
+  });
+  g.append("g").attr("transform","translate(0,"+iH+")").call(d3.axisBottom(x)).call(a=>{
+    a.select(".domain").attr("stroke",mu);
+    a.selectAll("text").attr("fill",fg).attr("font-size",10.5);
+    a.selectAll(".tick line").attr("stroke",mu);
+  });
+  g.append("g").call(d3.axisLeft(y).ticks(5)).call(a=>{
+    a.select(".domain").attr("stroke",mu);
+    a.selectAll("text").attr("fill",fg).attr("font-size",11);
+    a.selectAll(".tick line").attr("stroke",mu);
+  });
+  svg.append("text").attr("x",W/2).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Score distributions by cognitive domain — box spans Q1–Q3, line marks median, dots are outliers");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Stacked Area Graph | Irreducibly Human</title>
+<meta name="description" content="Multiple area series stacked vertically. Shows both individual contribution and cumulative total over time.">
+<meta name="keywords" content="stacked area, time series, composition, D3, data visualization">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Stacked Area Graph</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",gridC=dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.07)";
+const keys=["Problem Formulation","Tool Orchestration","Plausibility Auditing","Interpretive Judgment"];
+const palette=["#8B0000","#8B7536","#6B6B5E","#4A4A4A"];
+const months=["Jan","Mar","May","Jul","Sep","Nov"];
+const raw=[
+  [12,15,18,22,26,28],[18,20,22,24,26,28],[20,22,24,24,22,20],[15,18,20,22,24,26]
+];
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:210,b:60,l:60};
+  const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const g=svg.append("g").attr("transform","translate("+m.l+","+m.t+")");
+  const data=d3.range(6).map(i=>({i,values:keys.map((k,ki)=>raw[ki][i])}));
+  const stack=d3.stack().keys(d3.range(keys.length)).value((d,k)=>d.values[k]);
+  const series=stack(data);
+  const x=d3.scaleLinear().domain([0,5]).range([0,iW]);
+  const maxY=d3.max(series[series.length-1],d=>d[1]);
+  const y=d3.scaleLinear().domain([0,maxY]).range([iH,0]);
+  y.ticks(5).forEach(t=>{g.append("line").attr("x1",0).attr("x2",iW).attr("y1",y(t)).attr("y2",y(t)).attr("stroke",gridC).attr("stroke-width",1);});
+  const area=d3.area().x((_,i)=>x(i)).y0(d=>y(d[0])).y1(d=>y(d[1])).curve(d3.curveCatmullRom.alpha(.5));
+  series.forEach((s,i)=>{
+    g.append("path").datum(s).attr("d",area).attr("fill",palette[i]).attr("opacity",.75);
+  });
+  g.append("g").attr("transform","translate(0,"+iH+")").call(d3.axisBottom(x).ticks(5).tickFormat((_,i)=>months[i]||"")).call(a=>{a.select(".domain").attr("stroke",mu);a.selectAll("text").attr("fill",fg).attr("font-size",11);a.selectAll(".tick line").attr("stroke",mu);});
+  g.append("g").call(d3.axisLeft(y).ticks(5)).call(a=>{a.select(".domain").attr("stroke",mu);a.selectAll("text").attr("fill",fg).attr("font-size",11);a.selectAll(".tick line").attr("stroke",mu);});
+  keys.forEach((k,i)=>{
+    svg.append("rect").attr("x",W-m.r+10).attr("y",m.t+i*22).attr("width",12).attr("height",12).attr("fill",palette[i]).attr("rx",2).attr("opacity",.8);
+    svg.append("text").attr("x",W-m.r+28).attr("y",m.t+i*22+10).attr("font-size",11).attr("fill",fg).text(k);
+  });
+  svg.append("text").attr("x",(W-m.r+m.l)/2).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Hours per week by supervisory capacity — stacked area shows composition and total");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

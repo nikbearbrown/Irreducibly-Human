@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bullet Graph | Irreducibly Human</title>
+<meta name="description" content="A compact alternative to gauges. Shows a primary measure (the bar), a comparative target (the tick), and qualitative performance ranges (background bands).">
+<meta name="keywords" content="bullet graph, KPI, performance, target, D3, data visualization">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Bullet Graph</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680";
+const metrics=[
+  {k:"Pattern Recognition",val:88,target:85,ranges:[50,70,90,100]},
+  {k:"Language Fluency",val:92,target:80,ranges:[50,70,85,100]},
+  {k:"Causal Reasoning",val:61,target:75,ranges:[40,60,80,100]},
+  {k:"Moral Judgment",val:45,target:70,ranges:[30,55,75,100]},
+  {k:"Creative Synthesis",val:68,target:72,ranges:[40,60,80,100]},
+  {k:"Embodied Teaching",val:38,target:65,ranges:[30,50,70,100]}
+];
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:80,b:30,l:160};
+  const iW=W-m.l-m.r,rH=Math.min(42,(H-m.t-m.b)/metrics.length-12);
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const bandC=dark?["#1a1a1a","#2a2a2a","#333"]:["#D3D1C7","#B4B2A9","#9C9680"];
+  const spacing=(H-m.t-m.b)/metrics.length;
+  metrics.forEach((d,i)=>{
+    const gy=m.t+i*spacing;
+    const g=svg.append("g").attr("transform","translate("+m.l+","+gy+")");
+    const x=d3.scaleLinear().domain([0,100]).range([0,iW]);
+    // Bands
+    for(let b=0;b<d.ranges.length-1;b++){
+      g.append("rect").attr("x",x(d.ranges[b])).attr("y",0).attr("height",rH)
+        .attr("width",x(d.ranges[b+1])-x(d.ranges[b])).attr("fill",bandC[b]||bandC[bandC.length-1]).attr("rx",2);
+    }
+    // Measure bar
+    g.append("rect").attr("x",0).attr("y",rH*.3).attr("height",rH*.4)
+      .attr("width",x(d.val)).attr("fill","#8B0000").attr("rx",1);
+    // Target line
+    g.append("line").attr("x1",x(d.target)).attr("x2",x(d.target)).attr("y1",rH*.1).attr("y2",rH*.9)
+      .attr("stroke","#8B7536").attr("stroke-width",3);
+    // Label
+    svg.append("text").attr("x",m.l-12).attr("y",gy+rH/2+4).attr("text-anchor","end")
+      .attr("font-size",12).attr("fill",fg).text(d.k);
+    // Value
+    svg.append("text").attr("x",m.l+iW+10).attr("y",gy+rH/2+4).attr("font-size",11).attr("fill",mu).text(d.val);
+  });
+  svg.append("text").attr("x",W/2).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("AI capability vs human benchmark — bar = performance, tick = target, bands = ranges");
+  // Legend
+  const lx=W-m.r+10,ly=m.t;
+  [["Performance","#8B0000"],["Target","#8B7536"]].forEach(([l,c],i)=>{
+    svg.append("rect").attr("x",lx).attr("y",ly+i*18).attr("width",12).attr("height",i===0?6:12).attr("fill",c).attr("ry",1);
+    svg.append("text").attr("x",lx+18).attr("y",ly+i*18+9).attr("font-size",10).attr("fill",fg).text(l);
+  });
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>

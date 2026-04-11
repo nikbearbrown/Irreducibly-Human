@@ -1,6 +1,7 @@
 import { join } from 'path'
 import { readFileSync } from 'fs'
 import type { Metadata } from 'next'
+import { sql } from '@/lib/db'
 import { scanHtmlSubdirs } from '@/lib/html-meta'
 import TalksBrowser from './TalksBrowser'
 
@@ -11,8 +12,23 @@ export const metadata: Metadata = {
   description: 'Browse talks and presentations.',
 }
 
-export default function TalksPage() {
+export default async function TalksPage() {
   const groups = scanHtmlSubdirs(join(process.cwd(), 'public', 'talks'))
+
+  // Fetch DB tag overrides — DB takes priority over HTML meta keywords
+  let dbTagMap = new Map<string, string[]>()
+  try {
+    const rows = await sql`SELECT slug, tags FROM page_meta WHERE page_type = 'talks'`
+    dbTagMap = new Map((rows as { slug: string; tags: string[] }[]).map(r => [r.slug, r.tags]))
+  } catch {}
+
+  const mergedGroups = groups.map(g => ({
+    ...g,
+    docs: g.docs.map(d => ({
+      ...d,
+      tags: dbTagMap.has(d.slug) ? dbTagMap.get(d.slug)! : d.tags,
+    })),
+  }))
 
   let filterTags: string[] = []
   try {
@@ -27,7 +43,7 @@ export default function TalksPage() {
         <p className="text-muted-foreground mb-10">
           Browse talks and presentations.
         </p>
-        <TalksBrowser groups={groups} filterTags={filterTags} />
+        <TalksBrowser groups={mergedGroups} filterTags={filterTags} />
       </div>
     </div>
   )

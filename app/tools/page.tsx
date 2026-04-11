@@ -35,7 +35,16 @@ export default async function ToolsPage() {
     tags: doc.tags,
   }))
 
-  // 2. Database link tools
+  // 2. Fetch artifact tag overrides from DB and merge into filesystem artifacts
+  try {
+    const rows = await sql`SELECT slug, tags FROM page_meta WHERE page_type = 'artifact'`
+    const artifactTagMap = new Map((rows as { slug: string; tags: string[] }[]).map(r => [r.slug, r.tags]))
+    for (const tool of artifactTools) {
+      if (artifactTagMap.has(tool.slug)) tool.tags = artifactTagMap.get(tool.slug)!
+    }
+  } catch {}
+
+  // 3. Database link tools
   let dbTools: Tool[] = []
   try {
     dbTools = await sql`SELECT * FROM tools WHERE tool_type = 'link' ORDER BY created_at DESC`
@@ -43,12 +52,12 @@ export default async function ToolsPage() {
     console.error('[tools/page] Failed to fetch DB tools:', err)
   }
 
-  // 3. Merge, deduplicate by slug (filesystem wins)
+  // 4. Merge, deduplicate by slug (filesystem wins)
   const slugSet = new Set(artifactTools.map(t => t.slug))
   const linkTools = dbTools.filter(t => !slugSet.has(t.slug))
   const allTools = [...artifactTools, ...linkTools]
 
-  // 4. Read curated filter tags from filters.json
+  // 5. Read curated filter tags from filters.json
   let filterTags: string[] = []
   try {
     const raw = readFileSync(join(process.cwd(), 'public', 'artifacts', 'filters.json'), 'utf-8')

@@ -21,7 +21,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Pencil, Trash2, Plus, ExternalLink, Box } from 'lucide-react'
+import { Pencil, Trash2, Plus, ExternalLink, Box, RotateCcw } from 'lucide-react'
+
+interface ArtifactMeta {
+  id: string | null
+  slug: string
+  title: string
+  description: string
+  html_tags: string[]
+  db_tags: string[] | null
+  effective_tags: string[]
+}
 
 interface Tool {
   id: string
@@ -64,6 +74,13 @@ export default function ToolsAdminPage() {
   const [form, setForm] = useState(EMPTY_FORM)
   const [saving, setSaving] = useState(false)
 
+  // Artifact tools state
+  const [artifacts, setArtifacts] = useState<ArtifactMeta[]>([])
+  const [artifactsLoading, setArtifactsLoading] = useState(true)
+  const [editingArtifact, setEditingArtifact] = useState<ArtifactMeta | null>(null)
+  const [artifactTagsInput, setArtifactTagsInput] = useState('')
+  const [artifactSaving, setArtifactSaving] = useState(false)
+
   const fetchTools = useCallback(async () => {
     try {
       const res = await fetch('/api/admin/tools')
@@ -77,9 +94,64 @@ export default function ToolsAdminPage() {
     }
   }, [])
 
+  const fetchArtifacts = useCallback(async () => {
+    setArtifactsLoading(true)
+    try {
+      const res = await fetch('/api/admin/page-meta?type=artifact')
+      if (!res.ok) throw new Error('Failed to load artifacts')
+      setArtifacts(await res.json())
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error loading artifacts')
+    } finally {
+      setArtifactsLoading(false)
+    }
+  }, [])
+
   useEffect(() => {
     fetchTools()
-  }, [fetchTools])
+    fetchArtifacts()
+  }, [fetchTools, fetchArtifacts])
+
+  function openArtifactEdit(a: ArtifactMeta) {
+    setEditingArtifact(a)
+    setArtifactTagsInput((a.db_tags ?? a.html_tags).join(', '))
+  }
+
+  async function saveArtifactTags() {
+    if (!editingArtifact) return
+    setArtifactSaving(true)
+    setError('')
+    try {
+      const tags = artifactTagsInput.split(',').map(t => t.trim()).filter(Boolean)
+      const res = await fetch('/api/admin/page-meta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page_type: 'artifact', slug: editingArtifact.slug, tags }),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Failed to save')
+      }
+      setEditingArtifact(null)
+      fetchArtifacts()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error saving artifact tags')
+    } finally {
+      setArtifactSaving(false)
+    }
+  }
+
+  async function resetArtifactTags(a: ArtifactMeta) {
+    if (!a.id) return
+    if (!confirm(`Reset "${a.title}" tags to HTML meta defaults?`)) return
+    try {
+      const res = await fetch(`/api/admin/page-meta/${a.id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed to reset')
+      fetchArtifacts()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error resetting artifact tags')
+    }
+  }
 
   function openNew() {
     setEditingTool(null)
@@ -383,6 +455,109 @@ export default function ToolsAdminPage() {
             </Button>
             <Button onClick={saveTool} disabled={saving}>
               {saving ? 'Saving…' : 'Save'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ── Artifact Tools ── */}
+      <div className="border-t pt-8 space-y-4">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tighter">Artifact Tools — Tags</h2>
+          <p className="text-sm text-muted-foreground">
+            Edit tags for filesystem artifacts (<code className="text-xs bg-muted px-1 rounded">public/artifacts/</code>).
+            DB overrides replace HTML meta keywords on the public page.
+          </p>
+        </div>
+
+        {artifactsLoading ? (
+          <p className="text-muted-foreground">Loading…</p>
+        ) : artifacts.length === 0 ? (
+          <p className="text-muted-foreground">No artifacts found in public/artifacts/.</p>
+        ) : (
+          <div className="grid gap-3">
+            {artifacts.map(a => (
+              <Card key={a.slug}>
+                <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+                  <div className="space-y-1 min-w-0">
+                    <CardTitle className="text-base leading-tight">{a.title}</CardTitle>
+                    <CardDescription className="flex items-center gap-1.5 flex-wrap">
+                      <Badge variant="outline" className="text-xs font-mono">{a.slug}</Badge>
+                      {a.db_tags !== null && (
+                        <Badge variant="secondary" className="text-xs">DB override</Badge>
+                      )}
+                    </CardDescription>
+                  </div>
+                  <div className="flex gap-1.5 shrink-0 ml-4">
+                    <Button variant="outline" size="sm" onClick={() => openArtifactEdit(a)}>
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Button>
+                    {a.id && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => resetArtifactTags(a)}
+                        title="Reset to HTML meta tags"
+                      >
+                        <RotateCcw className="h-3.5 w-3.5" />
+                      </Button>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className="flex flex-wrap gap-1.5">
+                    {a.effective_tags.length > 0 ? (
+                      a.effective_tags.map(tag => (
+                        <Badge key={tag} variant="secondary" className="text-xs">{tag}</Badge>
+                      ))
+                    ) : (
+                      <span className="text-xs text-muted-foreground italic">No tags</span>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Artifact tag edit dialog */}
+      <Dialog open={!!editingArtifact} onOpenChange={open => { if (!open) setEditingArtifact(null) }}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Tags — {editingArtifact?.title}</DialogTitle>
+            <DialogDescription>
+              {editingArtifact?.db_tags !== null
+                ? 'Currently using DB override. Save to update, or reset to revert to HTML meta.'
+                : 'Currently using HTML meta keywords. Save to create a DB override.'}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            {editingArtifact && editingArtifact.html_tags.length > 0 && (
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">HTML meta tags (original):</p>
+                <div className="flex flex-wrap gap-1">
+                  {editingArtifact.html_tags.map(tag => (
+                    <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="space-y-1.5">
+              <Label htmlFor="artifact-tags">Tags (comma-separated)</Label>
+              <Input
+                id="artifact-tags"
+                value={artifactTagsInput}
+                onChange={e => setArtifactTagsInput(e.target.value)}
+                placeholder="tag1, tag2, tag3"
+                autoFocus
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingArtifact(null)}>Cancel</Button>
+            <Button onClick={saveArtifactTags} disabled={artifactSaving}>
+              {artifactSaving ? 'Saving…' : 'Save'}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Area Graph | Irreducibly Human</title>
+<meta name="description" content="A line graph with the area below the line filled, emphasizing cumulative volume or total magnitude over time.">
+<meta name="keywords" content="area graph, filled line chart, time series, D3, data visualization">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden}
+body{font-family:Inter,-apple-system,sans-serif;background:#E8E0D0;color:#0D0D0D}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(232,224,208,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid rgba(0,0,0,.09);
+display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+nav a{font-size:13px;color:#4A4A4A;text-decoration:none;font-weight:500}
+nav a:hover{color:#0D0D0D}.nt{font-size:13px;color:#6B6B5E}.nc{font-size:12px;color:#9C9680}
+.nc a{color:#9C9680;text-decoration:none}.nc a:hover{color:#4A4A4A}
+#viz{position:fixed;top:44px;left:0;right:0;bottom:0;overflow:hidden}
+
+@media(prefers-color-scheme:dark){
+body{background:#0D0D0D;color:#E8E0D0}
+nav{background:rgba(13,13,13,.94);border-color:rgba(255,255,255,.07)}
+nav a{color:#9C9680}nav a:hover{color:#E8E0D0}}
+</style></head><body>
+<nav><a href="/">&#8592; Irreducibly Human</a><span class="nt">Area Graph</span>
+<span class="nc">Built with <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a></span></nav>
+<div id="viz"></div><script>
+const dark=window.matchMedia("(prefers-color-scheme:dark)").matches;
+const fg=dark?"#E8E0D0":"#0D0D0D",mu="#9C9680",gridC=dark?"rgba(255,255,255,.06)":"rgba(0,0,0,.07)";
+function draw(){
+  d3.select("#viz svg").remove();
+  const el=document.getElementById("viz"),W=el.clientWidth,H=el.clientHeight;
+  const m={t:60,r:40,b:60,l:60};
+  const iW=W-m.l-m.r,iH=H-m.t-m.b;
+  const svg=d3.select("#viz").append("svg").attr("width",W).attr("height",H);
+  const g=svg.append("g").attr("transform","translate("+m.l+","+m.t+")");
+  const data=[28,35,42,38,55,62,70,65,78,85,90,88].map((v,i)=>({i,v}));
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const x=d3.scaleLinear().domain([0,11]).range([0,iW]);
+  const y=d3.scaleLinear().domain([0,100]).range([iH,0]);
+  // Grid
+  y.ticks(5).forEach(t=>{
+    g.append("line").attr("x1",0).attr("x2",iW).attr("y1",y(t)).attr("y2",y(t))
+      .attr("stroke",gridC).attr("stroke-width",1);
+  });
+  // Gradient
+  const defs=svg.append("defs");
+  const grad=defs.append("linearGradient").attr("id","ag").attr("x1","0").attr("x2","0").attr("y1","0").attr("y2","1");
+  grad.append("stop").attr("offset","0%").attr("stop-color","#8B0000").attr("stop-opacity",.55);
+  grad.append("stop").attr("offset","100%").attr("stop-color","#8B0000").attr("stop-opacity",.04);
+  // Area
+  const area=d3.area().x(d=>x(d.i)).y0(iH).y1(d=>y(d.v)).curve(d3.curveCatmullRom.alpha(.5));
+  const line=d3.line().x(d=>x(d.i)).y(d=>y(d.v)).curve(d3.curveCatmullRom.alpha(.5));
+  g.append("path").datum(data).attr("d",area).attr("fill","url(#ag)");
+  g.append("path").datum(data).attr("d",line).attr("fill","none").attr("stroke","#8B0000").attr("stroke-width",2.5);
+  // Dots
+  g.selectAll("circle").data(data).enter().append("circle")
+    .attr("cx",d=>x(d.i)).attr("cy",d=>y(d.v)).attr("r",4)
+    .attr("fill","#8B0000").attr("stroke",dark?"#0D0D0D":"#E8E0D0").attr("stroke-width",2);
+  // Axes
+  g.append("g").attr("transform","translate(0,"+iH+")").call(
+    d3.axisBottom(x).ticks(11).tickFormat((_,i)=>months[i])).call(a=>{
+    a.select(".domain").attr("stroke",mu);
+    a.selectAll("text").attr("fill",fg).attr("font-size",11);
+    a.selectAll(".tick line").attr("stroke",mu);
+  });
+  g.append("g").call(d3.axisLeft(y).ticks(5)).call(a=>{
+    a.select(".domain").attr("stroke",mu);
+    a.selectAll("text").attr("fill",fg).attr("font-size",11);
+    a.selectAll(".tick line").attr("stroke",mu);
+  });
+  svg.append("text").attr("x",W/2).attr("y",32).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill",mu).text("Research hours per month — filled area emphasizes cumulative volume");
+  g.append("text").attr("x",-iH/2).attr("y",-42).attr("transform","rotate(-90)")
+    .attr("text-anchor","middle").attr("font-size",11).attr("fill",fg).text("Hours");
+}
+draw();window.addEventListener("resize",draw);
+</script></body></html>
