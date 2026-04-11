@@ -30,12 +30,14 @@ Brand voice: Academic, clear, direct. Informed by research, accessible to practi
 
 ## Site structure
 1. `/` — Home (program intro + course overview + contact)
-2. `/courses` — Course directory (card grid of the 5-course sequence)
-3. `/courses/botspeak` — BotSpeak: Fluency in AI Communication
-4. `/courses/causal-reasoning` — Causal Reasoning and World Modeling
-5. `/courses/ethical-play` — Ethical Play and Moral Imagination
-6. `/courses/aimagineering` — AIMagineering: Creative Intelligence
-7. `/courses/embodied-teaching` — Embodied Teaching and Mentorship
+2. `/courses` — Course directory (hardcoded cards for the 5-course certificate sequence)
+3. `/courses/botspeak` — BotSpeak: Fluency in AI Communication (static page)
+4. `/courses/causal-reasoning` — Causal Reasoning and World Modeling (static page)
+5. `/courses/ethical-play` — Ethical Play and Moral Imagination (static page)
+6. `/courses/aimagineering` — AIMagineering: Creative Intelligence (static page)
+7. `/courses/embodied-teaching` — Embodied Teaching and Mentorship (static page)
+7b. `/courses/[slug]` — Filesystem-driven lesson browser (dynamic, for courses in `public/courses/`)
+7c. `/courses/visualization` — Data Visualization with D3 lesson browser (30 interactive D3 lessons)
 8. `/tools` — Tools directory (card grid, Neon-driven)
 9. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
 10. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
@@ -250,6 +252,42 @@ Each folder contains:
 
 ### Shared utility
 - `lib/html-meta.ts` — `scanHtmlDir(dir)` reads all `.html` files from a directory and extracts `<title>`, `<meta name="description">`, `<meta name="keywords">` tags. Returns `HtmlDocMeta[]`. Used by `/dev` pages and admin. `scanHtmlSubdirs(dir)` scans subdirectories and returns `GroupedHtmlDocs[]` (folder + docs). Used by `/notes`.
+
+## Courses system — DONE
+
+Filesystem-driven. No database. Two levels:
+
+- `/courses` — certificate course index (hardcoded data in `app/courses/page.tsx`)
+- `/courses/[slug]` — lesson browser (dynamic route; reads `.html` files from `public/courses/[slug]/`)
+- `/courses/[slug]/[lesson].html` — lesson served as static file from `public/`, opens in new tab
+
+Static routes (`botspeak`, `aimagineering`, etc.) take priority over the dynamic `[slug]` route, so the certificate course pages are unaffected.
+
+### File structure
+```
+public/courses/
+  [course-slug]/
+    course.json          ← { title, description, keywords, order }
+    [lesson-slug].html   ← standalone lesson, full-viewport D3 or HTML
+    json/                ← data files (scanner skips this directory)
+    images/              ← image assets (scanner skips this directory)
+```
+
+### Adding a new filesystem course
+1. Create `public/courses/[slug]/`
+2. Add `course.json`
+3. Drop `.html` lesson files in
+4. Push — appears at `/courses/[slug]` automatically. No code changes needed.
+
+### Current courses
+- `public/courses/visualization/` — "Data Visualization with D3" (30 D3.js chart type lessons, order: 1)
+
+### Scanner
+`lib/courses.ts` exports `scanCourses(dir)` and `scanCourse(dir, slug)`.
+
+### Components
+- `app/courses/[slug]/page.tsx` — Server component: reads course via `scanCourse()`, renders lesson browser
+- `app/courses/[slug]/LessonBrowser.tsx` — Client component: search + tag filter + lesson card grid
 
 ## Blog system — DONE
 
@@ -705,8 +743,7 @@ After every session, always:
 
 ## Remaining work (in priority order)
 1. Rebrand Header, Footer, Home page, and About page to Irreducibly Human
-2. Build `/courses` directory page and five individual course pages
-3. Update legal pages (Privacy, Cookies, Terms) for Irreducibly Human branding
-4. Update color palette for Irreducibly Human branding
-5. Add tools via admin dashboard
-6. Consider contact form widget (currently all CTAs route to mailto)
+2. Update legal pages (Privacy, Cookies, Terms) for Irreducibly Human branding
+3. Update color palette for Irreducibly Human branding
+4. Add tools via admin dashboard
+5. Consider contact form widget (currently all CTAs route to mailto)

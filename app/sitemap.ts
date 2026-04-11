@@ -1,23 +1,29 @@
 import { MetadataRoute } from 'next'
 import { neon } from '@neondatabase/serverless'
 import path from 'path'
-import { scanD3Dir } from '@/lib/html-meta'
+import { scanCourses, scanCourse } from '@/lib/courses'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://irreduciblyhuman.xyz'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // D3 visualizations (filesystem-driven, no DB required)
-  const d3Groups = await scanD3Dir(path.join(process.cwd(), 'public/d3'))
-  const d3Urls: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/d3`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    ...d3Groups.flatMap(g =>
-      g.docs.map(doc => ({
-        url: `${BASE_URL}/d3/${g.folder}/${doc.slug}.html`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly' as const,
-        priority: 0.6,
-      }))
-    ),
+  // Courses (filesystem-driven, no DB required)
+  const coursesDir = path.join(process.cwd(), 'public/courses')
+  const courses = scanCourses(coursesDir)
+  const courseUrls: MetadataRoute.Sitemap = [
+    { url: `${BASE_URL}/courses`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ...courses.flatMap(c => {
+      const full = scanCourse(coursesDir, c.slug)
+      if (!full) return [{ url: `${BASE_URL}/courses/${c.slug}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 }]
+      return [
+        { url: `${BASE_URL}/courses/${c.slug}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
+        ...full.lessons.map(l => ({
+          url: `${BASE_URL}${l.path}`,
+          lastModified: new Date(),
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        })),
+      ]
+    }),
   ]
 
   const entries: MetadataRoute.Sitemap = [
@@ -91,5 +97,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // If database is not configured, just return static pages
   }
 
-  return [...entries, ...d3Urls]
+  return [...entries, ...courseUrls]
 }
