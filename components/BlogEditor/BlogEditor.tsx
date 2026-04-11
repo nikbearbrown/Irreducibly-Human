@@ -356,7 +356,7 @@ export default function BlogEditor({ post }: { post?: BlogPost }) {
         value={title}
         onChange={(e) => handleTitleChange(e.target.value)}
         placeholder="Title"
-        className="w-full text-4xl font-bold tracking-tighter bg-transparent border-none outline-none placeholder:text-muted-foreground/40"
+        className="w-full text-2xl sm:text-4xl font-bold tracking-tighter bg-transparent border-none outline-none placeholder:text-muted-foreground/40"
       />
 
       {/* Subtitle */}
@@ -392,7 +392,7 @@ export default function BlogEditor({ post }: { post?: BlogPost }) {
       </div>
 
       {/* Slug */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
         <Label className="text-xs text-muted-foreground whitespace-nowrap">
           /blog/
         </Label>
@@ -487,15 +487,16 @@ export default function BlogEditor({ post }: { post?: BlogPost }) {
       )}
 
       {/* Actions */}
-      <div className="flex items-center gap-3 border-t pt-6">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 border-t pt-6">
         <Button
           variant="outline"
           onClick={() => save(false)}
           disabled={saving}
+          className="w-full sm:w-auto"
         >
           {saving ? 'Saving…' : 'Save Draft'}
         </Button>
-        <Button onClick={() => save(true)} disabled={saving}>
+        <Button onClick={() => save(true)} disabled={saving} className="w-full sm:w-auto">
           {saving ? 'Publishing…' : post?.published ? 'Update' : 'Publish'}
         </Button>
         {post?.published && (
@@ -503,7 +504,7 @@ export default function BlogEditor({ post }: { post?: BlogPost }) {
             variant="outline"
             onClick={() => save(false)}
             disabled={saving}
-            className="text-destructive hover:text-destructive"
+            className="w-full sm:w-auto text-destructive hover:text-destructive"
           >
             Unpublish
           </Button>

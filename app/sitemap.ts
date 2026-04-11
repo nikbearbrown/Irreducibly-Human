@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { neon } from '@neondatabase/serverless'
 import path from 'path'
-import { scanCourses, scanCourse } from '@/lib/courses'
+import { scanCourses, scanLessons } from '@/lib/courses'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://irreduciblyhuman.xyz'
 
@@ -12,11 +12,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const courseUrls: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/courses`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     ...courses.flatMap(c => {
-      const full = scanCourse(coursesDir, c.slug)
-      if (!full) return [{ url: `${BASE_URL}/courses/${c.slug}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 }]
+      const lessons = scanLessons(coursesDir, c.slug)
       return [
         { url: `${BASE_URL}/courses/${c.slug}`, lastModified: new Date(), changeFrequency: 'weekly' as const, priority: 0.7 },
-        ...full.lessons.map(l => ({
+        ...lessons.map(l => ({
           url: `${BASE_URL}${l.path}`,
           lastModified: new Date(),
           changeFrequency: 'monthly' as const,

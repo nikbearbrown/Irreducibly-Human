@@ -74,7 +74,7 @@ export default function BlogFeed({ posts }: { posts: Post[] }) {
                   <img
                     src={post.cover_image}
                     alt=""
-                    className="w-full h-48 object-cover rounded-lg mb-4"
+                    className="hidden sm:block w-full h-48 object-cover rounded-lg mb-4"
                   />
                 )}
                 {post.published_at && (

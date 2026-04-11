@@ -93,7 +93,7 @@ export default async function BlogPostPage({
             <img
               src={post.cover_image}
               alt=""
-              className="w-full h-64 sm:h-80 object-cover rounded-lg mb-6"
+              className="w-full h-48 sm:h-80 object-cover rounded-lg mb-6"
             />
           )}
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl lg:text-5xl">{post.title}</h1>
@@ -104,7 +104,7 @@ export default async function BlogPostPage({
             <span>{readingTime}</span>
           </div>
         </header>
-        <div className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tighter prose-a:text-foreground prose-a:underline prose-img:rounded-lg">
+        <div className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tighter prose-a:text-foreground prose-a:underline prose-img:rounded-lg prose-p:text-base prose-p:leading-[1.7]">
           <BlogVizHydrator html={post.content} />
         </div>
         {post.byline && (
@@ -115,7 +115,7 @@ export default async function BlogPostPage({
 
         {/* Previous / Next */}
         {(prevPost || nextPost) && (
-          <nav className="mt-16 pt-8 border-t grid grid-cols-2 gap-8">
+          <nav className="mt-16 pt-8 border-t grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
               {prevPost && (
                 <Link href={`/blog/${prevPost.slug}`} className="group block">
@@ -124,7 +124,7 @@ export default async function BlogPostPage({
                 </Link>
               )}
             </div>
-            <div className="text-right">
+            <div className="sm:text-right">
               {nextPost && (
                 <Link href={`/blog/${nextPost.slug}`} className="group block">
                   <span className="text-xs text-muted-foreground">Next →</span>

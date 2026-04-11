@@ -112,7 +112,7 @@ export default function ToolsBrowser({ tools, filterTags = [] }: { tools: Tool[]
             const cardContent = (
               <Card className="h-full transition-shadow hover:shadow-md">
                 <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
+                  <CardTitle className="text-lg flex flex-wrap items-center gap-2">
                     {tool.name}
                     {isArtifact && (
                       <Badge variant="default" className="text-xs">

@@ -104,10 +104,9 @@ export default function Home() {
                 A curriculum series, production pipeline, and measurement infrastructure
                 for the cognitive capacities the AI era most urgently requires humans to
                 develop — demonstrated by the method used to build it. The argument evolves
-                through conversation with{' '}
-                <a href="https://marley.bearbrown.co/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground/80">Dewey</a>.
-                The curriculum takes shape as the design is debated. What you&apos;re looking
-                at is the working document, not the finished product. That&apos;s the point.
+                through conversation with conversational AI. The curriculum takes shape as
+                the design is debated. What you&apos;re looking at is the working document,
+                not the finished product. That&apos;s the point.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
                 <a href="/courses" className={buttonStyles}>

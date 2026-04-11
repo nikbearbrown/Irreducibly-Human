@@ -19,15 +19,11 @@ export interface LessonMeta {
   path: string
 }
 
-export interface CourseWithLessons extends CourseMeta {
-  lessons: LessonMeta[]
-}
-
 export function scanCourses(dir: string): CourseMeta[] {
   if (!fs.existsSync(dir)) return []
 
   return fs.readdirSync(dir, { withFileTypes: true })
-    .filter(d => d.isDirectory() && d.name !== 'json' && d.name !== 'images')
+    .filter(d => d.isDirectory())
     .map(d => {
       const slug = d.name
       const courseDir = path.join(dir, slug)
@@ -43,7 +39,7 @@ export function scanCourses(dir: string): CourseMeta[] {
 
       return {
         slug,
-        title: meta.title ?? slug.replace(/-/g, ' '),
+        title: meta.title ?? slug,
         description: meta.description ?? '',
         keywords: meta.keywords ?? [],
         order: meta.order ?? 99,
@@ -54,45 +50,27 @@ export function scanCourses(dir: string): CourseMeta[] {
     .sort((a, b) => a.order - b.order)
 }
 
-export function scanCourse(dir: string, courseSlug: string): CourseWithLessons | null {
+export function scanLessons(dir: string, courseSlug: string): LessonMeta[] {
   const courseDir = path.join(dir, courseSlug)
-  if (!fs.existsSync(courseDir)) return null
+  if (!fs.existsSync(courseDir)) return []
 
-  const jsonPath = path.join(courseDir, 'course.json')
-  let meta: Partial<CourseMeta> = {}
-  if (fs.existsSync(jsonPath)) {
-    try { meta = JSON.parse(fs.readFileSync(jsonPath, 'utf-8')) } catch {}
-  }
-
-  const lessons: LessonMeta[] = fs.readdirSync(courseDir)
+  return fs.readdirSync(courseDir)
     .filter(f => f.endsWith('.html'))
     .sort()
     .map(filename => {
       const content = fs.readFileSync(path.join(courseDir, filename), 'utf-8')
       const slug = filename.replace(/\.html$/, '')
       const rawTitle = content.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1] ?? slug
-      const title = rawTitle.split('|')[0].trim() || slug
-      const description = content.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1] ?? ''
-      const keywords = (content.match(/<meta\s+name=["']keywords["']\s+content=["']([^"']+)["']/i)?.[1] ?? '')
-        .split(',').map(k => k.trim()).filter(Boolean)
+      const title = rawTitle.replace(/\s*\|.*$/, '').trim() || slug
+      const description =
+        content.match(/<meta\s+name=["']description["']\s+content=["']([^"']+)["']/i)?.[1] ?? ''
+      const keywords = (
+        content.match(/<meta\s+name=["']keywords["']\s+content=["']([^"']+)["']/i)?.[1] ?? ''
+      )
+        .split(',')
+        .map(k => k.trim())
+        .filter(Boolean)
 
-      return {
-        slug,
-        filename,
-        title,
-        description,
-        keywords,
-        path: `/courses/${courseSlug}/${slug}.html`,
-      }
+      return { slug, filename, title, description, keywords, path: `/courses/${courseSlug}/${slug}.html` }
     })
-
-  return {
-    slug: courseSlug,
-    title: meta.title ?? courseSlug.replace(/-/g, ' '),
-    description: meta.description ?? '',
-    keywords: meta.keywords ?? [],
-    order: meta.order ?? 99,
-    lessonCount: lessons.length,
-    lessons,
-  }
 }
