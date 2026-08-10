@@ -121,7 +121,7 @@ Four sections, alternating white/muted/dark backgrounds:
 1. **Hero** (two-column): Left — h1 "Irreducibly Human", subtext "What AI Can and Can't Do", thesis description, "Read the Idea" (/idea) + "Open the AI Exposure Explorer" (/onet) buttons. Right — introductory video embed (kept).
 2. **The Idea** (muted bg): Compact seven-tier strip (Tiers 4–7 highlighted as core), "The Full Taxonomy →" CTA to /idea.
 3. **The First Instrument** (dark bg): AI Exposure Explorer feature — what the two charts show, builder credit (Abisha Vadukoot, Milivoje "Mickey" Davidovic, Nik Bear Brown) + O*NET/BLS data credit, "OPEN THE EXPLORER" CTA to /onet.
-4. **Watch: The AI Exposure Explorer** (hidden until live): YouTube embed section in the old BotSpeak-card spot, gated on the `EXPLORER_VIDEO_ID` constant at the top of `app/page.tsx` — paste the walkthrough video's YouTube ID there and the section appears. The walkthrough reel builds in `Irreducibly-Human/youtube/claude-liam-ai-exposure-explorer/` (deep-explainer).
+4. **Watch: The AI Exposure Explorer** (hidden until live): YouTube embed section in the old BotSpeak-card spot, gated on the `EXPLORER_VIDEO_ID` constant at the top of `app/page.tsx` — paste the walkthrough video's YouTube ID there and the section appears. The walkthrough reel builds in `Irreducibly-Human/youtube/claude-bear-ai-exposure-explorer/` (deep-explainer variant: Remotion site-simulation, Bear persona, nbb voice).
 5. **Bear Brown & Company** (dark bg, border-t divider): Program affiliation and contact info (kept — it's a Bear Brown project). The BotSpeak card section was removed per Bear (2026-08-10); its spot is now the walkthrough-video section above.
 
 ## Tools system — DONE

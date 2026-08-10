@@ -1,4 +1,4 @@
-# PLAN v2 — claude-liam-ai-exposure-explorer
+# PLAN v2.1 — claude-bear-ai-exposure-explorer
 
 **Genre:** deep-explainer chassis, with a genre deviation signed by Bear (2026-08-10):
 **no screenshots, no pantry** — the documentary lane is replaced by a **SITE lane**:
@@ -9,7 +9,7 @@ episode's "archive footage."
 **Voice:** Bear's **nbb clone** (F5-TTS, `nbbhuman` @ ckpt `model_2500`, free) —
 `metadata.engine: "nbb"`; audio generation runs FROM the Mac (AICR Slurm
 round-trip), per books/CLAUDE.md.
-**Slug:** `claude-liam-ai-exposure-explorer` → `Irreducibly-Human/youtube/`
+**Slug:** `claude-bear-ai-exposure-explorer` → `Irreducibly-Human/youtube/`
 **Destination:** YouTube, then the front page — `EXPLORER_VIDEO_ID` in
 `app/page.tsx` (already wired).
 **Estimated landing:** ~38 body beats ≈ 6:30–7:30. Duration is an output.
@@ -79,9 +79,10 @@ VERDICT → YOUR TURN → TITLE      (exempt)
 ## Beats (lane + simulation spec + narration ~25–45 words)
 
 ### B00 — Cold open (exempt)
-`ClaudeComposerAsk`. Liam: "Claude, everyone has an opinion about whether AI is
-coming for my job. Is there somewhere I can just… look at the data?" Answered:
-the AI Exposure Explorer, live at irreducibly.xyz. Signs in.
+`ClaudeComposerAsk`. Bear (verbatim per Bear, light polish): "Hey Claude — what
+is the Irreducibly Human AI Exposure Explorer, and can you SHOW me how to use
+it?" The ask lands answered — Claude opens the Explorer and the whole body IS
+the showing. Bear signs in.
 
 ### ACT I — The Tool
 | ID | Lane | Sim / visual | Narration draft |
@@ -149,7 +150,7 @@ the AI Exposure Explorer, live at irreducibly.xyz. Signs in.
 - **VERDICT** (`ClaudeVerdictArtifact`): one tool, two charts, three pairs; the
   index is the trick, Top Differences is the shortcut, the ability mix is the
   exposure.
-- **YOUR TURN** (`ClaudeComposerAsk`, "Your turn."): "Open irreducibly.xyz/onet.
+- **YOUR TURN** (`ClaudeComposerAsk`, "Your turn.", read by Bear): "Open irreducibly.xyz/onet.
   Put YOUR occupation in slot one. Put the job everyone says is doomed in slot
   two. Flip Chart 2 to Top Differences and ask: which of my top abilities could
   a machine actually do? Send me the URL."
@@ -190,6 +191,6 @@ plates. No other >2 same-lane runs.
 ## Build handoff (local session, from books/)
 
 ```
-./brutalist-art/art todo  Irreducibly-Human/youtube/claude-liam-ai-exposure-explorer
-./brutalist-art/art run   Irreducibly-Human/youtube/claude-liam-ai-exposure-explorer
+./brutalist-art/art todo  Irreducibly-Human/youtube/claude-bear-ai-exposure-explorer
+./brutalist-art/art run   Irreducibly-Human/youtube/claude-bear-ai-exposure-explorer
 ```
