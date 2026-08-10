@@ -116,7 +116,8 @@ export default function Home() {
             and ask which of those abilities machines have actually reached.
           </p>
           <p className="text-sm text-background/60 mb-10">
-            Built with data from O*NET and the U.S. Bureau of Labor Statistics.
+            Built by Abisha Vadukoot, Milivoje (Mickey) Davidovic, and Nik Bear Brown, with data
+            from O*NET and the U.S. Bureau of Labor Statistics (BLS).
           </p>
           <Link
             href="/onet"
@@ -127,33 +128,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* First Course Section */}
-      <section className="w-full py-16 md:py-24">
-        <div className="container px-4 md:px-6 mx-auto max-w-2xl">
-          <div className="text-center mb-10">
-            <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-3">
-              Where the Curriculum Starts
-            </h2>
-          </div>
-          <div className="rounded-lg border bg-card p-8 shadow-sm flex flex-col">
-            <h3 className="text-lg font-bold tracking-wide mb-3">BOTSPEAK</h3>
-            <p className="text-muted-foreground leading-relaxed flex-1">
-              Fluency in AI communication. How to talk to machines — and know when they&apos;re
-              talking past you. Prompt engineering, model limitations, hallucination detection,
-              and the rhetorical gap between human intent and machine output.
-            </p>
-            <a
-              href="/notes/Irreducibly-Human/Irreducibly-Human-Botspeak"
-              className="mt-6 text-sm font-medium text-foreground hover:underline"
-            >
-              Explore BotSpeak →
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="w-full py-16 md:py-24 bg-foreground text-background">
+      {/* Contact Section (follows another dark section, so a subtle divider) */}
+      <section className="w-full py-16 md:py-24 bg-foreground text-background border-t border-background/20">
         <div className="container px-4 md:px-6 mx-auto text-center">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-4">
             Bear Brown &amp; Company

@@ -40,7 +40,7 @@ Brand voice: Academic, clear, direct. Informed by research, accessible to practi
 7c. `/courses/visualization` — Data Visualization with D3 lesson browser (30 interactive D3 lessons)
 8. `/tools` — Tools directory (card grid, Neon-driven)
 9. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
-9b. `/onet` — The AI Exposure Explorer (formerly "The Occupation Explorer"): pick two occupations and compare their employment trend against AI milestones (Chart 1, BLS index) and the human abilities each job leans on (Chart 2, O*NET). Neon-driven via `/api/onet/*`; searchable picker + "browse all occupations" drawer; pair is shareable via `?soc=A,B`. Linked from the top nav ("Explorer"), the home page, and `/idea`.
+9b. `/onet` — The AI Exposure Explorer (formerly "The Occupation Explorer"): pick two occupations and compare their employment trend against AI milestones (Chart 1, BLS index) and the human abilities each job leans on (Chart 2, O*NET). Neon-driven via `/api/onet/*`; the select-two picker sits in the wide left column under the intro text (OccupationPicker `show="picker"`), the "Browse all occupations" control alone in the right column (`show="browse"`); pair is shareable via `?soc=A,B`. Source line credits the builders — Abisha Vadukoot, Milivoje (Mickey) Davidovic, and Nik Bear Brown — plus O*NET/BLS data. Linked from the top nav ("Explorer"), the home page, and `/idea`.
 9c. `/idea` — The Idea: the Irreducibly Human thesis, the seven-tier taxonomy (Tiers 4–7 highlighted as core territory), the meta-principle, and a CTA to the AI Exposure Explorer. Static page, in the top nav ("The Idea").
 10. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
 11. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
@@ -117,12 +117,11 @@ Four-column grid layout:
 - Vercel Analytics
 
 ## Home page (`/app/page.tsx`) — DONE (2026-08 redesign: idea + explorer first)
-Five sections, alternating white/muted/dark backgrounds:
+Four sections, alternating white/muted/dark backgrounds:
 1. **Hero** (two-column): Left — h1 "Irreducibly Human", subtext "What AI Can and Can't Do", thesis description, "Read the Idea" (/idea) + "Open the AI Exposure Explorer" (/onet) buttons. Right — introductory video embed (kept).
 2. **The Idea** (muted bg): Compact seven-tier strip (Tiers 4–7 highlighted as core), "The Full Taxonomy →" CTA to /idea.
-3. **The First Instrument** (dark bg): AI Exposure Explorer feature — what the two charts show, O*NET/BLS credit, "OPEN THE EXPLORER" CTA to /onet.
-4. **Where the Curriculum Starts**: the BotSpeak card (the first course card, kept per Bear) linking to the BotSpeak note.
-5. **Bear Brown & Company** (dark bg): Program affiliation and contact info (kept — it's a Bear Brown project).
+3. **The First Instrument** (dark bg): AI Exposure Explorer feature — what the two charts show, builder credit (Abisha Vadukoot, Milivoje "Mickey" Davidovic, Nik Bear Brown) + O*NET/BLS data credit, "OPEN THE EXPLORER" CTA to /onet.
+4. **Bear Brown & Company** (dark bg, border-t divider): Program affiliation and contact info (kept — it's a Bear Brown project). The BotSpeak card section was removed per Bear (2026-08-10).
 
 ## Tools system — DONE
 

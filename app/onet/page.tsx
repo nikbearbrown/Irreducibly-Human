@@ -69,7 +69,8 @@ const sourceNote: React.CSSProperties = {
   color: 'hsl(var(--muted-foreground))',
   marginTop: 10,
 }
-const SOURCE_TEXT = 'Built with data from O*NET and the U.S. Bureau of Labor Statistics (BLS).'
+const SOURCE_TEXT =
+  'Built by Abisha Vadukoot, Milivoje (Mickey) Davidovic, and Nik Bear Brown, with data from O*NET and the U.S. Bureau of Labor Statistics (BLS).'
 
 export default async function AIExposureExplorerPage({
   searchParams,
@@ -165,9 +166,10 @@ export default async function AIExposureExplorerPage({
       {/* No max-width cap: each chart is 66.6667vw and its right panel is flex:1
           (relative), so the row needs the full viewport width to fill. */}
       <div>
-        {/* Top band: tool summary (left, above the chart) + occupation picker
-            (right, above the legend). Column widths mirror the chart row so the
-            picker lines up above the legend box. */}
+        {/* Top band: tool summary + the select-two picker together in the wide
+            left column (picker sits under the text), with the browse-all
+            control alone in the right column. Column widths mirror the chart
+            row below. */}
         <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 28 }}>
           <div style={{ width: '66.6667vw', maxWidth: '100%', flexShrink: 0 }}>
             {/* Intro heading + how-to summary. */}
@@ -181,9 +183,9 @@ export default async function AIExposureExplorerPage({
               </a>{' '}
               explains the idea behind the tool.
             </p>
-            <ul style={{ ...panelText, margin: 0, paddingLeft: 18, listStyleType: 'disc' }}>
+            <ul style={{ ...panelText, margin: '0 0 14px', paddingLeft: 18, listStyleType: 'disc' }}>
               <li style={{ display: 'list-item', marginBottom: 3 }}>
-                Choose two occupations with the selector on the right (search by role name or SOC code).
+                Choose two occupations with the selector below (search by role name or SOC code).
               </li>
               <li style={{ display: 'list-item', marginBottom: 3 }}>
                 In Chart 2, switch between COMPARISON and TOP DIFFERENCES, browse the ability categories, and open
@@ -191,9 +193,10 @@ export default async function AIExposureExplorerPage({
               </li>
               <li style={{ display: 'list-item' }}>Hover any point for its exact values.</li>
             </ul>
+            <OccupationPicker initial={pickerInitial} show="picker" />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <OccupationPicker initial={pickerInitial} />
+            <OccupationPicker initial={pickerInitial} show="browse" />
           </div>
         </div>
         <h2 style={heading}>Chart 1 — Employment</h2>

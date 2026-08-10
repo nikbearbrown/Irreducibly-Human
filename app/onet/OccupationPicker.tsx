@@ -48,8 +48,19 @@ const SUGGESTIONS: OccResult[] = [
  * the currently-selected pair comes in via `initial` (resolved server-side),
  * and picking a new occupation navigates to a new ?soc — which re-renders the
  * page with fresh data and a fresh `initial`. No internal selection state.
+ *
+ * `show` splits the control across the page layout: 'picker' renders only the
+ * brass select-two box (left column, under the intro text), 'browse' renders
+ * only the Browse-all-occupations control + drawer (right column), 'full'
+ * renders everything (legacy single-column layout).
  */
-export default function OccupationPicker({ initial }: { initial: OccSlot[] }) {
+export default function OccupationPicker({
+  initial,
+  show = 'full',
+}: {
+  initial: OccSlot[]
+  show?: 'full' | 'picker' | 'browse'
+}) {
   const router = useRouter()
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
@@ -81,8 +92,16 @@ export default function OccupationPicker({ initial }: { initial: OccSlot[] }) {
     if (socs.length) router.push(`${pathname}?soc=${encodeURIComponent(socs.join(','))}`)
   }
 
+  const showPicker = show !== 'browse'
+  const showBrowse = show !== 'picker'
+  // Picker-only mode sits in the wide left column and may stretch; the legacy
+  // and browse-only modes keep the original narrow footprint.
+  const outerStyle: React.CSSProperties =
+    show === 'picker' ? { width: '100%', maxWidth: 560 } : { width: 360, maxWidth: '100%' }
+
   return (
-    <div style={{ width: 360, maxWidth: '100%' }}>
+    <div style={outerStyle}>
+    {showPicker && (
     <div
       style={{
         // Thicker, darker border so the eye lands here first: this is where
@@ -118,9 +137,11 @@ export default function OccupationPicker({ initial }: { initial: OccSlot[] }) {
         />
       ))}
     </div>
+    )}
       {/* Coverage disclaimer: we let you search any occupation (transparency),
           but BLS employment data doesn't exist for all of them. Sits outside the
           brass box so it doesn't compete with the "select here" focus. */}
+      {showPicker && (
       <p
         style={{
           fontFamily: FONT,
@@ -133,17 +154,19 @@ export default function OccupationPicker({ initial }: { initial: OccSlot[] }) {
         You can search any occupation. Not all have BLS employment data: when it&apos;s missing, Chart 1 omits that line
         (and says so) while Chart 2 still compares abilities.
       </p>
+      )}
 
       {/* Browse-all trigger: opens a glossary-style drawer listing every
           occupation with its SOC code, for people who'd rather scan than search. */}
+      {showBrowse && (
       <button
         type="button"
         onClick={() => setBrowseOpen(true)}
         style={{
-          marginTop: 8,
-          padding: '5px 10px',
+          marginTop: show === 'browse' ? 0 : 8,
+          padding: show === 'browse' ? '8px 14px' : '5px 10px',
           fontFamily: FONT,
-          fontSize: 12,
+          fontSize: show === 'browse' ? 13 : 12,
           letterSpacing: '0.04em',
           color: 'hsl(var(--foreground))',
           background: 'transparent',
@@ -155,8 +178,9 @@ export default function OccupationPicker({ initial }: { initial: OccSlot[] }) {
       >
         Browse all occupations
       </button>
+      )}
 
-      {browseOpen && (
+      {showBrowse && browseOpen && (
         <BrowseDrawer
           occs={allOccs}
           loading={occsLoading}
