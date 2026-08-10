@@ -40,6 +40,7 @@ Brand voice: Academic, clear, direct. Informed by research, accessible to practi
 7c. `/courses/visualization` — Data Visualization with D3 lesson browser (30 interactive D3 lessons)
 8. `/tools` — Tools directory (card grid, Neon-driven)
 9. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
+9b. `/onet` — The Occupation Explorer: pick two occupations and compare their employment trend against AI milestones (Chart 1, BLS index) and the human abilities each job leans on (Chart 2, O*NET). Neon-driven via `/api/onet/*`; searchable picker + "browse all occupations" drawer; pair is shareable via `?soc=A,B`. Standalone page, not in the top nav.
 10. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
 11. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
 12. `/notes` — Notes browser (searchable card grid, grouped by folder, filesystem-driven)

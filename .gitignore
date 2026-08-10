@@ -34,4 +34,15 @@ next-env.d.ts
 
 # OS generated files
 Thumbs.db
-ehthumbs.db 
+ehthumbs.db
+
+# Local-only working notes, dev logs, and captured sample data (not for the repo)
+docs/HANDOFF-profilechart-stage1.md
+docs/WORKLOG.md
+docs/CHART-FEATURES-LOG.md
+docs/bls-historical-extension.md
+docs/samples/
+docs/samples/*.json
+
+# Local reference/baseline page — kept out of the deployed site
+app/onet/test/ 
