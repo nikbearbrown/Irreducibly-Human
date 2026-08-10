@@ -24,18 +24,18 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Placeholder column for future content */}
+          {/* Platform */}
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">Platform</h3>
             <div className="flex flex-col gap-2">
-              <Link href="/tools" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Tools
+              <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Home
               </Link>
-              <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Blog
+              <Link href="/idea" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                The Idea
               </Link>
-              <Link href="/notes/Irreducibly-Human/Irreducibly-Human-Project" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                About
+              <Link href="/onet" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                AI Exposure Explorer
               </Link>
             </div>
           </div>
@@ -45,44 +45,12 @@ export default function Footer() {
             <h3 className="text-sm font-semibold">Connect</h3>
             <div className="flex flex-col gap-2">
               <a
-                href="https://github.com/nikbearbrown/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://www.skepticism.ai/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Substack
-              </a>
-              <a
-                href="https://www.bearbrown.co/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Bear Brown &amp; Co
-              </a>
-              <a
-                href="https://www.youtube.com/@Musinique"
+                href="https://www.youtube.com/@NikBearBrown"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 YouTube
-              </a>
-              <a
-                href="https://open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6?si=9Fx2UusBQHi3tTyVEAoCDQ"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Spotify
               </a>
             </div>
           </div>

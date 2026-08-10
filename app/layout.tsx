@@ -13,7 +13,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Irreducibly Human',
-  description: 'What AI Can and Can\'t Do — a 5-course series from Bear Brown & Company.',
+  description:
+    'What AI Can and Can\'t Do — the seven-tier taxonomy of human intelligence and the AI Exposure Explorer, from Bear Brown & Company.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

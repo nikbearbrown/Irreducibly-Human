@@ -4,12 +4,12 @@ import ProfileChart, { type ProfileChartData } from './charts/ProfileChart'
 import OccupationPicker from './OccupationPicker'
 import InfoPanel, { type OccLegendItem } from './InfoPanel'
 
-// The Occupation Explorer: pick two occupations and compare their employment
+// The AI Exposure Explorer: pick two occupations and compare their employment
 // trend against AI milestones (Chart 1) and the human abilities each job leans
 // on (Chart 2), through the Irreducibly Human lens of what AI can't replicate.
 export const dynamic = 'force-dynamic'
 export const metadata = {
-  title: 'The Occupation Explorer — Irreducibly Human',
+  title: 'The AI Exposure Explorer — Irreducibly Human',
   description:
     'Compare two occupations: how their employment has moved since 2018 against major AI milestones, and the human abilities each job relies on.',
 }
@@ -71,7 +71,7 @@ const sourceNote: React.CSSProperties = {
 }
 const SOURCE_TEXT = 'Built with data from O*NET and the U.S. Bureau of Labor Statistics (BLS).'
 
-export default async function OccupationExplorerPage({
+export default async function AIExposureExplorerPage({
   searchParams,
 }: {
   searchParams: Promise<{ soc?: string }>
@@ -171,11 +171,15 @@ export default async function OccupationExplorerPage({
         <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', marginBottom: 28 }}>
           <div style={{ width: '66.6667vw', maxWidth: '100%', flexShrink: 0 }}>
             {/* Intro heading + how-to summary. */}
-            <h1 style={heading}>The Occupation Explorer</h1>
+            <h1 style={heading}>The AI Exposure Explorer</h1>
             <p style={{ ...panelText, marginBottom: 10 }}>
               Pick two occupations to compare them two ways: how their employment has moved since 2018, set against
               major AI milestones (Chart 1), and the human abilities each job leans on (Chart 2). The lens is the
-              Irreducibly Human question of which abilities are hardest for AI to replicate.
+              Irreducibly Human question of which abilities are hardest for AI to replicate — the{' '}
+              <a href="/idea" style={{ color: 'hsl(var(--foreground))', textDecoration: 'underline' }}>
+                seven-tier taxonomy
+              </a>{' '}
+              explains the idea behind the tool.
             </p>
             <ul style={{ ...panelText, margin: 0, paddingLeft: 18, listStyleType: 'disc' }}>
               <li style={{ display: 'list-item', marginBottom: 3 }}>

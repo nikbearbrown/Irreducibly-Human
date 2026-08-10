@@ -8,20 +8,13 @@ import { cn } from '@/lib/utils'
 import ThemeToggle from '@/components/ThemeToggle'
 
 const NAV_ITEMS = [
-  { name: 'Blog', href: '/blog' },
-  { name: 'Courses', href: '/courses' },
-  { name: 'Dev', href: '/dev' },
-  { name: 'Notes', href: '/notes' },
-  { name: 'Talks', href: '/talks' },
-  { name: 'Tools', href: '/tools' },
-  { name: 'Videos', href: '/irreducibly' },
+  { name: 'Home', href: '/' },
+  { name: 'The Idea', href: '/idea' },
+  { name: 'Explorer', href: '/onet' },
 ]
 
 const SOCIAL_LINKS = [
-  { name: 'GitHub', href: 'https://github.com/nikbearbrown/' },
-  { name: 'Substack', href: 'https://www.skepticism.ai/' },
-  { name: 'YouTube', href: 'https://www.youtube.com/@Musinique' },
-  { name: 'Spotify', href: 'https://open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6?si=9Fx2UusBQHi3tTyVEAoCDQ' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@NikBearBrown' },
 ]
 
 const buttonStyles =

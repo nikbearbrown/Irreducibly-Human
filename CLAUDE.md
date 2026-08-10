@@ -40,7 +40,8 @@ Brand voice: Academic, clear, direct. Informed by research, accessible to practi
 7c. `/courses/visualization` — Data Visualization with D3 lesson browser (30 interactive D3 lessons)
 8. `/tools` — Tools directory (card grid, Neon-driven)
 9. `/tools/[slug]` — Artifact tool embed page (full-viewport iframe)
-9b. `/onet` — The Occupation Explorer: pick two occupations and compare their employment trend against AI milestones (Chart 1, BLS index) and the human abilities each job leans on (Chart 2, O*NET). Neon-driven via `/api/onet/*`; searchable picker + "browse all occupations" drawer; pair is shareable via `?soc=A,B`. Standalone page, not in the top nav.
+9b. `/onet` — The AI Exposure Explorer (formerly "The Occupation Explorer"): pick two occupations and compare their employment trend against AI milestones (Chart 1, BLS index) and the human abilities each job leans on (Chart 2, O*NET). Neon-driven via `/api/onet/*`; searchable picker + "browse all occupations" drawer; pair is shareable via `?soc=A,B`. Linked from the top nav ("Explorer"), the home page, and `/idea`.
+9c. `/idea` — The Idea: the Irreducibly Human thesis, the seven-tier taxonomy (Tiers 4–7 highlighted as core territory), the meta-principle, and a CTA to the AI Exposure Explorer. Static page, in the top nav ("The Idea").
 10. `/dev` — Dev docs browser (searchable card grid, filesystem-driven)
 11. `/dev/[slug]` — Full-viewport iframe of a dev doc HTML file
 12. `/notes` — Notes browser (searchable card grid, grouped by folder, filesystem-driven)
@@ -92,21 +93,22 @@ Teaching is irreducibly human. This course covers presence, improvisation, emoti
 
 ## Persistent layout (every page)
 
-### Header (`/components/Header/Header.tsx`) — DONE
+### Header (`/components/Header/Header.tsx`) — DONE (2026-08 redesign)
 - Logo: text-based "Irreducibly Human" in bold tracking-tighter
-- Nav: Home (`/`) | Courses (`/courses`) | Tools (`/tools`) | Dev (`/dev`) | About (`/about`) | Blog (`/blog`)
-- Social buttons (top right): GitHub (github.com/nikbearbrown/irreducibly-human), Substack (skepticism.ai), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6) — black button style
+- Nav (stripped to the core): Home (`/`) | The Idea (`/idea`) | Explorer (`/onet`)
+- Social buttons (top right): YouTube (youtube.com/@NikBearBrown) only — black button style
 - Dark/light mode toggle (ThemeToggle component)
 - Mobile hamburger menu with backdrop (lg breakpoint)
 - Sticky, z-50, backdrop-blur
+- Other routes (blog, courses, dev, notes, talks, tools, videos, …) remain live but unlinked from the nav
 
-### Footer (`/components/Footer/Footer.tsx`) — DONE
+### Footer (`/components/Footer/Footer.tsx`) — DONE (2026-08 redesign)
 Four-column grid layout:
-- **Program Info:** Irreducibly Human, Bear Brown & Company, Bear Brown & Company, bear@bearbrown.co
-- **Platform:** Links to Courses, Tools, Blog, About
-- **Connect:** GitHub (github.com/nikbearbrown/irreducibly-human), Substack (skepticism.ai), Bear Brown & Co (bearbrown.co), YouTube (youtube.com/@Musinique), Spotify (open.spotify.com/artist/0hSpFCJodAYMP2cWK72zI6)
+- **Program Info:** Irreducibly Human, 30 N Gould St Ste N, Sheridan WY, bear@bearbrown.co (kept as-is — "the first card")
+- **Platform:** Home, The Idea (`/idea`), AI Exposure Explorer (`/onet`)
+- **Connect:** YouTube (youtube.com/@NikBearBrown) only
 - **Legal:** Privacy Policy, Cookie Policy, Terms of Service
-- Bottom bar: copyright
+- Bottom bar: copyright + MIT/bearbrown.co/skepticism.ai attribution line (required — see License & Attribution)
 
 ### Root layout (`/app/layout.tsx`) — DONE
 - ThemeProvider: defaultTheme="light", enableSystem
@@ -114,13 +116,13 @@ Four-column grid layout:
 - Header + main + Footer
 - Vercel Analytics
 
-## Home page (`/app/page.tsx`) — NEEDS UPDATE
+## Home page (`/app/page.tsx`) — DONE (2026-08 redesign: idea + explorer first)
 Five sections, alternating white/muted/dark backgrounds:
-1. **Hero** (two-column): Left — h1 "Irreducibly Human", subtext "What AI Can and Can't Do", program description, "Explore Courses" + "Contact Us" buttons. Right — introductory video embed.
-2. **The Five Courses** (2x2+1 card grid, muted bg): Five course cards — BotSpeak, Causal Reasoning, Ethical Play, AIMagineering, Embodied Teaching. Each with description + course link.
-3. **Who This Is For** (3-column cards, dark bg): For Graduate Students, For Researchers, For Professionals — each with 4 bullet points.
-4. **Get Started** (bb-2 bg): CTA section with "EXPLORE COURSES" (/courses), "ABOUT THE PROGRAM" (/about), "CONTACT US" buttons.
-5. **Bear Brown & Company** (dark bg): Program affiliation and contact info.
+1. **Hero** (two-column): Left — h1 "Irreducibly Human", subtext "What AI Can and Can't Do", thesis description, "Read the Idea" (/idea) + "Open the AI Exposure Explorer" (/onet) buttons. Right — introductory video embed (kept).
+2. **The Idea** (muted bg): Compact seven-tier strip (Tiers 4–7 highlighted as core), "The Full Taxonomy →" CTA to /idea.
+3. **The First Instrument** (dark bg): AI Exposure Explorer feature — what the two charts show, O*NET/BLS credit, "OPEN THE EXPLORER" CTA to /onet.
+4. **Where the Curriculum Starts**: the BotSpeak card (the first course card, kept per Bear) linking to the BotSpeak note.
+5. **Bear Brown & Company** (dark bg): Program affiliation and contact info (kept — it's a Bear Brown project).
 
 ## Tools system — DONE
 
@@ -743,8 +745,9 @@ After every session, always:
 2. Commit and push all changes to main with a descriptive commit message.
 
 ## Remaining work (in priority order)
-1. Rebrand Header, Footer, Home page, and About page to Irreducibly Human
+1. ~~Rebrand Header, Footer, Home page~~ — DONE 2026-08 (idea-first redesign: nav stripped to Home/The Idea/Explorer, YouTube-only social, /idea page added, /onet renamed AI Exposure Explorer). About page still pending.
 2. Update legal pages (Privacy, Cookies, Terms) for Irreducibly Human branding
-3. Update color palette for Irreducibly Human branding
+3. Update color palette for Irreducibly Human branding (deliberately deferred from the 2026-08 redesign pass)
 4. Add tools via admin dashboard
 5. Consider contact form widget (currently all CTAs route to mailto)
+6. Map O*NET abilities in the Explorer onto the seven tiers (turn the Explorer into the series' measurement instrument, not just an illustration)
