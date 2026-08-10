@@ -6,6 +6,10 @@ const buttonStyles =
 const buttonOutline =
   'inline-flex h-10 items-center justify-center rounded-md px-8 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'
 
+// YouTube ID of the AI Exposure Explorer walkthrough (deep-explainer episode).
+// Leave empty until the video is live — the section below renders only when set.
+const EXPLORER_VIDEO_ID = ''
+
 // Compact tier strip for the home page — the full treatment lives at /idea.
 const TIER_STRIP = [
   { tier: 'Tier 1 — Pattern & Association', status: 'Machines: superhuman', core: false },
@@ -127,6 +131,36 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* Explorer Walkthrough Video — the spot where the BotSpeak card sat.
+          A YouTube embed like the hero's; hidden until EXPLORER_VIDEO_ID is set. */}
+      {EXPLORER_VIDEO_ID && (
+        <section className="w-full py-16 md:py-24">
+          <div className="container px-4 md:px-6 mx-auto max-w-4xl">
+            <div className="text-center mb-10">
+              <h2 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-3">
+                Watch: The AI Exposure Explorer
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                A walkthrough of the Explorer — what both charts mean, three comparisons,
+                and how to run your own.
+              </p>
+            </div>
+            <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
+              <iframe
+                src={`https://www.youtube.com/embed/${EXPLORER_VIDEO_ID}`}
+                title="The AI Exposure Explorer — walkthrough"
+                width="100%"
+                height="100%"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Contact Section (follows another dark section, so a subtle divider) */}
       <section className="w-full py-16 md:py-24 bg-foreground text-background border-t border-background/20">

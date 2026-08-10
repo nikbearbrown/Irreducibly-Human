@@ -10,7 +10,7 @@ import ThemeToggle from '@/components/ThemeToggle'
 const NAV_ITEMS = [
   { name: 'Home', href: '/' },
   { name: 'The Idea', href: '/idea' },
-  { name: 'Explorer', href: '/onet' },
+  { name: 'AI Exposure Explorer', href: '/onet' },
 ]
 
 const SOCIAL_LINKS = [
