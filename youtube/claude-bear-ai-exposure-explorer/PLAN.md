@@ -1,4 +1,4 @@
-# PLAN v2.1 — claude-bear-ai-exposure-explorer
+# PLAN v2.2 (employment factchecked — Act V rewritten to match the data) — claude-bear-ai-exposure-explorer
 
 **Genre:** deep-explainer chassis, with a genre deviation signed by Bear (2026-08-10):
 **no screenshots, no pantry** — the documentary lane is replaced by a **SITE lane**:
@@ -43,7 +43,7 @@ file). The build does not proceed to chart scenes while any is missing —
 `MISSING:` line in BUILD-LOG.
 
 ```
-data/employment.json    bls_employment rows for the 6 BLS codes
+data/employment.json    RECEIVED 2026-08-10 (renamed from data/video.json), validated
 data/milestones.json    ai_milestones rows (display_on_chart = TRUE)
 data/abilities.json     onet_abilities LV rows for the 6 O*NET codes
 data/occupations.json   onet_occupations titles/groups for the 6 codes
@@ -58,10 +58,13 @@ Six occupations: 15-1252.00 / 15-1251.00 / 29-1141.00 / 43-4051.00 /
 |---|------|---------------------|-----------|
 | 1 | Software Developers vs Computer Programmers | default state | Same field, opposite exposure: design-and-judgment vs implementing specs |
 | 2 | Registered Nurses vs Customer Service Reps | typed search, both slots | Embodied relational care (Tiers 2–3) vs scripted pattern work (Tier 1) |
-| 3 | Graphic Designers vs Carpenters | search + browse drawer | The inversion: the creative desk job is more exposed than the trade |
+| 3 | Graphic Designers vs Carpenters | search + browse drawer | The trap: the predicted design collapse is NOT in the employment data (yet) — discourse vs data |
 
-**FACTCHECK:** every curve-direction claim below is an expectation until checked
-against `data/employment.json`. The narration locks only after the numbers land.
+**FACTCHECK:** employment claims are now VERIFIED against `data/employment.json`
+(see FACTCHECK.md — B07/B08/B13/B23/B24 confirmed; B11 sharpened with the 2001
+start; Act V rewritten: designers are FLAT through the image-gen era, so the act
+became "the chart that refuses to panic"). Milestone-timing and ability-profile
+claims stay open until `milestones.json` and `abilities.json` land.
 
 ## Act map
 
@@ -101,7 +104,7 @@ the showing. Bear signs in.
 | B08 | SITE | `EmploymentSim`: default pair; axes in, both lines DRAW left→right from real data | "Here's the default pair. Software Developers against Computer Programmers. Same buildings, same degrees, same language — and the lines tear apart." *(verify)* |
 | B09 | SITE | Camera pushes to the x-axis; milestone labels pop sequentially, terracotta ring | "Those labels under the axis are AI milestones — major model releases, coding assistants. They're the timeline the employment lines get read against. That's the question the chart puts in front of you." |
 | B10 | REMOTION | "A timeline is a question, not a verdict" pattern | "And be careful: milestones next to a falling line is correlation. The chart lets you ask whether AI bent the curve. It does not settle it. Tools that pretend otherwise are lying to you." |
-| B11 | MANIM | The two curves clean, gap shaded | "But the gap is real, whatever caused it. One job climbs, the other slides — and they're supposedly the same career. So the difference isn't 'tech.' The difference is what each job actually does all day." |
+| B11 | MANIM | Full-range programmer curve: 230 (2000) → 48 (2024), pre/post-2018 shading | "Now the fine print. Zoom out and the programmer line has been falling since two thousand one — offshoring, reclassification, the cloud. Most of the slide predates the chatbots. AI may be accelerating this. It did not start it." |
 | B12 | REMOTION | Spec→code conveyor vs design/judgment loop | "Programmers, in the government's definition, implement specifications someone else wrote. Developers decide what to build, why, and whether it's working. One is Tier one work. The other lives in Tiers four and five." |
 | B13 | SITE | `EmploymentSim`: camera to the dotted 2019–2020 gap; terracotta underline on the legend note | "One honesty note baked in: dotted segments are data gaps, and it says so — Software Developers wasn't even tracked separately for two years. The chart shows its seams instead of painting over them." |
 
@@ -122,16 +125,16 @@ the showing. Bear signs in.
 |----|------|--------------|-----------------|
 | B22 | CARD | Act card | — |
 | B23 | SITE | `PickerSim`: clears slot 1, types "registered n…", picks; types "customer…", picks; `EmploymentSim` redraws | "New pair, one search each: Registered Nurses against Customer Service Representatives. Both jobs are talking to people all day. The employment lines say the economy doesn't think they're remotely the same." *(verify)* |
-| B24 | MANIM | Recreated curves, milestone ticks | "Nursing holds through everything — a pandemic, a hiring freeze, the model releases. Customer service slides, and the slide steepens right where scripted chat got good. Correlation, again. But a pointed one." *(verify)* |
+| B24 | MANIM | Recreated curves; 2023→2024 CSR step highlighted | "Nursing climbs through everything — a pandemic, a hiring freeze, every model release. Eleven percent up. Customer service drifts below its baseline, and the newest year of data is its steepest drop yet — right as scripted chat got good. Correlation. But a pointed one." |
 | B25 | SITE | `AbilitiesSim`: TOP DIFFERENCES for the pair, top rows ringed | "Top Differences explains it. The nurse's lead: assisting and caring, physical work near people, judgment under uncertainty. The rep's profile leans on exactly the abilities a language model fakes best — scripted response, pattern lookup." |
 | B26 | REMOTION | Hands + presence vs headset + script | "A nurse's job is Tier two and three — a body in a room, trust, hands. You can't download that. A script you read off a screen? That IS the training data." |
 | B27 | CARD | Spark-line: "Talking to people isn't one skill." | — |
 
-### ACT V — Graphic Designers vs Carpenters
+### ACT V — Graphic Designers vs Carpenters (the chart that refuses to panic)
 | ID | Lane | Sim / visual | Narration draft |
 |----|------|--------------|-----------------|
 | B28 | CARD | Act card | — |
-| B29 | SITE | `PickerSim` types "graphic…"; `DrawerSim` opens for Carpenters — browse, group, "as Occ 2"; `EmploymentSim` redraws | "Last pair, and it's the uncomfortable one. Graphic Designers against Carpenters — one from search, one from the browse drawer. A creative degree against a trade. Guess which line image generators showed up for." *(verify)* |
+| B29 | SITE | `PickerSim` types "graphic…"; `DrawerSim` opens for Carpenters — browse, group, "as Occ 2"; `EmploymentSim` redraws | "Last pair, and it's a trap. Graphic Designers against Carpenters — one from search, one from the browse drawer. Everyone knows image generators came for design. So watch the employment data agree… except it doesn't." |
 | B30 | MANIM | Curves, generative-image milestone tick emphasized | "The designer line wobbles where image generation arrives. The carpenter line barely registers that AI exists. Nobody's model swings a hammer on a wet roof in February." *(verify)* |
 | B31 | SITE | `AbilitiesSim`: TOP DIFFERENCES; dexterity/stamina vs visualization/originality ringed | "The ability chart shows the split: the carpenter's edge is entirely embodied — dexterity, strength, spatial work in the physical world. The designer's profile concentrates in visualization and originality — production abilities the generators target first." |
 | B32 | REMOTION | "Production ≠ Direction" — output stack vs taste/brief/judgment | "The nuance: what's exposed is design PRODUCTION — comps, variations, assets. Design judgment — reading a client, knowing which of forty options is right and why — that's Tier four. The title survives; the task list doesn't." |
